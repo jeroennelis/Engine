@@ -11,3 +11,5 @@
 	#error Engine only supports Windows!
 #endif // ENGINE_PLATFORM_WINDOWS
 
+#define BIT(x) (1 << x)
+

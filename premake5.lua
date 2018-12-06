@@ -18,6 +18,8 @@ project "Engine"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	
+
 	files
 	{
 		"%{prj.name}/src/**.h",
@@ -27,13 +29,15 @@ project "Engine"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/src"
+
 	}
 
 	filter "system:windows"
 		cppdialect "c++17"
 		staticruntime "On"
-		systemversion "10.0.16299.0"
+		systemversion "latest"
 
 		defines
 		{
@@ -89,7 +93,7 @@ project "Sandbox"
 	filter "system:windows"
 		cppdialect "c++17"
 		staticruntime "On"
-		systemversion "10.0.16299.0"
+		systemversion "latest"
 
 		defines
 		{

@@ -1,9 +1,8 @@
 #pragma once
-#include <memory>
 
-#include "core.h"
+#include "Core.h"
 #include "spdlog/spdlog.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/fmt/ostr.h"
 
 namespace Engine {
 
@@ -31,8 +30,8 @@ namespace Engine {
 #define EN_CORE_FATAL(...)    ::Engine::Log::GetCoreLogger()->fatal(__VA_ARGS__)
 
 // Client log macros
-#define EN_CLIENT_TRACE(...)    ::Engine::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define EN_CLIENT_INFO(...)     ::Engine::Log::GetClientLogger()->info(__VA_ARGS__)
-#define EN_CLIENT_WARN(...)     ::Engine::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define EN_CLIENT_ERROR(...)    ::Engine::Log::GetClientLogger()->error(__VA_ARGS__)
-#define EN_CLIENT_FATAL(...)    ::Engine::Log::GetClientLogger()->fatal(__VA_ARGS__)
+#define EN_TRACE(...)    ::Engine::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define EN_INFO(...)     ::Engine::Log::GetClientLogger()->info(__VA_ARGS__)
+#define EN_WARN(...)     ::Engine::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define EN_ERROR(...)    ::Engine::Log::GetClientLogger()->error(__VA_ARGS__)
+#define EN_FATAL(...)    ::Engine::Log::GetClientLogger()->fatal(__VA_ARGS__)
