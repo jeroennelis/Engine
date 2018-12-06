@@ -18,7 +18,8 @@ project "Engine"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	
+	pchheader "enpch.h"
+	pchsource "Engine/src/enpch.cpp"
 
 	files
 	{
