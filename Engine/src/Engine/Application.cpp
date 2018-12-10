@@ -6,6 +6,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <openvr.h>
+
 namespace Engine {
 
 	Application::Application()
@@ -20,6 +22,7 @@ namespace Engine {
 
 	void Application::Run()
 	{
+
 		while (m_Running)
 		{
 			glClearColor(1, 0, 0, 1);

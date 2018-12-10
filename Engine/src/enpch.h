@@ -14,7 +14,7 @@
 
 #include "Engine/Log.h"
 
-//#ifdef EN_PLATFORM_WINDOWS
-	//#include <Windows.h>
-//#endif
+#ifdef EN_PLATFORM_WINDOWS
+	#include <Windows.h>
+#endif
 

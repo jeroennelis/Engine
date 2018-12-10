@@ -1,6 +1,7 @@
 #include "enpch.h"
 #include "WindowsWindow.h"
 
+
 namespace Engine {
 
 	static bool s_GLFWInitialized = false;

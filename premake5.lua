@@ -38,13 +38,20 @@ project "Engine"
 	{
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/src",
+		"%{prj.name}/vendor/openvr/include",
 		"%{IncludeDir.GLFW}"
+	}
+
+	libdirs
+	{
+		"%{prj.name}/vendor/openvr/lib/win64"
 	}
 
 	links
 	{
 		"GLFW",
-		"opengl32.lib"
+		"opengl32.lib",
+		"openvr_api.lib"
 	}
 
 	filter "system:windows"
