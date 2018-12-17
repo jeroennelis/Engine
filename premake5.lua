@@ -39,7 +39,8 @@ project "Engine"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/openvr/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"Physics/src"
 	}
 
 	libdirs
@@ -51,7 +52,8 @@ project "Engine"
 	{
 		"GLFW",
 		"opengl32.lib",
-		"openvr_api.lib"
+		"openvr_api.lib",
+		"Physics"
 	}
 
 	filter "system:windows"
@@ -81,6 +83,56 @@ project "Engine"
 	filter "configurations:Dist"
 		defines "EN_DIST"
 		optimize "On"
+
+project "Physics"
+	location "Physics"
+	kind "SharedLib"
+	language "C++"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	filter "system:windows"
+		cppdialect "c++17"
+		staticruntime "On"
+		systemversion "latest"
+
+	defines
+		{
+			"EN_PLATFORM_WINDOWS",
+			"EN_BUILD_DLL"
+		}
+
+	postbuildcommands
+		{
+			("{copy} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .."/Engine"),
+			("{copy} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .."/Sandbox")
+		}
+
+		includedirs
+	{
+		
+		"Physics/src"
+	}
+
+	filter "configurations:Debug"
+		defines "EN_DEBUG"
+		symbols "On"
+
+	filter "configurations:Release"
+		defines "EN_RELEASE"
+		optimize "On"
+
+	filter "configurations:Dist"
+		defines "EN_DIST"
+		optimize "On"
+
 
 
 project "Sandbox"

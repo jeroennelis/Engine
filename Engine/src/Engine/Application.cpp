@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include <openvr.h>
+#include "Physics/Test.h"
 
 namespace Engine {
 
@@ -32,7 +33,7 @@ namespace Engine {
 
 	void Application::Run()
 	{
-
+		physics::Test::DoTest();
 		while (m_Running)
 		{
 			glClearColor(1, 0, 0, 1);

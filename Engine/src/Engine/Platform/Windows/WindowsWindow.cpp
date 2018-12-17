@@ -48,6 +48,8 @@ namespace Engine {
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
+		EN_CORE_INFO("{0}", glGetString(GL_VERSION));
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 

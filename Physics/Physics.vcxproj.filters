@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{888B590D-F46A-D8A8-FD82-637F69E13E0A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Physics.h" />
+    <ClInclude Include="src\Physics\Test.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\core.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Particle.h" />
+    <ClInclude Include="src\Physics\ParticleForceGenerator.h" />
+    <ClInclude Include="src\Physics\Precision.h" />
+    <ClInclude Include="src\Physics\Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Physics\Test.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\Particle.cpp" />
+    <ClCompile Include="src\Physics\ParticleForceGenerator.cpp" />
+    <ClCompile Include="src\Physics\Utils.cpp" />
+  </ItemGroup>
+</Project>
