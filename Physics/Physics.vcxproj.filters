@@ -7,23 +7,37 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Physics.h" />
+    <ClInclude Include="src\Physics\Particle.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\ParticleForceGenerator.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Precision.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Physics\Test.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Utils.h">
       <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\Physics\core.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\Particle.h" />
-    <ClInclude Include="src\Physics\ParticleForceGenerator.h" />
-    <ClInclude Include="src\Physics\Precision.h" />
-    <ClInclude Include="src\Physics\Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\Particle.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\ParticleForceGenerator.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
     <ClCompile Include="src\Physics\Test.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\Particle.cpp" />
-    <ClCompile Include="src\Physics\ParticleForceGenerator.cpp" />
-    <ClCompile Include="src\Physics\Utils.cpp" />
+    <ClCompile Include="src\Physics\Utils.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

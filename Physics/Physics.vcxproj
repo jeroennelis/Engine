@@ -83,6 +83,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -107,6 +108,7 @@ IF EXIST ..\bin\Debug-windows-x86_64\Physics\Physics.dll\ (xcopy /Q /E /Y /I ..\
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -132,6 +134,7 @@ IF EXIST ..\bin\Release-windows-x86_64\Physics\Physics.dll\ (xcopy /Q /E /Y /I .
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -151,8 +154,8 @@ IF EXIST ..\bin\Dist-windows-x86_64\Physics\Physics.dll\ (xcopy /Q /E /Y /I ..\b
     <ClInclude Include="src\Physics\ParticleForceGenerator.h" />
     <ClInclude Include="src\Physics\Precision.h" />
     <ClInclude Include="src\Physics\Test.h" />
-    <ClInclude Include="src\Physics\core.h" />
     <ClInclude Include="src\Physics\Utils.h" />
+    <ClInclude Include="src\Physics\core.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\Particle.cpp" />

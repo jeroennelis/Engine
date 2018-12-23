@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Engine/Core.h"
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
+#include "Core.h"
 
 #include "window.h"
-
-
+#include "Engine/LayerStack.h"
+#include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
 
 namespace Engine {
 
@@ -20,11 +19,15 @@ namespace Engine {
 
 		void OnEvent(Event &e);
 
+		void PushLayer(Layer* layer);
+		void PushOverLay(Layer* overlay);
+
 	private:
 		bool OnWindowClosed(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
+		LayerStack m_LayerStack;
 	};
 
 	// To be defined in CLIENT

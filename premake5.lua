@@ -74,14 +74,17 @@ project "Engine"
 
 	filter "configurations:Debug"
 		defines "EN_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "EN_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "EN_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 project "Physics"
@@ -123,14 +126,17 @@ project "Physics"
 
 	filter "configurations:Debug"
 		defines "EN_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "EN_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "EN_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 
@@ -174,12 +180,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "EN_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "EN_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "EN_DIST"
+		buildoptions "/MD"
 		optimize "On"

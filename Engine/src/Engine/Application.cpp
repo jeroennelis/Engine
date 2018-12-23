@@ -28,8 +28,15 @@ namespace Engine {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClosed));
 
-		EN_CORE_TRACE("{0}", e);
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+		{
+			(*--it)->OnEvent(e);
+			if (e.Handled())
+				break;
+		}
 	}
+
+	
 
 	void Application::Run()
 	{
@@ -39,7 +46,22 @@ namespace Engine {
 			glClearColor(1, 0, 0, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 			m_Window->OnUpdate();
+			
+			for (Layer* layer : m_LayerStack)
+			layer->OnUpdate();
 		}
+
+		
+	}
+
+	void Application::PushLayer(Layer * layer)
+		{
+			m_LayerStack.PushLayer(layer);
+		}
+
+		void Application::PushOverLay(Layer * overlay)
+		{
+			m_LayerStack.PushOverLay(overlay);
 	}
 
 	bool Application::OnWindowClosed(WindowCloseEvent & e)
