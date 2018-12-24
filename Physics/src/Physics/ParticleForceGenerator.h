@@ -213,7 +213,72 @@ namespace  physics
 	public:
 		ParticleBungee(Particle* other, real springConstant, real restLenght);
 
-		virtual void UpdateForce(Particle* particle, real duration);
+		virtual void UpdateForce(Particle* particle, real duration) override;
+	};
+
+	/**
+	*	implementation of forcegenerator that aplies a buoyancy force 
+	*	for a plane of liquid parallel to the xz plane
+	**/
+	class PHYSICS_API ParticleBuoyency : public ParticleForceGenerator
+	{
+		/**
+		*	maximum subersion depth of the object
+		*	before generating the maximum buoyency force
+		**/
+		real maxDepth;
+
+		/**
+		*	volume of the object
+		**/
+		real volume;
+
+		/**
+		*	height of the water plane above y = 0.
+		*	the plane is parallel to the xz plane.
+		**/
+		real waterHeight;
+
+		/**
+		*	denistiy of the liquid.
+		*	reference: 1m³ water -> 1000kg
+		**/
+		real liquidDensity;
+
+	public:
+
+		ParticleBuoyency(real maxDepth, real volume, real waterHeight, real liquidDensity = 1000.0f);
+
+		virtual void UpdateForce(Particle* particle, real duration) override;
+	};
+
+	/**
+	*	implementation of forcegenerator that applies a fake stif spring force 
+	*	one end is attached to a fixed point in space
+	**/
+	class PHYSICS_API ParticleFakeSpring : public ParticleForceGenerator
+	{
+
+		/**
+		*	Location of the anchored end of the spring
+		**/
+		Vector3 *anchor;
+
+		/**
+		*	spring constant
+		**/
+		real springConstant;
+	
+		/**
+		*	dampning on oscillation of spring
+		**/
+		real damping;
+
+	public:
+		
+		ParticleFakeSpring(Vector3* anchor, real springConstant, real damping);
+
+		virtual void UpdateForce(Particle* particle, real duration) override;
 	};
 
 }

@@ -149,17 +149,23 @@ IF EXIST ..\bin\Dist-windows-x86_64\Physics\Physics.dll\ (xcopy /Q /E /Y /I ..\b
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Physics\ParticleLinks.h" />
+    <ClInclude Include="src\Physics\ParticleContact.h" />
     <ClInclude Include="src\Physics.h" />
     <ClInclude Include="src\Physics\Particle.h" />
     <ClInclude Include="src\Physics\ParticleForceGenerator.h" />
+    <ClInclude Include="src\Physics\ParticleWorld.h" />
     <ClInclude Include="src\Physics\Precision.h" />
     <ClInclude Include="src\Physics\Test.h" />
     <ClInclude Include="src\Physics\Utils.h" />
     <ClInclude Include="src\Physics\core.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\ParticleLinks.cpp" />
     <ClCompile Include="src\Physics\Particle.cpp" />
+    <ClCompile Include="src\Physics\ParticleContact.cpp" />
     <ClCompile Include="src\Physics\ParticleForceGenerator.cpp" />
+    <ClCompile Include="src\Physics\ParticleWorld.cpp" />
     <ClCompile Include="src\Physics\Test.cpp" />
     <ClCompile Include="src\Physics\Utils.cpp" />
   </ItemGroup>

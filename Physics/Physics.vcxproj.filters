@@ -25,6 +25,13 @@
     <ClInclude Include="src\Physics\core.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Physics\ParticleContact.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\ParticleLinks.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\ParticleWorld.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\Particle.cpp">
@@ -39,5 +46,12 @@
     <ClCompile Include="src\Physics\Utils.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\ParticleContact.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\ParticleLinks.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\ParticleWorld.cpp" />
   </ItemGroup>
 </Project>

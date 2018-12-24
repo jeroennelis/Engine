@@ -26,3 +26,17 @@ typedef float real;
 */
 #define real_abs fabsf
 
+/*
+* Defines precision of the sine operator.
+*/
+#define real_sin sinf
+
+/*
+* Defines precision of the cosinus operator.
+*/
+#define real_cos cosf
+
+/*
+* Defines precision of the exponent operator.
+*/
+#define real_exp expf
