@@ -13,8 +13,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include dirs relative to root folder
 IncludeDir = {}
 IncludeDir["GLFW"] = "Engine/vendor/GLFW/include"
+IncludeDir["Glad"] = "Engine/vendor/Glad/include"
 
 include "Engine/vendor/GLFW"
+include "Engine/vendor/Glad"
 
 project "Engine"
 	location "Engine"
@@ -36,10 +38,11 @@ project "Engine"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/openvr/include",
+		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
+		"%{prj.name}/vendor/openvr/include",
 		"Physics/src"
 	}
 
@@ -51,6 +54,7 @@ project "Engine"
 	links
 	{
 		"GLFW",
+		"Glad",
 		"opengl32.lib",
 		"openvr_api.lib",
 		"Physics"
@@ -64,7 +68,8 @@ project "Engine"
 		defines
 		{
 			"EN_PLATFORM_WINDOWS",
-			"EN_BUILD_DLL"
+			"EN_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands
