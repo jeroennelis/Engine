@@ -19,6 +19,9 @@
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Components">
+      <UniqueIdentifier>{9fb6bb1b-8600-41e3-8a91-587a1fb0c969}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine.h" />
@@ -65,6 +68,11 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\enpch.h" />
+    <ClInclude Include="src\Engine\Components\Component.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Components\TestComponent.h" />
+    <ClInclude Include="src\Engine\GameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
@@ -89,5 +97,7 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\enpch.cpp" />
+    <ClCompile Include="src\Engine\Components\TestComponent.cpp" />
+    <ClCompile Include="src\Engine\GameObject.cpp" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,8 @@
 
 #include <openvr.h>
 #include "Physics/Test.h"
+#include "Components/TestComponent.h"
+#include "GameObject.h"
 
 namespace Engine {
 
@@ -47,6 +49,17 @@ namespace Engine {
 
 	void Application::Run()
 	{
+		TestComponent test;
+		EN_CORE_INFO(test.ID());
+		EN_CORE_INFO(test.Name());
+
+		GameObject testObject("TestObject");
+		testObject.AddComponent(&test);
+		testObject.GetComponent<TestComponent>();
+
+		TestComponent* temp = testObject.GetComponent<TestComponent>();
+		;
+		EN_CORE_INFO(temp->Name());
 		while (m_Running)
 		{
 			glClearColor(1, 0, 0, 1);
@@ -59,6 +72,7 @@ namespace Engine {
 			m_Window->OnUpdate();
 		}
 
+		
 		
 	}
 

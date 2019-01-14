@@ -10,7 +10,7 @@ public:
 
 	void OnUpdate() override
 	{
-		EN_INFO("ExampleLayer::Update");
+		//EN_INFO("ExampleLayer::Update");
 	}
 
 	void OnEvent(Engine::Event& event) override
