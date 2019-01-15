@@ -12,7 +12,7 @@ namespace Engine {
 
 	void Engine::TestComponent::Update()
 	{
-		EN_CORE_INFO("update testcomponent");
+		EN_CORE_INFO("update {0}", m_Name);
 	}
 }
 

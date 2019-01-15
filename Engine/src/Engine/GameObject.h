@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Engine/Components/Component.h"
+
 
 namespace Engine {
 	class GameObject
@@ -8,7 +10,9 @@ namespace Engine {
 		GameObject(const std::string& name);
 		~GameObject();
 
-		void Update();
+		void OnUpdate();
+		void OnHierarchyRender(GameObject* currentGameObject);
+		void OnInspectorRender();
 
 		void AddChild(GameObject* go);
 		void AddComponent(Component* comp);

@@ -155,6 +155,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Logic\Scene.h" />
+    <ClInclude Include="src\Engine\Logic\LogicLayer.h" />
     <ClInclude Include="src\Engine\GameObject.h" />
     <ClInclude Include="src\Engine\Components\Component.h" />
     <ClInclude Include="src\Engine.h" />
@@ -176,6 +178,8 @@
     <ClInclude Include="src\Engine\Components\TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Logic\Scene.cpp" />
+    <ClCompile Include="src\Engine\Logic\LogicLayer.cpp" />
     <ClCompile Include="src\Engine\GameObject.cpp" />
     <ClCompile Include="src\Engine\Application.cpp" />
     <ClCompile Include="src\Engine\ImGui\ImGuiLayer.cpp" />

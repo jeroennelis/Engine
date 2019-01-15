@@ -13,7 +13,7 @@
 namespace Engine {
 
 	ImGuiLayer::ImGuiLayer()
-		:Layer("ImGuiLayer")
+		:Layer("ImGui Layer")
 	{
 	}
 	ImGuiLayer::~ImGuiLayer()
@@ -67,9 +67,10 @@ namespace Engine {
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
-
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
+		
+		RenderHierarchyWindow();
+		RenderGameWindow();
+		RenderInspectorWindow();
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -86,6 +87,27 @@ namespace Engine {
 		dispatcher.Dispatch<KeyReleasedEvent>(EN_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
 		dispatcher.Dispatch<KeyTypedEvent>(EN_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
 		dispatcher.Dispatch<WindowResizeEvent>(EN_BIND_EVENT_FN(ImGuiLayer::OnwindowResizeEvent));
+	}
+
+	void ImGuiLayer::RenderInspectorWindow()
+	{
+		ImGui::Begin("Inspector");
+
+		ImGui::End();
+	}
+
+	void ImGuiLayer::RenderGameWindow()
+	{
+		ImGui::Begin("Game");
+
+		ImGui::End();
+	}
+
+	void ImGuiLayer::RenderHierarchyWindow()
+	{
+		ImGui::Begin("Hierarchy");
+
+		ImGui::End();
 	}
 
 	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent & e)

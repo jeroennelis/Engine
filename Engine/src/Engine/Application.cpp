@@ -9,6 +9,7 @@
 #include "Physics/Test.h"
 #include "Components/TestComponent.h"
 #include "GameObject.h"
+#include "Engine/Logic/Scene.h"
 
 namespace Engine {
 
@@ -53,13 +54,17 @@ namespace Engine {
 		EN_CORE_INFO(test.ID());
 		EN_CORE_INFO(test.Name());
 
-		GameObject testObject("TestObject");
+		GameObject testObject("TestObject1");
+		GameObject testObject2("TestObject2");
 		testObject.AddComponent(&test);
 		testObject.GetComponent<TestComponent>();
 
-		TestComponent* temp = testObject.GetComponent<TestComponent>();
-		;
-		EN_CORE_INFO(temp->Name());
+		Scene::Current()->AddGameObject(std::make_shared<GameObject>(testObject));
+		Scene::Current()->AddGameObject(std::make_shared<GameObject>(testObject2));
+
+		Scene scene("scene 2");
+		//Scene::SetCurrent(&scene);
+
 		while (m_Running)
 		{
 			glClearColor(1, 0, 0, 1);

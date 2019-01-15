@@ -20,6 +20,10 @@ namespace Engine {
 		void OnUpdate();
 		void OnEvent(Event& event);
 
+		void RenderInspectorWindow();
+		void RenderGameWindow();
+		void RenderHierarchyWindow();
+
 	private:
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
 		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);

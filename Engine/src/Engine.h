@@ -6,6 +6,7 @@
 #include "Engine/Log.h"
 
 #include "Engine/ImGui/ImGuiLayer.h"
+#include "Engine/Logic/LogicLayer.h"
 
 // ---Entry Point--------------
 #include "Engine\EntryPoint.h"

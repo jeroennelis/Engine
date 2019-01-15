@@ -14,13 +14,38 @@ namespace Engine {
 			delete child;
 	}
 
-	void GameObject::Update()
+	void GameObject::OnUpdate()
 	{
+		EN_CORE_INFO("update {0}", m_Name);
 		for (Component* component : m_Components)
 			component->Update();
 
 		for (GameObject* child : m_Children)
-			child->Update();
+			child->OnUpdate();
+	}
+
+	void GameObject::OnHierarchyRender(GameObject* currentGameObject)
+	{
+		
+
+		/*if (ImGui::TreeNode(m_Name.c_str()))
+		{
+			char label[] = "this";
+			ImGui::Bullet(); ImGui::Selectable(label, false);
+			if ((ImGui::IsItemHovered() || ImGui::IsItemFocused()) && ImGui::IsMouseClicked(0))
+				currentGameObject = this;
+			
+			for (GameObject* child : m_Children)
+			{
+				child->OnHierarchyRender(currentGameObject);
+			}
+			ImGui::TreePop();
+		}*/
+	}
+
+	void GameObject::OnInspectorRender()
+	{
+
 	}
 
 	void GameObject::AddChild(GameObject * go)
