@@ -75,6 +75,7 @@
     <ClInclude Include="src\Engine\GameObject.h" />
     <ClInclude Include="src\Engine\Logic\LogicLayer.h" />
     <ClInclude Include="src\Engine\Logic\Scene.h" />
+    <ClInclude Include="vendor\imgui\imgui.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">

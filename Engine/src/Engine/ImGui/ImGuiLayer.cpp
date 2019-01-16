@@ -2,13 +2,17 @@
 #include "ImGuiLayer.h"
 
 #include "imgui.h"
+
 #include "Platform/OpenGl/ImGuiOpenGLRenderer.h"
-
-#include "Engine/Application.h"
-
 // TEMP
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+
+#include "Engine/GameObject.h"
+
+#include "Engine/Application.h"
+
+#include "Engine/Logic/Scene.h"
 
 namespace Engine {
 
@@ -51,6 +55,8 @@ namespace Engine {
 		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
 		ImGui_ImplOpenGL3_Init("#version 410");
+
+		EN_CORE_INFO("attached imGui layer");
 	}
 	void ImGuiLayer::OnDetach()
 	{
@@ -67,10 +73,11 @@ namespace Engine {
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
-		
+
 		RenderHierarchyWindow();
 		RenderGameWindow();
 		RenderInspectorWindow();
+		RenderConsoleWindow();
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -93,6 +100,14 @@ namespace Engine {
 	{
 		ImGui::Begin("Inspector");
 
+		if (Scene::SelectedGameObject())
+		{
+			for (Component * component : Scene::SelectedGameObject()->Components())
+			{
+				component->RenderInspectorInfo();
+			}
+		}
+
 		ImGui::End();
 	}
 
@@ -106,6 +121,16 @@ namespace Engine {
 	void ImGuiLayer::RenderHierarchyWindow()
 	{
 		ImGui::Begin("Hierarchy");
+
+		for (auto gameObject : Scene::Current()->GameObjects())
+			gameObject->OnHierarchyRender(Scene::SelectedGameObject());
+
+		ImGui::End();
+	}
+
+	void ImGuiLayer::RenderConsoleWindow()
+	{
+		ImGui::Begin("Console");
 
 		ImGui::End();
 	}

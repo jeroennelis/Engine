@@ -6,6 +6,8 @@
 #include "Engine/Events/MouseEvent.h"
 #include "Engine/Events/ApplicationEvent.h"
 
+
+
 namespace Engine {
 
 	class ENGINE_API ImGuiLayer : public Layer
@@ -23,6 +25,7 @@ namespace Engine {
 		void RenderInspectorWindow();
 		void RenderGameWindow();
 		void RenderHierarchyWindow();
+		void RenderConsoleWindow();
 
 	private:
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);

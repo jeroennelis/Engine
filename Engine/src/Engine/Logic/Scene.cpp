@@ -4,6 +4,7 @@
 namespace Engine {
 
 	Scene* Scene::m_Current = nullptr;
+	GameObject* Scene::m_SelectedGameObject = nullptr;
 
 	Scene::Scene()
 		:m_Name("New Scene")
@@ -31,7 +32,6 @@ namespace Engine {
 
 	void Scene::OnUpdate()
 	{
-		EN_CORE_INFO("update {0}", m_Name);
 		for (auto go : m_GameObjects)
 			go->OnUpdate();
 	}

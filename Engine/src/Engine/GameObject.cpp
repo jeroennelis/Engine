@@ -1,6 +1,9 @@
 #include "enpch.h"
 #include "GameObject.h"
 
+#include "ImGui/ImGuiLayer.h"
+#include "imgui.h";
+#include "Engine/Logic/Scene.h"
 
 namespace Engine {
 	GameObject::GameObject(const std::string & name)
@@ -16,7 +19,6 @@ namespace Engine {
 
 	void GameObject::OnUpdate()
 	{
-		EN_CORE_INFO("update {0}", m_Name);
 		for (Component* component : m_Components)
 			component->Update();
 
@@ -26,21 +28,19 @@ namespace Engine {
 
 	void GameObject::OnHierarchyRender(GameObject* currentGameObject)
 	{
-		
-
-		/*if (ImGui::TreeNode(m_Name.c_str()))
+		if (ImGui::TreeNode(m_Name.c_str()))
 		{
 			char label[] = "this";
 			ImGui::Bullet(); ImGui::Selectable(label, false);
 			if ((ImGui::IsItemHovered() || ImGui::IsItemFocused()) && ImGui::IsMouseClicked(0))
-				currentGameObject = this;
+				Scene::SetSelectedGameObject(this);
 			
 			for (GameObject* child : m_Children)
 			{
 				child->OnHierarchyRender(currentGameObject);
 			}
 			ImGui::TreePop();
-		}*/
+		}
 	}
 
 	void GameObject::OnInspectorRender()

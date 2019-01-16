@@ -18,6 +18,7 @@ namespace Engine {
 		void AddComponent(Component* comp);
 
 		inline const std::string& Name() const { return m_Name; }
+		inline const std::vector<Component*>& Components()const { return m_Components; }
 
 		template <class component_type>
 		component_type* GetComponent()

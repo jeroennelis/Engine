@@ -11,6 +11,7 @@ namespace Engine {
 	public:
 		inline virtual ~Component() {}
 		virtual void Update() = 0;
+		virtual void RenderInspectorInfo() = 0;
 
 		inline const std::string& Name() const { return m_Name; }
 		inline const unsigned int const ID()const { return m_ComponentID; }

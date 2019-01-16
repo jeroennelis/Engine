@@ -1,5 +1,6 @@
 #include "enpch.h"
 #include "TestComponent.h"
+#include "imgui.h"
 
 namespace Engine {
 	
@@ -12,7 +13,22 @@ namespace Engine {
 
 	void Engine::TestComponent::Update()
 	{
-		EN_CORE_INFO("update {0}", m_Name);
+	}
+
+	void TestComponent::RenderInspectorInfo()
+	{
+		if (ImGui::TreeNode(m_Name.c_str()))
+		{
+			/*ImGui::InputFloat("Pitch", &Pitch, 1);
+			ImGui::InputFloat("Yaw", &Yaw, 1);
+			ImGui::InputFloat("Roll", &Roll, 1);
+			ImGui::InputFloat("FOV", &FOV, 1);
+			ImGui::InputFloat("NEAR", &NEAR_PLANE, 1);
+			ImGui::InputFloat("FAR", &FAR_PLANE, 1);
+			ImGui::Checkbox("player", &focussedAroundPlayer);*/
+
+			ImGui::TreePop();
+		}
 	}
 }
 

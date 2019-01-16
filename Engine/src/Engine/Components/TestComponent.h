@@ -11,8 +11,11 @@ namespace Engine {
 		virtual ~TestComponent() {};
 
 		virtual void Update() override;
+		
 
 		const static unsigned int ComponentType;
+
+		virtual void RenderInspectorInfo() override;
 	};
 }
 

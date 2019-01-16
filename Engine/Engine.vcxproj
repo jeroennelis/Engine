@@ -176,6 +176,7 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\enpch.h" />
     <ClInclude Include="src\Engine\Components\TestComponent.h" />
+    <ClInclude Include="vendor\imgui\imgui.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Logic\Scene.cpp" />

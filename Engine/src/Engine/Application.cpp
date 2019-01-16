@@ -40,6 +40,7 @@ namespace Engine {
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
+			EN_CORE_TRACE(e.ToString());
 			(*--it)->OnEvent(e);
 			if (e.Handled())
 				break;
@@ -51,8 +52,6 @@ namespace Engine {
 	void Application::Run()
 	{
 		TestComponent test;
-		EN_CORE_INFO(test.ID());
-		EN_CORE_INFO(test.Name());
 
 		GameObject testObject("TestObject1");
 		GameObject testObject2("TestObject2");
@@ -67,7 +66,7 @@ namespace Engine {
 
 		while (m_Running)
 		{
-			glClearColor(1, 0, 0, 1);
+			glClearColor(0, 0, 0, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 			
 			
