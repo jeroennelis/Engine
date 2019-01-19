@@ -5,6 +5,7 @@
 #include "Engine/Events/Event.h"
 #include "Engine/Events/MouseEvent.h"
 #include "Engine/Events/ApplicationEvent.h"
+#include "Engine/Components/TestComponent.h"
 
 
 
@@ -22,10 +23,12 @@ namespace Engine {
 		void OnUpdate();
 		void OnEvent(Event& event);
 
+		void RenderMenuBar();
 		void RenderInspectorWindow();
 		void RenderGameWindow();
 		void RenderHierarchyWindow();
 		void RenderConsoleWindow();
+
 
 	private:
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
@@ -37,8 +40,13 @@ namespace Engine {
 		bool OnKeyTypedEvent(KeyTypedEvent& e);
 		bool OnwindowResizeEvent(WindowResizeEvent& e);
 
+		void ToggleStatistics();
+		void AddEmptyGameObject();
+
 
 	private:
 		float m_time = 0;
+
+		static bool m_ShowStatistics;
 	};
 }

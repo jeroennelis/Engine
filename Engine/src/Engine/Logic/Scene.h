@@ -18,7 +18,7 @@ namespace Engine {
 				
 		inline const std::string& Name() const { return m_Name; }
 
-		inline const std::vector<std::shared_ptr<GameObject>>& GameObjects()const { return m_GameObjects; }
+		inline std::vector<std::shared_ptr<GameObject>>& GameObjects() { return m_GameObjects; }
 
 		void AddGameObject(std::shared_ptr<GameObject> go);
 

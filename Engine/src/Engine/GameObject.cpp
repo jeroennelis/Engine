@@ -34,7 +34,7 @@ namespace Engine {
 			ImGui::Bullet(); ImGui::Selectable(label, false);
 			if ((ImGui::IsItemHovered() || ImGui::IsItemFocused()) && ImGui::IsMouseClicked(0))
 				Scene::SetSelectedGameObject(this);
-			
+
 			for (GameObject* child : m_Children)
 			{
 				child->OnHierarchyRender(currentGameObject);
@@ -53,8 +53,17 @@ namespace Engine {
 		m_Children.push_back(go);
 	}
 
-	void GameObject::AddComponent(Component * comp)
+	void GameObject::AddComponent(Component * newComp)
 	{
-		m_Components.push_back(comp);
+		for (Component* comp : m_Components)
+		{
+			if (newComp->Type()== comp->Type())
+			{
+				EN_CORE_INFO("this Game Object already contains a {0}", newComp->Name());
+				return;
+			}
+		}
+		EN_CORE_INFO("Added a {0}", newComp->Name());
+		m_Components.push_back(newComp);
 	}
 }

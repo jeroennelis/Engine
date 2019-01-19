@@ -4,11 +4,17 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Components">
+      <UniqueIdentifier>{102EE711-7C44-E5A7-C5BB-70C93111B62F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Engine\Events">
       <UniqueIdentifier>{5FAFB439-CB6F-3070-94AA-79ED002A754C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\ImGui">
       <UniqueIdentifier>{45756795-31D8-F639-DA5D-2FF0C69FC2BC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Logic">
+      <UniqueIdentifier>{185E9F95-04C1-2E3A-AD46-67F09988FABC}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
@@ -19,14 +25,17 @@
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Components">
-      <UniqueIdentifier>{9fb6bb1b-8600-41e3-8a91-587a1fb0c969}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Engine\Application.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Components\Component.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Components\TestComponent.h">
+      <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Core.h">
       <Filter>Engine</Filter>
@@ -46,6 +55,9 @@
     <ClInclude Include="src\Engine\Events\MouseEvent.h">
       <Filter>Engine\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\GameObject.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\ImGui\ImGuiLayer.h">
       <Filter>Engine\ImGui</Filter>
     </ClInclude>
@@ -58,6 +70,12 @@
     <ClInclude Include="src\Engine\Log.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Logic\LogicLayer.h">
+      <Filter>Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Logic\Scene.h">
+      <Filter>Engine\Logic</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\window.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -68,17 +86,16 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\enpch.h" />
-    <ClInclude Include="src\Engine\Components\Component.h">
-      <Filter>Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Components\TestComponent.h" />
-    <ClInclude Include="src\Engine\GameObject.h" />
-    <ClInclude Include="src\Engine\Logic\LogicLayer.h" />
-    <ClInclude Include="src\Engine\Logic\Scene.h" />
-    <ClInclude Include="vendor\imgui\imgui.h" />
+    <ClInclude Include="src\Engine\Components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Components\TestComponent.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameObject.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\ImGui\ImGuiLayer.cpp">
@@ -93,6 +110,12 @@
     <ClCompile Include="src\Engine\Log.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Logic\LogicLayer.cpp">
+      <Filter>Engine\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Logic\Scene.cpp">
+      <Filter>Engine\Logic</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\ImGuiOpenGLRenderer.cpp">
       <Filter>Platform\OpenGl</Filter>
     </ClCompile>
@@ -100,9 +123,6 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\enpch.cpp" />
-    <ClCompile Include="src\Engine\Components\TestComponent.cpp" />
-    <ClCompile Include="src\Engine\GameObject.cpp" />
-    <ClCompile Include="src\Engine\Logic\LogicLayer.cpp" />
-    <ClCompile Include="src\Engine\Logic\Scene.cpp" />
+    <ClCompile Include="src\Engine\Components\Transform.cpp" />
   </ItemGroup>
 </Project>

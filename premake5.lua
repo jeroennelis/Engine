@@ -15,10 +15,12 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Engine/vendor/GLFW/include"
 IncludeDir["Glad"] = "Engine/vendor/Glad/include"
 IncludeDir["ImGui"] = "Engine/vendor/imgui"
+IncludeDir["Maths"] = "Engine/Dependencies/Maths"
 
 include "Engine/vendor/GLFW"
 include "Engine/vendor/Glad"
 include "Engine/vendor/imgui"
+include "Engine/Dependencies/Maths"
 
 project "Engine"
 	location "Engine"
@@ -46,7 +48,7 @@ project "Engine"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{prj.name}/vendor/openvr/include",
-		"Physics/src"
+		"%{IncludeDir.Maths}"
 	}
 
 	libdirs
@@ -61,7 +63,7 @@ project "Engine"
 		"ImGui",
 		"opengl32.lib",
 		"openvr_api.lib",
-		"Physics"
+		"Maths"
 	}
 
 	filter "system:windows"
@@ -80,58 +82,6 @@ project "Engine"
 		{
 			("{copy} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .."/Sandbox")
 		}
-
-	filter "configurations:Debug"
-		defines "EN_DEBUG"
-		buildoptions "/MDd"
-		symbols "On"
-
-	filter "configurations:Release"
-		defines "EN_RELEASE"
-		buildoptions "/MD"
-		optimize "On"
-
-	filter "configurations:Dist"
-		defines "EN_DIST"
-		buildoptions "/MD"
-		optimize "On"
-
-project "Physics"
-	location "Physics"
-	kind "SharedLib"
-	language "C++"
-
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
-
-	filter "system:windows"
-		cppdialect "c++17"
-		staticruntime "On"
-		systemversion "latest"
-
-	defines
-		{
-			"EN_PLATFORM_WINDOWS",
-			"EN_BUILD_DLL"
-		}
-
-	postbuildcommands
-		{
-			("{copy} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .."/Engine"),
-			("{copy} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .."/Sandbox")
-		}
-
-		includedirs
-	{
-		
-		"Physics/src"
-	}
 
 	filter "configurations:Debug"
 		defines "EN_DEBUG"

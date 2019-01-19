@@ -4,7 +4,8 @@
 namespace Engine {
 
 #define COMP_UNASSIGNED	0
-#define COMP_TEST		1
+#define COMP_TRANSFORM	1
+#define COMP_TEST		100
 
 	class ENGINE_API Component
 	{
@@ -12,6 +13,7 @@ namespace Engine {
 		inline virtual ~Component() {}
 		virtual void Update() = 0;
 		virtual void RenderInspectorInfo() = 0;
+		virtual const unsigned int Type() const = 0;
 
 		inline const std::string& Name() const { return m_Name; }
 		inline const unsigned int const ID()const { return m_ComponentID; }

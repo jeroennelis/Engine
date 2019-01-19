@@ -6,10 +6,11 @@
 #include <Glad/glad.h>
 
 #include <openvr.h>
-#include "Physics/Test.h"
 #include "Components/TestComponent.h"
 #include "GameObject.h"
 #include "Engine/Logic/Scene.h"
+#include "Maths/src/Vector2.h"
+#include "Components/Transform.h"
 
 namespace Engine {
 
@@ -52,10 +53,12 @@ namespace Engine {
 	void Application::Run()
 	{
 		TestComponent test;
-
+		Transform transform;
+		transform.Position.x = 5;
+		transform.Position.z = -2;
 		GameObject testObject("TestObject1");
 		GameObject testObject2("TestObject2");
-		testObject.AddComponent(&test);
+		testObject.AddComponent(&transform);
 		testObject.GetComponent<TestComponent>();
 
 		Scene::Current()->AddGameObject(std::make_shared<GameObject>(testObject));
