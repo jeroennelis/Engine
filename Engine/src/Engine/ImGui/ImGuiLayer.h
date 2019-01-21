@@ -7,6 +7,8 @@
 #include "Engine/Events/ApplicationEvent.h"
 #include "Engine/Components/TestComponent.h"
 
+#include "Engine/XMLParser/XMLWriter.h"
+
 
 
 namespace Engine {

@@ -87,6 +87,8 @@
     </ClInclude>
     <ClInclude Include="src\enpch.h" />
     <ClInclude Include="src\Engine\Components\Transform.h" />
+    <ClInclude Include="src\Engine\XMLParser\XMLNode.h" />
+    <ClInclude Include="src\Engine\XMLParser\XMLWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
@@ -124,5 +126,7 @@
     </ClCompile>
     <ClCompile Include="src\enpch.cpp" />
     <ClCompile Include="src\Engine\Components\Transform.cpp" />
+    <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp" />
+    <ClCompile Include="src\Engine\XMLParser\XMLWriter.cpp" />
   </ItemGroup>
 </Project>

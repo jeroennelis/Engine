@@ -1,0 +1,14 @@
+<scene name="New Scene">
+	<GameObject name="TestObject1">
+		<Component type="1">
+		</Component>
+	</GameObject>
+	<GameObject name="TestObject2">
+	</GameObject>
+	<GameObject name="new gameobject">
+		<Component type="100">
+		</Component>
+	</GameObject>
+	<GameObject name="new gameobject">
+	</GameObject>
+</scene>

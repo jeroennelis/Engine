@@ -41,7 +41,7 @@ namespace Engine {
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
-			EN_CORE_TRACE(e.ToString());
+			//EN_CORE_TRACE(e.ToString());
 			(*--it)->OnEvent(e);
 			if (e.Handled())
 				break;
@@ -53,12 +53,12 @@ namespace Engine {
 	void Application::Run()
 	{
 		TestComponent test;
-		Transform transform;
-		transform.Position.x = 5;
-		transform.Position.z = -2;
+		std::shared_ptr<Transform> transform = std::make_shared<Transform>();
+		transform->Position.x = 5;
+		transform->Position.z = -2;
 		GameObject testObject("TestObject1");
 		GameObject testObject2("TestObject2");
-		testObject.AddComponent(&transform);
+		testObject.AddComponent(transform);
 		testObject.GetComponent<TestComponent>();
 
 		Scene::Current()->AddGameObject(std::make_shared<GameObject>(testObject));

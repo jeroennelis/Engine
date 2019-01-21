@@ -14,25 +14,26 @@ namespace Engine {
 		void OnHierarchyRender(GameObject* currentGameObject);
 		void OnInspectorRender();
 
-		void AddChild(GameObject* go);
-		void AddComponent(Component* comp);
+		void AddChild(std::shared_ptr<GameObject> go);
+		void AddComponent(std::shared_ptr<Component> comp);
 
 		inline const std::string& Name() const { return m_Name; }
-		inline const std::vector<Component*>& Components()const { return m_Components; }
+		inline const std::vector<std::shared_ptr<Component>>& Components()const { return m_Components; }
+		inline const std::vector<std::shared_ptr<GameObject>>& Children()const { return m_Children; }
 
 		template <class component_type>
 		component_type* GetComponent()
 		{
-			for (auto* comp : m_Components)
+			for (std::shared_ptr<Component> comp : m_Components)
 				if (component_type::ComponentType == comp->ID())
-					return dynamic_cast<component_type*>(comp);
+					return dynamic_cast<component_type*>(comp.get());
 			return NULL;
 		}
 
 	private:
-		std::string					m_Name;
-		std::vector<GameObject*>	m_Children;
-		std::vector<Component*>		m_Components;
+		std::string									m_Name;
+		std::vector<std::shared_ptr<GameObject>>	m_Children;
+		std::vector<std::shared_ptr<Component>>		m_Components;
 	};
 }
 

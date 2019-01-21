@@ -111,7 +111,7 @@ EN_CORE_INFO("attached imGui layer");
 				if (ImGui::MenuItem("New Scene", "CTRL+N", false, false)) {}
 				if (ImGui::MenuItem("Open Scne", "CTRL+O", false, false)) {}
 				ImGui::Separator();
-				if (ImGui::MenuItem("Save", "CTRL+S", false, false)) {}
+				if (ImGui::MenuItem("Save scene", "CTRL+S", false, true)) { XMLWriter::WriteScene(Scene::Current()); }
 				if (ImGui::MenuItem("Save As...", "CTRL+SHIFT+N", false, false)) {}
 				ImGui::Separator();
 				if (ImGui::MenuItem("New Project", "", false, false)) {}
@@ -153,7 +153,7 @@ EN_CORE_INFO("attached imGui layer");
 				{
 					if (ImGui::MenuItem("Test Component", "", false, enabled)) 
 					{
-						Component* comp = new TestComponent;
+						std::shared_ptr<Component> comp = std::make_shared<TestComponent>();
 						Scene::Current()->SelectedGameObject()->AddComponent(comp);
 					}
 					ImGui::EndMenu();
@@ -186,9 +186,9 @@ EN_CORE_INFO("attached imGui layer");
 		
 		if (Scene::SelectedGameObject())
 		{
-			for (Component * component : Scene::SelectedGameObject()->Components())
+			for (std::shared_ptr<Component> comp : Scene::SelectedGameObject()->Components())
 			{
-				component->RenderInspectorInfo();
+				comp->RenderInspectorInfo();
 			}
 		}
 		ImGui::End();

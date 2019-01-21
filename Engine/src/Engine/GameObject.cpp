@@ -13,16 +13,14 @@ namespace Engine {
 
 	GameObject::~GameObject()
 	{
-		for (GameObject* child : m_Children)
-			delete child;
 	}
 
 	void GameObject::OnUpdate()
 	{
-		for (Component* component : m_Components)
+		for (std::shared_ptr<Component> component : m_Components)
 			component->Update();
 
-		for (GameObject* child : m_Children)
+		for (std::shared_ptr<GameObject> child : m_Children)
 			child->OnUpdate();
 	}
 
@@ -35,7 +33,7 @@ namespace Engine {
 			if ((ImGui::IsItemHovered() || ImGui::IsItemFocused()) && ImGui::IsMouseClicked(0))
 				Scene::SetSelectedGameObject(this);
 
-			for (GameObject* child : m_Children)
+			for (std::shared_ptr<GameObject> child : m_Children)
 			{
 				child->OnHierarchyRender(currentGameObject);
 			}
@@ -48,14 +46,14 @@ namespace Engine {
 
 	}
 
-	void GameObject::AddChild(GameObject * go)
+	void GameObject::AddChild(std::shared_ptr<GameObject> go)
 	{
 		m_Children.push_back(go);
 	}
 
-	void GameObject::AddComponent(Component * newComp)
+	void GameObject::AddComponent(std::shared_ptr<Component> newComp)
 	{
-		for (Component* comp : m_Components)
+		for (std::shared_ptr<Component> comp : m_Components)
 		{
 			if (newComp->Type()== comp->Type())
 			{
