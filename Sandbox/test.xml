@@ -2,13 +2,25 @@
 	<GameObject name="TestObject1">
 		<Component type="1">
 		</Component>
+		<GameObject name="TestObject3">
+			<GameObject name="TestObject4">
+				<Component type="1">
+				</Component>
+			</GameObject>
+			<GameObject name="TestObject7">
+			</GameObject>
+			<GameObject name="GameObject">
+			</GameObject>
+		</GameObject>
+		<GameObject name="TestObject6">
+			<GameObject name="GameObject">
+				<Component type="100">
+				</Component>
+			</GameObject>
+		</GameObject>
 	</GameObject>
 	<GameObject name="TestObject2">
-	</GameObject>
-	<GameObject name="new gameobject">
-		<Component type="100">
-		</Component>
-	</GameObject>
-	<GameObject name="new gameobject">
+		<GameObject name="TestObject5">
+		</GameObject>
 	</GameObject>
 </scene>

@@ -16,6 +16,9 @@
     <Filter Include="Engine\Logic">
       <UniqueIdentifier>{185E9F95-04C1-2E3A-AD46-67F09988FABC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\XMLParser">
+      <UniqueIdentifier>{08994EB0-F491-6D02-1DC4-5287091C4D0E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
@@ -35,6 +38,9 @@
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Components\TestComponent.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Components\Transform.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Core.h">
@@ -76,6 +82,12 @@
     <ClInclude Include="src\Engine\Logic\Scene.h">
       <Filter>Engine\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\XMLParser\XMLNode.h">
+      <Filter>Engine\XMLParser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\XMLParser\XMLWriter.h">
+      <Filter>Engine\XMLParser</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\window.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -86,15 +98,15 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\enpch.h" />
-    <ClInclude Include="src\Engine\Components\Transform.h" />
-    <ClInclude Include="src\Engine\XMLParser\XMLNode.h" />
-    <ClInclude Include="src\Engine\XMLParser\XMLWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Components\TestComponent.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Components\Transform.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\GameObject.cpp">
@@ -118,6 +130,12 @@
     <ClCompile Include="src\Engine\Logic\Scene.cpp">
       <Filter>Engine\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp">
+      <Filter>Engine\XMLParser</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\XMLParser\XMLWriter.cpp">
+      <Filter>Engine\XMLParser</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\ImGuiOpenGLRenderer.cpp">
       <Filter>Platform\OpenGl</Filter>
     </ClCompile>
@@ -125,8 +143,5 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\enpch.cpp" />
-    <ClCompile Include="src\Engine\Components\Transform.cpp" />
-    <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp" />
-    <ClCompile Include="src\Engine\XMLParser\XMLWriter.cpp" />
   </ItemGroup>
 </Project>

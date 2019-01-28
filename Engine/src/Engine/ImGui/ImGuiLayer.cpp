@@ -52,16 +52,16 @@ namespace Engine {
 		io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
 		io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
 		io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
-io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
-io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
-io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
-io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
-io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
-io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
+		io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
+		io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
+		io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
+		io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
+		io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
+		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
-ImGui_ImplOpenGL3_Init("#version 410");
+		ImGui_ImplOpenGL3_Init("#version 410");
 
-EN_CORE_INFO("attached imGui layer");
+		EN_CORE_INFO("attached imGui layer");
 	}
 	void ImGuiLayer::OnDetach()
 	{
@@ -190,6 +190,29 @@ EN_CORE_INFO("attached imGui layer");
 			{
 				comp->RenderInspectorInfo();
 			}
+
+			// add component button at the end of the component list
+			static bool addingComponent;
+
+			if (ImGui::Button("Add Component", ImVec2(ImGui::GetWindowSize().x - 15, 20)))
+				addingComponent = true;
+
+			if (addingComponent)
+			{
+				ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+				ImGui::BeginChild("Child2", ImVec2(0, 260), true);
+				if (ImGui::BeginMenuBar())
+				{
+					if (ImGui::BeginMenu("Menu"))
+					{
+						ImGui::EndMenu();
+					}
+					ImGui::EndMenuBar();
+				}
+				
+				ImGui::EndChild();
+				ImGui::PopStyleVar();
+			}
 		}
 		ImGui::End();
 	}
@@ -199,38 +222,8 @@ EN_CORE_INFO("attached imGui layer");
 
 		ImGui::Begin("Game");
 
-		//ShowHelpMarker("Click to select, CTRL+Click to toggle, double-click to open");
-		static int selection_mask = 0x02;   // Dumb representation of what may be user-side selection state. You may carry selection state inside or outside your objects in whatever format you see fit.
-
-		int node_clicked = -1;
-		for (int i = 0; i < 5; i++)
-		{
-			ImGuiTreeNodeFlags node_flags = ((selection_mask & (1 << i)) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-			bool opened = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "Selectable Child %d", i);
-			if (ImGui::IsItemClicked())
-				node_clicked = i;
-			if (opened)
-			{
-				ImGui::Text("blah blah");
-				ImGui::TreePop();
-			}
-		}
-		if (node_clicked != -1)
-		{
-			// Update selection state. Process outside of tree loop to avoid visual inconsistencies during the clicking-frame.
-			if (ImGui::GetIO().KeyCtrl)
-				selection_mask ^= (1 << node_clicked);  // CTRL+click to toggle
-			else
-			{
-				selection_mask = (1 << node_clicked);   // Click to single-select
-			}
-
-		}
-
-		
-
 		if (m_ShowStatistics)
-		{
+		{	//TODO brol ervan tussen halen
 			const float DISTANCE = 10.0f;
 			static int corner = 0;
 			ImVec2 window_pos = ImVec2((corner & 1) ? ImGui::GetIO().DisplaySize.x - DISTANCE : DISTANCE, (corner & 2) ? ImGui::GetIO().DisplaySize.y - DISTANCE : DISTANCE);
@@ -249,16 +242,38 @@ EN_CORE_INFO("attached imGui layer");
 			ImGui::Text("%.3f ms/frame", 1000.0f / ImGui::GetIO().Framerate);
 			ImGui::EndChild();
 		}
+
 		ImGui::End();
 	}
 
 	void ImGuiLayer::RenderHierarchyWindow()
 	{
+		ImVec2 screenCoords = ImGui::GetCursorPos();
 		ImGui::Begin("Hierarchy");
 
-		for (auto gameObject : Scene::Current()->GameObjects())
-			gameObject->OnHierarchyRender(Scene::SelectedGameObject());
+		ImGui::SetCursorPos(screenCoords);
 
+		static int selection_mask = 0x00;   // Dumb representation of what may be user-side selection state. You may carry selection state inside or outside your objects in whatever format you see fit.
+
+		int node_clicked = -1;
+		
+		unsigned int index = 0;
+		for (auto go : Scene::Current()->GameObjects())
+		{
+			go->OnHierarchyRender(Scene::SelectedGameObject(), node_clicked, index, selection_mask);
+		}
+
+		if (node_clicked != -1)
+		{
+			// Update selection state. Process outside of tree loop to avoid visual inconsistencies during the clicking-frame.
+			if (ImGui::GetIO().KeyCtrl)
+				selection_mask ^= (1 << node_clicked);  // CTRL+click to toggle
+			else
+			{
+				selection_mask = (1 << node_clicked);   // Click to single-select
+			}
+
+		}
 		ImGui::BeginChild("test");
 		if (ImGui::BeginPopupContextWindow())
 		{
@@ -266,13 +281,13 @@ EN_CORE_INFO("attached imGui layer");
 			{
 				AddEmptyGameObject();
 			}
-			if (ImGui::Selectable("testing"))
-			{
-
-			}
 			ImGui::EndPopup();
 		}
 		ImGui::EndChild();
+			
+		
+
+		
 
 		ImGui::End();
 
@@ -435,8 +450,21 @@ EN_CORE_INFO("attached imGui layer");
 
 	void ImGuiLayer::AddEmptyGameObject()
 	{
+		static int index = 0;
+
+		if (!index)
+		{
+			GameObject newObject = GameObject("new gameobject");
+			Scene::Current()->AddGameObject(std::make_shared<GameObject>(newObject));
+		}
+		else
+		{
+			std::stringstream name;
+			name << "new gameobject(" << index << ")";
+			GameObject newObject = GameObject(name.str());
+			Scene::Current()->AddGameObject(std::make_shared<GameObject>(newObject));
+		}
+		index++;
 		EN_CORE_INFO("add new gameObject");
-		GameObject newObject = GameObject("new gameobject");
-		Scene::Current()->AddGameObject(std::make_shared<GameObject>(newObject));
 	}
 }

@@ -54,15 +54,27 @@ namespace Engine {
 	{
 		TestComponent test;
 		std::shared_ptr<Transform> transform = std::make_shared<Transform>();
+		std::shared_ptr<Transform> transform2 = std::make_shared<Transform>();
 		transform->Position.x = 5;
 		transform->Position.z = -2;
-		GameObject testObject("TestObject1");
-		GameObject testObject2("TestObject2");
-		testObject.AddComponent(transform);
-		testObject.GetComponent<TestComponent>();
+		std::shared_ptr<GameObject> testObject = std::make_shared<GameObject>("TestObject1");
+		std::shared_ptr<GameObject> testObject2 = std::make_shared<GameObject>("TestObject2");
+		std::shared_ptr<GameObject> testObject3 = std::make_shared<GameObject>("TestObject3");
+		std::shared_ptr<GameObject> testObject4 = std::make_shared<GameObject>("TestObject4");
+		std::shared_ptr<GameObject> testObject5 = std::make_shared<GameObject>("TestObject5");
+		std::shared_ptr<GameObject> testObject6 = std::make_shared<GameObject>("TestObject6");
+		std::shared_ptr<GameObject> testObject7 = std::make_shared<GameObject>("TestObject7");
+		testObject->AddComponent(transform);
+		testObject4->AddComponent(transform2);
+		testObject->GetComponent<TestComponent>();
 
-		Scene::Current()->AddGameObject(std::make_shared<GameObject>(testObject));
-		Scene::Current()->AddGameObject(std::make_shared<GameObject>(testObject2));
+		Scene::Current()->AddGameObject(testObject);
+		Scene::Current()->AddGameObject(testObject2);
+		testObject->AddChild(testObject3);
+		testObject->AddChild(testObject6);
+		testObject3->AddChild(testObject4);
+		testObject3->AddChild(testObject7);
+		testObject2->AddChild(testObject5);
 
 		Scene scene("scene 2");
 		//Scene::SetCurrent(&scene);

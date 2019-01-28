@@ -25,9 +25,9 @@ namespace Engine {
 	{
 		if (ImGui::TreeNode(m_Name.c_str()))
 		{
-			ImGui::InputFloat3("Translate", (float*)&Position, 3);
-			ImGui::InputFloat3("Rotate",	(float*)&Rotation, 3);
-			ImGui::InputFloat3("Scale",		(float*)&Scale, 3);
+			ImGui::DragFloat3("Translate", (float*)&Position, 1, -1000, 1000);
+			ImGui::DragFloat3("Rotate",	(float*)&Rotation, 1, -1000, 1000);
+			ImGui::DragFloat3("Scale",		(float*)&Scale, 1, -1000, 1000);
 			ImGui::TreePop();
 		}
 	}

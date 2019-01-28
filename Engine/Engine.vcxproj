@@ -19,7 +19,7 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Engine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -159,6 +159,7 @@
     <ClInclude Include="src\Engine\Application.h" />
     <ClInclude Include="src\Engine\Components\Component.h" />
     <ClInclude Include="src\Engine\Components\TestComponent.h" />
+    <ClInclude Include="src\Engine\Components\Transform.h" />
     <ClInclude Include="src\Engine\Core.h" />
     <ClInclude Include="src\Engine\EntryPoint.h" />
     <ClInclude Include="src\Engine\Events\ApplicationEvent.h" />
@@ -172,17 +173,17 @@
     <ClInclude Include="src\Engine\Log.h" />
     <ClInclude Include="src\Engine\Logic\LogicLayer.h" />
     <ClInclude Include="src\Engine\Logic\Scene.h" />
-    <ClInclude Include="src\Engine\window.h" />
     <ClInclude Include="src\Engine\XMLParser\XMLNode.h" />
+    <ClInclude Include="src\Engine\XMLParser\XMLWriter.h" />
+    <ClInclude Include="src\Engine\window.h" />
     <ClInclude Include="src\Platform\OpenGl\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\enpch.h" />
-    <ClInclude Include="src\Engine\Components\Transform.h" />
-    <ClInclude Include="src\Engine\XMLParser\XMLWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp" />
     <ClCompile Include="src\Engine\Components\TestComponent.cpp" />
+    <ClCompile Include="src\Engine\Components\Transform.cpp" />
     <ClCompile Include="src\Engine\GameObject.cpp" />
     <ClCompile Include="src\Engine\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Engine\Layer.cpp" />
@@ -191,13 +192,12 @@
     <ClCompile Include="src\Engine\Logic\LogicLayer.cpp" />
     <ClCompile Include="src\Engine\Logic\Scene.cpp" />
     <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp" />
+    <ClCompile Include="src\Engine\XMLParser\XMLWriter.cpp" />
     <ClCompile Include="src\Platform\OpenGl\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\enpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Engine\Components\Transform.cpp" />
-    <ClCompile Include="src\Engine\XMLParser\XMLWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

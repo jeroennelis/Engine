@@ -11,7 +11,7 @@ namespace Engine {
 		~GameObject();
 
 		void OnUpdate();
-		void OnHierarchyRender(GameObject* currentGameObject);
+		void OnHierarchyRender(GameObject* currentGameObject, int& node_clicked, unsigned int& index, int& selection_mask);
 		void OnInspectorRender();
 
 		void AddChild(std::shared_ptr<GameObject> go);
@@ -34,6 +34,10 @@ namespace Engine {
 		std::string									m_Name;
 		std::vector<std::shared_ptr<GameObject>>	m_Children;
 		std::vector<std::shared_ptr<Component>>		m_Components;
+		
+		//TODO automate
+		void GetNrOfChildrenRecursively(unsigned int& nrSoFar);
+		void GameObject::ContextMenu(int& node_clicked, unsigned int& index);
 	};
 }
 

@@ -24,20 +24,53 @@ namespace Engine {
 			child->OnUpdate();
 	}
 
-	void GameObject::OnHierarchyRender(GameObject* currentGameObject)
+	void GameObject::OnHierarchyRender(GameObject* currentGameObject, int& node_clicked, unsigned int& index, int& selection_mask)
 	{
-		if (ImGui::TreeNode(m_Name.c_str()))
-		{
-			char label[] = "this";
-			ImGui::Bullet(); ImGui::Selectable(label, false);
-			if ((ImGui::IsItemHovered() || ImGui::IsItemFocused()) && ImGui::IsMouseClicked(0))
-				Scene::SetSelectedGameObject(this);
-
-			for (std::shared_ptr<GameObject> child : m_Children)
+		if (!m_Children.size())
+		{	
+			ImGui::Indent();
+			if (ImGui::Selectable(m_Name.c_str(), (selection_mask & (1 << index))))
 			{
-				child->OnHierarchyRender(currentGameObject);
+				node_clicked = index;
+				Scene::SetSelectedGameObject(this);
 			}
-			ImGui::TreePop();
+			ContextMenu(node_clicked,index);
+			
+
+			index++;
+			ImGui::Unindent();
+		}
+		else
+		{
+			ImGuiTreeNodeFlags node_flags = ((selection_mask & (1 << index)) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+			bool opened = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, m_Name.c_str(), index);
+			static bool edit = false;
+			if (ImGui::IsItemClicked(0))
+			{
+				EN_CORE_INFO("{0}", index);
+				node_clicked = index;
+				Scene::SetSelectedGameObject(this);
+				if (ImGui::IsMouseDoubleClicked(0))
+				{
+					EN_CORE_INFO("test");
+					edit = true;
+				}
+			}
+			ContextMenu(node_clicked, index);
+
+			if (opened)
+			{
+				index++;
+				for (int i = 0; i < m_Children.size(); i++)
+				{
+					m_Children[i]->OnHierarchyRender(Scene::SelectedGameObject(), node_clicked, index, selection_mask);
+				}
+				ImGui::TreePop();
+			}
+			else
+			{
+				GetNrOfChildrenRecursively(index);
+			}
 		}
 	}
 
@@ -63,5 +96,69 @@ namespace Engine {
 		}
 		EN_CORE_INFO("Added a {0}", newComp->Name());
 		m_Components.push_back(newComp);
+	}
+	void GameObject::GetNrOfChildrenRecursively(unsigned int& nrSoFar)
+	{
+		if (!m_Children.size())
+		{
+			nrSoFar++;
+			return;
+		}
+		
+		for (std::shared_ptr<GameObject>& child : m_Children)
+		{
+			child->GetNrOfChildrenRecursively(nrSoFar);
+		}
+		nrSoFar++;
+	}
+
+	void GameObject::ContextMenu(int& node_clicked, unsigned int& index)
+	{
+		if (ImGui::BeginPopupContextItem())
+		{
+			Scene::SetSelectedGameObject(this);
+			node_clicked = index;
+			if (ImGui::MenuItem("Copy", "", false, false))
+			{
+
+			}
+			if (ImGui::MenuItem("Paste", "", false, false))
+			{
+
+			}
+			ImGui::Separator();
+			if (ImGui::MenuItem("Rename", "", false, false))
+			{
+
+			}
+			if (ImGui::MenuItem("Ducplicate", "", false, false))
+			{
+
+			}
+			if (ImGui::MenuItem("Delete", "", false, false))
+			{
+
+			}
+			ImGui::Separator();
+			ImGui::Separator();
+
+			if (ImGui::MenuItem("Create Empty", "", false, true))
+			{
+				AddChild(std::make_shared<GameObject>(GameObject("GameObject")));
+			}
+			if (ImGui::BeginMenu("3D Object"))
+			{
+				if (ImGui::MenuItem("Cube", "", false, false))
+				{
+
+				}
+				if (ImGui::MenuItem("Sphere", "", false, false))
+				{
+
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::EndPopup();
+		}
 	}
 }
