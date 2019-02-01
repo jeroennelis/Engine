@@ -59,6 +59,23 @@ namespace Engine {
 		io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
 		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
+
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+		io.ConfigDockingWithShift = false;
+
+
+		enum ImGuiDockNodeFlags_
+		{
+			ImGuiDockNodeFlags_None = 0,
+			ImGuiDockNodeFlags_KeepAliveOnly = 1 << 0,   // Don't display the dockspace node but keep it alive. Windows docked into this dockspace node won't be undocked.
+			ImGuiDockNodeFlags_NoSplit = 1 << 1,   // Disable splitting the node into smaller nodes. Useful e.g. when embedding dockspaces into a main root one (the root one may have splitting disabled to reduce confusion)
+			ImGuiDockNodeFlags_NoDockingInCentralNode = 1 << 4,   // Disable docking inside the Central Node, which will be always kept empty.
+			ImGuiDockNodeFlags_PassthruInEmptyNodes = 1 << 5,   // When Central Node is empty: let inputs pass-through + won't display a DockingEmptyBg background.
+			ImGuiDockNodeFlags_RenderWindowBg = 1 << 6,   // DockSpace() will render a ImGuiCol_WindowBg background covering everything excepted the Central Node (when empty). Meaning the host window should properly use SetNextWindowBgAlpha(0.0f) + ImGuiDockNodeFlags_NoOuterBorder prior to Begin() when using this.
+			ImGuiDockNodeFlags_PassthruDockspace = ImGuiDockNodeFlags_NoDockingInCentralNode | ImGuiDockNodeFlags_RenderWindowBg | ImGuiDockNodeFlags_PassthruInEmptyNodes
+		};
+
 		ImGui_ImplOpenGL3_Init("#version 410");
 
 		EN_CORE_INFO("attached imGui layer");
@@ -75,9 +92,27 @@ namespace Engine {
 		float time = (float)glfwGetTime();
 		io.DeltaTime = m_time > 0.0 ? (time - m_time) : (1.0f / 60.0f);
 		m_time = time;
-
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
+
+
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+			
+		ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(viewport->Pos);
+		ImGui::SetNextWindowSize(viewport->Size);
+		ImGui::SetNextWindowViewport(viewport->ID);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+		window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
+		bool open = true;
+		ImGui::PopStyleVar(2);
+		ImGui::Begin("DockSpace Demo", &open, window_flags);
+		ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), opt_flags);
+		ImGui::End();
 
 		RenderMenuBar();
 		RenderHierarchyWindow();
