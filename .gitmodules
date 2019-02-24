@@ -10,3 +10,6 @@
 [submodule "Engine/Dependencies/Maths"]
 	path = Engine/Dependencies/Maths
 	url = https://github.com/jeroennelis/Maths.git
+[submodule "Engine/vendor/glm"]
+	path = Engine/vendor/glm
+	url = https://github.com/g-truc/glm.git

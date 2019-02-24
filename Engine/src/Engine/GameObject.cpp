@@ -127,9 +127,10 @@ namespace Engine {
 
 			}
 			ImGui::Separator();
-			if (ImGui::MenuItem("Rename", "", false, false))
+			if (ImGui::MenuItem("Rename", "", false, true))
 			{
-
+				renaming = true;
+				
 			}
 			if (ImGui::MenuItem("Ducplicate", "", false, false))
 			{
@@ -160,5 +161,22 @@ namespace Engine {
 			}
 			ImGui::EndPopup();
 		}
+
+		//rename
+		if (renaming)
+		{
+			ImGui::GetWindowDrawList()->AddRectFilled(ImVec2(), ImVec2(100, 100), ImGui::ColorConvertFloat4ToU32(ImVec4(0.15, .15, .1, 1)));
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 20);
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 20);
+			static char buf[32];
+			ImGui::InputText("##text", buf, IM_ARRAYSIZE(buf));
+			
+
+			/*if (ImGui::GetIO().KeysDown())
+			{
+				renaming = false;
+			}*/
+		}
+
 	}
 }

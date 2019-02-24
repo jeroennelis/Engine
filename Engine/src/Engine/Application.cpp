@@ -12,21 +12,27 @@
 #include "Maths/src/Vector2.h"
 #include "Components/Transform.h"
 
+#include "Input.h"
+
+#include "Platform/OpenGl/FrameBuffer.h"
+
 namespace Engine {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application()	
 	{
 		EN_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
-		
-		unsigned int id;
-		glGenVertexArrays(1, &id);
+
+		m_GameFrameBuffer = new FrameBuffer(GetWindow().GetWidth(), GetWindow().GetHeight());
+
+		m_ImGuiLayer = new ImGuiLayer;
+		PushOverLay(m_ImGuiLayer);
 	}
 
 
@@ -79,14 +85,25 @@ namespace Engine {
 		Scene scene("scene 2");
 		//Scene::SetCurrent(&scene);
 
+		XMLReader::ReadFile("test.xml");
+		
+
 		while (m_Running)
 		{
-			glClearColor(0, 0, 0, 1);
+			m_GameFrameBuffer->Bind();
+			glClearColor(0, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			
+			m_GameFrameBuffer->Unbind();
+			glClearColor(1, 0, 0, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
 			
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+				layer->OnImGuiRender();
+			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		}

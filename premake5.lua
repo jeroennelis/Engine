@@ -15,6 +15,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Engine/vendor/GLFW/include"
 IncludeDir["Glad"] = "Engine/vendor/Glad/include"
 IncludeDir["ImGui"] = "Engine/vendor/imgui"
+IncludeDir["glm"] = "Engine/vendor/glm"
 IncludeDir["Maths"] = "Engine/Dependencies/Maths"
 
 include "Engine/vendor/GLFW"
@@ -36,7 +37,9 @@ project "Engine"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 
 	}
 
@@ -47,6 +50,7 @@ project "Engine"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}",
 		"%{prj.name}/vendor/openvr/include",
 		"%{IncludeDir.Maths}"
 	}
@@ -119,7 +123,8 @@ project "Sandbox"
 	includedirs
 	{
 		"Engine/vendor/spdlog/include",
-		"Engine/src"
+		"Engine/src",
+		"%{IncludeDir.glm}"
 	}
 
 	links

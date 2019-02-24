@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Engine/Layer.h"
+
 #include "Engine/Events/KeyEvent.h"
 #include "Engine/Events/Event.h"
 #include "Engine/Events/MouseEvent.h"
+
 #include "Engine/Events/ApplicationEvent.h"
 #include "Engine/Components/TestComponent.h"
 
@@ -20,10 +22,13 @@ namespace Engine {
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		void OnAttach();
-		void OnDetach();
-		void OnUpdate();
-		void OnEvent(Event& event);
+		void OnAttach() override;
+		void OnDetach() override;
+		void OnImGuiRender() override;
+
+		void Begin();
+		void End();
+		
 
 		void RenderMenuBar();
 		void RenderInspectorWindow();
@@ -33,15 +38,6 @@ namespace Engine {
 
 
 	private:
-		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
-		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
-		bool OnMouseMovedEvent(MouseMovedEvent& e);
-		bool OnMouseScrolledEvent(MouseScrolledEvent& e);
-		bool OnKeyPressedEvent(KeyPressedEvent& e);
-		bool OnKeyReleasedEvent(KeyReleasedEvent& e);
-		bool OnKeyTypedEvent(KeyTypedEvent& e);
-		bool OnwindowResizeEvent(WindowResizeEvent& e);
-
 		void ToggleStatistics();
 		void AddEmptyGameObject();
 

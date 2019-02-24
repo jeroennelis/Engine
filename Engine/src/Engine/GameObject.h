@@ -38,6 +38,8 @@ namespace Engine {
 		//TODO automate
 		void GetNrOfChildrenRecursively(unsigned int& nrSoFar);
 		void GameObject::ContextMenu(int& node_clicked, unsigned int& index);
+
+		bool renaming;
 	};
 }
 

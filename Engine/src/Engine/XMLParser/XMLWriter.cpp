@@ -37,9 +37,6 @@ namespace Engine {
 
 	void XMLWriter::WriteScene(Scene* scene)
 	{
-		EN_CORE_INFO("test");
-
-		
 		std::shared_ptr<XMLNode> sceneNode = std::make_shared<XMLNode>("scene");
 		sceneNode->AddAttribute("name", scene->Name());
 		for (std::shared_ptr<GameObject> go : scene->GameObjects())
