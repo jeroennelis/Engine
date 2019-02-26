@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GL.h"
 #include "VertexBuffer.h"
 
 namespace Engine {

@@ -17,12 +17,17 @@
 #include "Platform/OpenGl/FrameBuffer.h" 
 #include <fstream>
 
+#include "Platform/OpenGl/GL.h"
 #include "Platform/OpenGl/Renderer.h"
 #include "Platform/OpenGl/VertexBuffer.h"
 #include "Platform/OpenGl/IndexBuffer.h"
 #include "Platform/OpenGl/VertexArray.h"
 #include "Platform/OpenGl/Shader.h"
 #include "Platform/OpenGl/VertexBufferLayout.h"
+#include "Platform/OpenGl/Texture.h"
+
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 namespace Engine {
 
@@ -67,10 +72,10 @@ namespace Engine {
 
 //------------ Temp rendering------------//
 		float positions[] = {
-			-0.5f, -0.5f,
-			 0.5f, -0.5f,
-			 0.5f,  0.5f,
-			-0.5f,  0.5f
+			-50.5f, -50.0f, 0.0f, 0.0f,
+			 50.0f, -50.0f, 1.0f, 0.0f,
+			 50.0f,  50.0f, 1.0f, 1.0f,
+			-50.0f,  50.0f, 0.0f, 1.0f
 		};
 
 		unsigned int indices[] = {
@@ -78,18 +83,32 @@ namespace Engine {
 			2, 3, 0
 		};
 
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+		GLCall(glEnable(GL_BLEND));
+
 		VertexArray va;
-		VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+		VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
 		VertexBufferLayout layout;
+		layout.Push<float>(2);
 		layout.Push<float>(2);
 		va.AddBuffer(vb, layout);
 		
 		IndexBuffer ib(indices, 6);
 
+		glm::mat4 proj = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, -1.0f, 1.0f);
+		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+
+		glm::mat4 mvp = proj * view * model;
+
 		Shader shader("../Engine/res/shaders/basic.shader");
 		shader.Bind();
-		shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+
+		Texture texture("../Engine/res/textures/fern.png");
+		texture.Bind();
+		shader.SetUniform1i("u_Texture", 0);
+		shader.SetUniformMat4f("u_MVP", mvp);
 
 		va.UnBind();
 		shader.UnBind();
