@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Engine/Layer.h"
+#include  "Engine/Layer.h" 
 
-#include "Engine/Events/KeyEvent.h"
-#include "Engine/Events/Event.h"
-#include "Engine/Events/MouseEvent.h"
+#include  "Engine/Events/KeyEvent.h" 
+#include  "Engine/Events/Event.h" 
+#include  "Engine/Events/MouseEvent.h" 
 
-#include "Engine/Events/ApplicationEvent.h"
-#include "Engine/Components/TestComponent.h"
+#include  "Engine/Events/ApplicationEvent.h" 
+#include  "Engine/Components/TestComponent.h" 
 
-#include "Engine/XMLParser/XMLWriter.h"
+#include  "Engine/XMLParser/XMLWriter.h" 
 
 
 
@@ -33,6 +33,7 @@ namespace Engine {
 		void RenderMenuBar();
 		void RenderInspectorWindow();
 		void RenderGameWindow();
+		void RenderSceneWindow();
 		void RenderHierarchyWindow();
 		void RenderConsoleWindow();
 

@@ -1,10 +1,10 @@
-#include "enpch.h"
-#include "LogicLayer.h"
+#include  "enpch.h"
+#include  "LogicLayer.h" 
 
 namespace Engine
 {
 	LogicLayer::LogicLayer()
-		:Layer("Logic Layer")
+		:Layer( "Logic Layer" )
 	{
 		m_Scene = std::make_shared<Scene>();
 	}
@@ -16,7 +16,7 @@ namespace Engine
 
 	void LogicLayer::OnAttach()
 	{
-		EN_CORE_INFO("attached Logic Layer");
+		EN_CORE_INFO( "attached Logic Layer" );
 	}
 
 	void LogicLayer::OnUpdate()

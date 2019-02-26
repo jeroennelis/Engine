@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Core.h"
+#include  "Core.h"
 
-#include "window.h"
-#include "Engine/LayerStack.h"
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
-#include "Engine/XMLParser/XMLReader.h"
+#include  "window.h"
+#include  "Engine/LayerStack.h" 
+#include  "Events/Event.h" 
+#include  "Events/ApplicationEvent.h" 
+#include  "Engine/XMLParser/XMLReader.h" 
 
-#include "Engine/ImGui/ImGuiLayer.h"
+#include  "Engine/ImGui/ImGuiLayer.h" 
 
 
 namespace Engine {
@@ -31,6 +31,7 @@ namespace Engine {
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
 		inline FrameBuffer* GetGameFrameBuffer() { return m_GameFrameBuffer; }
+		inline FrameBuffer* GetSceneFrameBuffer() { return m_SceneFrameBuffer; }
 
 	private:
 		bool OnWindowClosed(WindowCloseEvent& e);
@@ -41,6 +42,7 @@ namespace Engine {
 		LayerStack m_LayerStack;
 
 		FrameBuffer* m_GameFrameBuffer;
+		FrameBuffer* m_SceneFrameBuffer;
 
 	private:
 		static Application* s_Instance;

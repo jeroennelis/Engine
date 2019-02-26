@@ -1,5 +1,5 @@
-#include "enpch.h"
-#include "FrameBuffer.h"
+#include  "enpch.h" 
+#include  "FrameBuffer.h" 
 
 namespace Engine {
 	FrameBuffer::FrameBuffer(int width, int height)
@@ -56,7 +56,7 @@ namespace Engine {
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RenderBufferID);
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+			EN_CORE_ERROR("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 

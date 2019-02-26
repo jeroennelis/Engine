@@ -1,14 +1,16 @@
-#include "enpch.h"
-#include "GameObject.h"
+#include  "enpch.h"
+#include  "GameObject.h" 
 
-#include "ImGui/ImGuiLayer.h"
-#include "imgui.h";
-#include "Engine/Logic/Scene.h"
+#include  "ImGui/ImGuiLayer.h" 
+#include  "imgui.h"
+#include  "Engine/Logic/Scene.h"
+#include "Components/Transform.h"
 
 namespace Engine {
 	GameObject::GameObject(const std::string & name)
 		:m_Name(name)
 	{
+		m_Components.push_back(std::make_shared<Transform>());
 	}
 
 	GameObject::~GameObject()
@@ -47,12 +49,10 @@ namespace Engine {
 			static bool edit = false;
 			if (ImGui::IsItemClicked(0))
 			{
-				EN_CORE_INFO("{0}", index);
 				node_clicked = index;
 				Scene::SetSelectedGameObject(this);
 				if (ImGui::IsMouseDoubleClicked(0))
 				{
-					EN_CORE_INFO("test");
 					edit = true;
 				}
 			}
@@ -90,11 +90,11 @@ namespace Engine {
 		{
 			if (newComp->Type()== comp->Type())
 			{
-				EN_CORE_INFO("this Game Object already contains a {0}", newComp->Name());
+				EN_CORE_INFO( "this Game Object already contains a {0}" , newComp->Name());
 				return;
 			}
 		}
-		EN_CORE_INFO("Added a {0}", newComp->Name());
+		EN_CORE_INFO( "Added a {0}" , newComp->Name());
 		m_Components.push_back(newComp);
 	}
 	void GameObject::GetNrOfChildrenRecursively(unsigned int& nrSoFar)
@@ -118,42 +118,42 @@ namespace Engine {
 		{
 			Scene::SetSelectedGameObject(this);
 			node_clicked = index;
-			if (ImGui::MenuItem("Copy", "", false, false))
+			if (ImGui::MenuItem( "Copy" , ""  , false, false))
 			{
 
 			}
-			if (ImGui::MenuItem("Paste", "", false, false))
+			if (ImGui::MenuItem( "Paste" , ""  , false, false))
 			{
 
 			}
 			ImGui::Separator();
-			if (ImGui::MenuItem("Rename", "", false, true))
+			if (ImGui::MenuItem( "Rename" , "" , false, true))
 			{
 				renaming = true;
 				
 			}
-			if (ImGui::MenuItem("Ducplicate", "", false, false))
+			if (ImGui::MenuItem( "Ducplicate" , ""  , false, false))
 			{
 
 			}
-			if (ImGui::MenuItem("Delete", "", false, false))
+			if (ImGui::MenuItem( "Delete" , "" , false, false))
 			{
 
 			}
 			ImGui::Separator();
 			ImGui::Separator();
 
-			if (ImGui::MenuItem("Create Empty", "", false, true))
+			if (ImGui::MenuItem( "Create Empty" , "" , false, true))
 			{
-				AddChild(std::make_shared<GameObject>(GameObject("GameObject")));
+				AddChild(std::make_shared<GameObject>(GameObject( "GameObject" )));
 			}
-			if (ImGui::BeginMenu("3D Object"))
+			if (ImGui::BeginMenu( "3D Object" ))
 			{
-				if (ImGui::MenuItem("Cube", "", false, false))
+				if (ImGui::MenuItem( "Cube" , ""  , false, false))
 				{
 
 				}
-				if (ImGui::MenuItem("Sphere", "", false, false))
+				if (ImGui::MenuItem( "Sphere" , ""  , false, false))
 				{
 
 				}
@@ -165,18 +165,35 @@ namespace Engine {
 		//rename
 		if (renaming)
 		{
-			ImGui::GetWindowDrawList()->AddRectFilled(ImVec2(), ImVec2(100, 100), ImGui::ColorConvertFloat4ToU32(ImVec4(0.15, .15, .1, 1)));
-			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 20);
-			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 20);
-			static char buf[32];
-			ImGui::InputText("##text", buf, IM_ARRAYSIZE(buf));
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 2.0f);
 			
-
-			/*if (ImGui::GetIO().KeysDown())
+			static bool configured;
+			if (!configured)
 			{
+				ImGui::SetKeyboardFocusHere(0);
+				configured = true;
+			}
+			
+			
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 20);
+			ImGui::SetCursorPosX(0);
+			ImGui::PushItemWidth(ImGui::GetWindowWidth());
+			static char buf[32];
+			strcpy(buf, m_Name.c_str());
+			if (!ImGui::IsItemHovered() && ImGui::IsMouseClicked(0)) {
 				renaming = false;
-			}*/
-		}
+				configured = false;
+			}
+			
+			if (ImGui::InputText( "##text" , buf, IM_ARRAYSIZE(buf), ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+			{
 
+				m_Name = buf;
+				renaming = false;
+				configured = false;
+			}
+			ImGui::PopStyleVar();
+			ImGui::PopItemWidth();
+		}
 	}
 }

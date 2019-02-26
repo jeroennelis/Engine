@@ -1,9 +1,9 @@
 #pragma once
 
-#include "enpch.h"
+#include  "enpch.h" 
 
-#include "Engine/Core.h"
-#include "Engine/Events/Event.h"
+#include  "Engine/Core.h" 
+#include  "Engine/Events/Event.h" 
 
 namespace Engine {
 
@@ -13,7 +13,7 @@ namespace Engine {
 		unsigned int Width;
 		unsigned int Height;
 
-		WindowProperties(const std::string& title = "Engine",
+		WindowProperties(const std::string& title =  "Engine" ,
 			unsigned int width = 1280,
 			unsigned int height = 720)
 			:Title(title), Width(width), Height(height) {}

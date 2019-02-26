@@ -1,5 +1,5 @@
-#include "enpch.h"
-#include "XMLWriter.h"
+#include  "enpch.h" 
+#include  "XMLWriter.h" 
 
 namespace Engine {
 
@@ -17,34 +17,34 @@ namespace Engine {
 	void XMLWriter::WriteStartTag(std::shared_ptr<XMLNode> node, int niveau)
 	{
 		for (int i = 0; i < niveau; i++)
-			file << "\t";
+			file <<  "\t" ;
 
-		file << "<" << node->Type().c_str();
+		file <<  "<"  << node->Type().c_str();
 
 		for (const std::pair<std::string, std::string>& attribute : node->Attibutes())
 		{
-			file << " " << attribute.first.c_str() << "=\"" << attribute.second.c_str() << "\"";
+			file << ""    << attribute.first.c_str() <<  "=\""   << attribute.second.c_str() <<  "\""  ;
 		}
-		file << ">\n";
+		file <<  ">\n" ;
 	}
 
 	void XMLWriter::WriteEndTag(std::shared_ptr<XMLNode> node, int niveau)
 	{
 		for (int i = 0; i < niveau; i++)
-			file << "\t";
-		file << "</" << node->Type().c_str() << ">\n";
+			file <<  "\t" ;
+		file <<  "</"  << node->Type().c_str() <<  ">\n" ;
 	}
 
 	void XMLWriter::WriteScene(Scene* scene)
 	{
-		std::shared_ptr<XMLNode> sceneNode = std::make_shared<XMLNode>("scene");
-		sceneNode->AddAttribute("name", scene->Name());
+		std::shared_ptr<XMLNode> sceneNode = std::make_shared<XMLNode>( "scene" );
+		sceneNode->AddAttribute( "name" , scene->Name());
 		for (std::shared_ptr<GameObject> go : scene->GameObjects())
 		{
 			AddGameObjectToNode(sceneNode, go);
 		}
 
-		file.open("test.xml");
+		file.open( "test.xml" );
 
 		write(sceneNode, 0);
 
@@ -54,8 +54,8 @@ namespace Engine {
 
 	void XMLWriter::AddGameObjectToNode(std::shared_ptr<XMLNode> parent, std::shared_ptr<GameObject> go)
 	{
-		std::shared_ptr<XMLNode> node= std::make_shared<XMLNode>("GameObject");
-		node->AddAttribute("name", go->Name());
+		std::shared_ptr<XMLNode> node= std::make_shared<XMLNode>( "GameObject" );
+		node->AddAttribute( "name" , go->Name());
 		parent->AddChildNode(node);
 		
 		for (const std::shared_ptr<Component> comp : go->Components())
@@ -69,8 +69,8 @@ namespace Engine {
 	}
 	void XMLWriter::AddComponentToNode(std::shared_ptr<XMLNode> parent, const std::shared_ptr<Component> comp)
 	{
-		std::shared_ptr<XMLNode> node = std::make_shared<XMLNode>("Component");
-		node->AddAttribute("type", std::to_string(comp->Type()));
+		std::shared_ptr<XMLNode> node = std::make_shared<XMLNode>( "Component" );
+		node->AddAttribute( "type" , std::to_string(comp->Type()));
 		parent->AddChildNode(node);
 	}
 

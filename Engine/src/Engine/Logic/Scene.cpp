@@ -1,5 +1,5 @@
-#include "enpch.h"
-#include "Scene.h"
+#include  "enpch.h" 
+#include  "Scene.h" 
 
 namespace Engine {
 
@@ -7,13 +7,13 @@ namespace Engine {
 	GameObject* Scene::m_SelectedGameObject = nullptr;
 
 	Scene::Scene()
-		:m_Name("New Scene")
+		:m_Name( "New Scene" )
 	{
 		if (!m_Current)
 			m_Current = this;
 	}
 
-	Scene::Scene(const std::string & name = "New Scene")
+	Scene::Scene(const std::string & name =  "New Scene" )
 		:m_Name(name)
 	{
 		if (!m_Current)

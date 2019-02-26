@@ -1,9 +1,9 @@
-#include "enpch.h"
-#include "WindowsWindow.h"
-
-#include "Engine/Events/ApplicationEvent.h"
-#include "Engine/Events/MouseEvent.h"
-#include "Engine/Events/KeyEvent.h"
+#include  "enpch.h" 
+#include  "WindowsWindow.h" 
+		  
+#include  "Engine/Events/ApplicationEvent.h" 
+#include  "Engine/Events/MouseEvent.h" 
+#include  "Engine/Events/KeyEvent.h" 
 
 #include <glad/glad.h>
 
@@ -13,7 +13,7 @@ namespace Engine {
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
-		EN_CORE_ERROR("GLFW Error ({ 0 }) : {1}", error, description);
+		EN_CORE_ERROR( "GLFW Error ({ 0 }) : {1}" , error, description);
 	}
 
 	Window* Window::Create(const WindowProperties& props)
@@ -37,21 +37,26 @@ namespace Engine {
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
-		EN_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+		EN_CORE_INFO( "Creating window {0} ({1}, {2})" , props.Title, props.Width, props.Height);
 
 		if (!s_GLFWInitialized)
 		{
 			int success = glfwInit();
-			EN_CORE_ASSERT(success, "Could not initialize GLFW!");
+			EN_CORE_ASSERT(success,  Could not initialize GLFW! );
 			glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitialized = true;
 		}
+
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		EN_CORE_ASSERT(status, "Failed to initialize Glad");
+		EN_CORE_ASSERT(status,  Failed to initialize Glad );
 
-		EN_CORE_INFO("{0}", glGetString(GL_VERSION));
+		EN_CORE_INFO( "{0}" , glGetString(GL_VERSION));
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);

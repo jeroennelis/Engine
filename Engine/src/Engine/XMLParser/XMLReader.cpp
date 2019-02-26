@@ -1,5 +1,5 @@
-#include "enpch.h"
-#include "XMLReader.h"
+#include  "enpch.h" 
+#include  "XMLReader.h" 
 
 
 XMLNode Engine::XMLReader::ReadFile(const std::string& fileName)
@@ -8,18 +8,18 @@ XMLNode Engine::XMLReader::ReadFile(const std::string& fileName)
 	
 	if (!stream.is_open())
 	{
-		EN_CORE_ERROR("could not open file: {0}", fileName);
+		EN_CORE_ERROR( "could not open file: {0}" , fileName);
 		return 0;
 	}
 
 	std::string line;
-	XMLNode node("test");
+	XMLNode node( "test" );
 	while (std::getline(stream, line))
 	{
-		/*if (line._Starts_with("<scene"))
+		/*if (line._Starts_with( <scene ))
 		{
 			std::string segments[] = line
-			EN_CORE_INFO("start");
+			EN_CORE_INFO( start );
 		}line.s*/
 
 	}
