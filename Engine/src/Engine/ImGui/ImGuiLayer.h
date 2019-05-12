@@ -28,7 +28,6 @@ namespace Engine {
 
 		void Begin();
 		void End();
-		
 
 		void RenderMenuBar();
 		void RenderInspectorWindow();
@@ -36,11 +35,15 @@ namespace Engine {
 		void RenderSceneWindow();
 		void RenderHierarchyWindow();
 		void RenderConsoleWindow();
+		void RenderProjectWindow();
 
 
 	private:
 		void ToggleStatistics();
 		void AddEmptyGameObject();
+		glm::vec3 PickMouse(int windowPosX, int windowPosY, int imGuiWindowWidth, int imGuiWindowHeigth, int mouseX, int mouseY);
+		void AddCube();
+		void AddSphere();
 
 
 	private:

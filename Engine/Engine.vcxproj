@@ -23,19 +23,19 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
@@ -54,111 +54,100 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Debug-windows-x86_64\Engine\</OutDir>
     <IntDir>..\bin-int\Debug-windows-x86_64\Engine\</IntDir>
     <TargetName>Engine</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\Release-windows-x86_64\Engine\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\Engine\</IntDir>
     <TargetName>Engine</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\Dist-windows-x86_64\Engine\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\Engine\</IntDir>
     <TargetName>Engine</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>enpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;EN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;Dependencies\Maths;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;EN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Vulkan\include;vendor\tiny_obj;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;Dependencies\Maths;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>..\bin\Debug-windows-x86_64\Engine\Engine.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Engine\Engine.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Engine\Engine.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Engine\Engine.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>enpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;EN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;Dependencies\Maths;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;EN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Vulkan\include;vendor\tiny_obj;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;Dependencies\Maths;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>..\bin\Release-windows-x86_64\Engine\Engine.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Engine\Engine.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Engine\Engine.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Engine\Engine.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>enpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;EN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;Dependencies\Maths;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;EN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Vulkan\include;vendor\tiny_obj;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;Dependencies\Maths;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>..\bin\Dist-windows-x86_64\Engine\Engine.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Engine\Engine.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Engine\Engine.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Engine\Engine.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\VR_engine\VR Engine\OBJLoader.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Engine\Application.h" />
+    <ClInclude Include="src\Engine\Components\Camera.h" />
     <ClInclude Include="src\Engine\Components\Component.h" />
+    <ClInclude Include="src\Engine\Components\Light.h" />
     <ClInclude Include="src\Engine\Components\TestComponent.h" />
     <ClInclude Include="src\Engine\Components\Transform.h" />
     <ClInclude Include="src\Engine\Core.h" />
@@ -173,25 +162,44 @@
     <ClInclude Include="src\Engine\KeyCodes.h" />
     <ClInclude Include="src\Engine\Layer.h" />
     <ClInclude Include="src\Engine\LayerStack.h" />
-    <ClInclude Include="src\Engine\Loaders\OBJLoader.h" />
     <ClInclude Include="src\Engine\Log.h" />
     <ClInclude Include="src\Engine\Logic\LogicLayer.h" />
     <ClInclude Include="src\Engine\Logic\Scene.h" />
     <ClInclude Include="src\Engine\MouseButtonCodes.h" />
-    <ClInclude Include="src\Engine\Renderer\RenderLayer.h" />
+    <ClInclude Include="src\Engine\Physics\Particle.h" />
+    <ClInclude Include="src\Engine\Physics\ParticleContact.h" />
+    <ClInclude Include="src\Engine\Physics\ParticleForceGenerator.h" />
+    <ClInclude Include="src\Engine\Physics\ParticleLinks.h" />
+    <ClInclude Include="src\Engine\Physics\ParticleWorld.h" />
+    <ClInclude Include="src\Engine\Physics\PhysicsLayer.h" />
+    <ClInclude Include="src\Engine\Physics\Precision.h" />
+    <ClInclude Include="src\Engine\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Engine\Renderer\RenderAPI.h" />
     <ClInclude Include="src\Engine\XMLParser\XMLNode.h" />
     <ClInclude Include="src\Engine\XMLParser\XMLReader.h" />
     <ClInclude Include="src\Engine\XMLParser\XMLWriter.h" />
     <ClInclude Include="src\Engine\window.h" />
     <ClInclude Include="src\Platform\OpenGl\FrameBuffer.h" />
     <ClInclude Include="src\Platform\OpenGl\GL.h" />
+    <ClInclude Include="src\Platform\OpenGl\GLRenderAPI.h" />
     <ClInclude Include="src\Platform\OpenGl\IndexBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGl\Loader.h" />
+    <ClInclude Include="src\Platform\OpenGl\Material.h" />
+    <ClInclude Include="src\Platform\OpenGl\MaterialProperty.h" />
+    <ClInclude Include="src\Platform\OpenGl\MeshRenderer.h" />
+    <ClInclude Include="src\Platform\OpenGl\OBJLoader.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGl\RawModel.h" />
     <ClInclude Include="src\Platform\OpenGl\Renderer.h" />
     <ClInclude Include="src\Platform\OpenGl\Shader.h" />
     <ClInclude Include="src\Platform\OpenGl\Texture.h" />
     <ClInclude Include="src\Platform\OpenGl\VertexArray.h" />
     <ClInclude Include="src\Platform\OpenGl\VertexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGl\VertexBufferLayout.h" />
+    <ClInclude Include="src\Platform\Vulkan\VKIndexBuffer.h" />
+    <ClInclude Include="src\Platform\Vulkan\VKVertexBuffer.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanContext.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanRenderAPI.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\enpch.h" />
@@ -560,8 +568,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\VR_engine\VR Engine\OBJLoader.cpp" />
     <ClCompile Include="src\Engine\Application.cpp" />
+    <ClCompile Include="src\Engine\Components\Camera.cpp" />
+    <ClCompile Include="src\Engine\Components\Light.cpp" />
     <ClCompile Include="src\Engine\Components\TestComponent.cpp" />
     <ClCompile Include="src\Engine\Components\Transform.cpp" />
     <ClCompile Include="src\Engine\GameObject.cpp" />
@@ -569,21 +578,37 @@
     <ClCompile Include="src\Engine\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Engine\Layer.cpp" />
     <ClCompile Include="src\Engine\LayerStack.cpp" />
-    <ClCompile Include="src\Engine\Loaders\OBJLoader.cpp" />
     <ClCompile Include="src\Engine\Log.cpp" />
     <ClCompile Include="src\Engine\Logic\LogicLayer.cpp" />
     <ClCompile Include="src\Engine\Logic\Scene.cpp" />
-    <ClCompile Include="src\Engine\Renderer\RenderLayer.cpp" />
+    <ClCompile Include="src\Engine\Physics\Particle.cpp" />
+    <ClCompile Include="src\Engine\Physics\ParticleContact.cpp" />
+    <ClCompile Include="src\Engine\Physics\ParticleForceGenerator.cpp" />
+    <ClCompile Include="src\Engine\Physics\ParticleLinks.cpp" />
+    <ClCompile Include="src\Engine\Physics\ParticleWorld.cpp" />
+    <ClCompile Include="src\Engine\Physics\PhysicsLayer.cpp" />
     <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp" />
     <ClCompile Include="src\Engine\XMLParser\XMLReader.cpp" />
     <ClCompile Include="src\Engine\XMLParser\XMLWriter.cpp" />
     <ClCompile Include="src\Platform\OpenGl\FrameBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\GLRenderAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGl\IndexBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\Loader.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\Material.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\MaterialProperty.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\MeshRenderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\OBJLoader.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\RawModel.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Renderer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Shader.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Texture.cpp" />
     <ClCompile Include="src\Platform\OpenGl\VertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGl\VertexBuffer.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VKVertexBuffer.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VkIndexBuffer.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanContext.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanRenderAPI.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\enpch.cpp">

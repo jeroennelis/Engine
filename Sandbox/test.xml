@@ -1,26 +1,14 @@
-<scene name="New Scene">
-	<GameObject name="TestObject1">
-		<Component type="1">
+<scenename="New Scene">
+	<GameObjectname="Camera">
+		<Componenttype="1">
 		</Component>
-		<GameObject name="TestObject3">
-			<GameObject name="TestObject4">
-				<Component type="1">
-				</Component>
-			</GameObject>
-			<GameObject name="TestObject7">
-			</GameObject>
-			<GameObject name="GameObject">
-			</GameObject>
-		</GameObject>
-		<GameObject name="TestObject6">
-			<GameObject name="GameObject">
-				<Component type="100">
-				</Component>
-			</GameObject>
-		</GameObject>
+		<Componenttype="0">
+		</Component>
 	</GameObject>
-	<GameObject name="TestObject2">
-		<GameObject name="TestObject5">
-		</GameObject>
+	<GameObjectname="killhouse">
+		<Componenttype="1">
+		</Component>
+		<Componenttype="2">
+		</Component>
 	</GameObject>
 </scene>

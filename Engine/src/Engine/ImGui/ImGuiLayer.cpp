@@ -8,307 +8,47 @@
 
 // TEMP
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
+//#include <glad/glad.h>
 
 #include  "Engine/GameObject.h" 
 
 #include  "Engine/Application.h"
 
 #include  "Engine/Logic/Scene.h" 
+#include "Engine/Components/Transform.h"
+#include "Platform/OpenGl/MeshRenderer.h"
+
+#include "Platform/OpenGl/OBJLoader.h"
+#include "Platform/OpenGl/FrameBuffer.h"
+#include "Platform/OpenGl/Loader.h"
+#include "Engine/Logic/Scene.h"
+#include "Engine/Components/Camera.h"
 
 //
 //#include  imgui_internal.h 
 
 namespace Engine {
 
-	//-----------------------------------------------------------------------------
-// [SECTION] Example App: Debug Console / ShowExampleAppConsole()
-//-----------------------------------------------------------------------------
-
-// Demonstrate creating a simple console window, with scrolling, filtering, completion and history.
-// For the console example, here we are using a more C++ like approach of declaring a class to hold the data and the functions.
-	struct ExampleAppConsole
+	
+	glm::vec3 ImGuiLayer::PickMouse(int windowPosX, int windowPosY, int imGuiWindowWidth, int imGuiWindowHeigth, int mouseX, int mouseY)
 	{
-		char                  InputBuf[256];
-		ImVector<char*>       Items;
-		bool                  ScrollToBottom;
-		ImVector<char*>       History;
-		int                   HistoryPos;    // -1: new line, 0..History.Size-1 browsing history.
-		ImVector<const char*> Commands;
+		//Step 1: 3d Normalised Device Coordinates
+		float x = 2.0f * (mouseX - windowPosX) / imGuiWindowWidth - 1.0f;
+		float y = 1.0f - (2.0f * (mouseY - windowPosY)) / imGuiWindowHeigth;
+		float z = 1.0f;
 
-		ExampleAppConsole()
-		{
-			ClearLog();
-			memset(InputBuf, 0, sizeof(InputBuf));
-			HistoryPos = -1;
-			Commands.push_back("HELP");
-			Commands.push_back("HISTORY");
-			Commands.push_back("CLEAR");
-			Commands.push_back("CLASSIFY");  // "classify" is only here to provide an example of "C"+[tab] completing to "CL" and displaying matches.
-			AddLog("Welcome to Dear ImGui!");
-		}
-		~ExampleAppConsole()
-		{
-			ClearLog();
-			for (int i = 0; i < History.Size; i++)
-				free(History[i]);
-		}
+		//Step 2: 4d Homogeneous Clip Coordinates
+		glm::vec4 vec(x, y, -1.0f, 1.0f);
+				
+		Camera* cam = Scene::Current()->GetSceneCamera();
+		glm::vec4 ray_eye = glm::inverse(cam->GetProjectionMatrix()) * vec;
+		
+		ray_eye = glm::vec4(ray_eye.x, ray_eye.y, -1.0, 0.0);
+		glm::vec4 ray_world = glm::inverse(cam->GetViewMatrix()) * ray_eye;
+		ray_world = glm::normalize(ray_world);
 
-		// Portable helpers
-		static int   Stricmp(const char* str1, const char* str2) { int d; while ((d = toupper(*str2) - toupper(*str1)) == 0 && *str1) { str1++; str2++; } return d; }
-		static int   Strnicmp(const char* str1, const char* str2, int n) { int d = 0; while (n > 0 && (d = toupper(*str2) - toupper(*str1)) == 0 && *str1) { str1++; str2++; n--; } return d; }
-		static char* Strdup(const char *str) { size_t len = strlen(str) + 1; void* buff = malloc(len); return (char*)memcpy(buff, (const void*)str, len); }
-		static void  Strtrim(char* str) { char* str_end = str + strlen(str); while (str_end > str && str_end[-1] == ' ') str_end--; *str_end = 0; }
-
-		void    ClearLog()
-		{
-			for (int i = 0; i < Items.Size; i++)
-				free(Items[i]);
-			Items.clear();
-			ScrollToBottom = true;
-		}
-
-		void    AddLog(const char* fmt, ...) IM_FMTARGS(2)
-		{
-			// FIXME-OPT
-			char buf[1024];
-			va_list args;
-			va_start(args, fmt);
-			vsnprintf(buf, IM_ARRAYSIZE(buf), fmt, args);
-			buf[IM_ARRAYSIZE(buf) - 1] = 0;
-			va_end(args);
-			Items.push_back(Strdup(buf));
-			ScrollToBottom = true;
-		}
-
-		void    Draw(const char* title, bool* p_open)
-		{
-			ImGui::SetNextWindowSize(ImVec2(520, 600), ImGuiCond_FirstUseEver);
-			if (!ImGui::Begin(title, p_open))
-			{
-				ImGui::End();
-				return;
-			}
-
-			if (ImGui::BeginPopupContextItem())
-			{
-				if (ImGui::MenuItem( "Close Console" ))
-					*p_open = false;
-				ImGui::EndPopup();
-			}
-
-			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-			/*static ImGuiTextFilter filter;
-			filter.Draw( Filter (\ incl,-excl\ ) (\ error\ ) , 180);*/
-			ImGui::PopStyleVar();
-			/*ImGui::Separator();*/
-
-			const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing(); // 1 separator, 1 input text
-			ImGui::BeginChild( "ScrollingRegion" , ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar); // Leave room for 1 separator + 1 InputText
-			if (ImGui::BeginPopupContextWindow())
-			{
-				if (ImGui::Selectable( "Clear" )) ClearLog();
-				ImGui::EndPopup();
-			}
-
-			// Display every line as a separate entry so we can change their color or add custom widgets. If you only want raw text you can use ImGui::TextUnformatted(log.begin(), log.end());
-			// NB- if you have thousands of entries this approach may be too inefficient and may require user-side clipping to only process visible items.
-			// You can seek and display only the lines that are visible using the ImGuiListClipper helper, if your elements are evenly spaced and you have cheap random access to the elements.
-			// To use the clipper we could replace the 'for (int i = 0; i < Items.Size; i++)' loop with:
-			//     ImGuiListClipper clipper(Items.Size);
-			//     while (clipper.Step())
-			//         for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
-			// However, note that you can not use this code as is if a filter is active because it breaks the 'cheap random-access' property. We would need random-access on the post-filtered list.
-			// A typical application wanting coarse clipping and filtering may want to pre-compute an array of indices that passed the filtering test, recomputing this array when user changes the filter,
-			// and appending newly elements as they are inserted. This is left as a task to the user until we can manage to improve this example code!
-			// If your items are of variable size you may want to implement code similar to what ImGuiListClipper does. Or split your data into fixed height items to allow random-seeking into your list.
-			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
-			
-			ImVec4 col_default_text = ImGui::GetStyleColorVec4(ImGuiCol_Text);
-			for (int i = 0; i < Items.Size; i++)
-			{
-				const char* item = Items[i];
-				/*if (!filter.PassFilter(item))
-					continue;*/
-				ImVec4 col = col_default_text;
-				if (strstr(item,  "[error]" )) col = ImColor(1.0f, 0.4f, 0.4f, 1.0f);
-				else if (strncmp(item,  "# " , 2) == 0) col = ImColor(1.0f, 0.78f, 0.58f, 1.0f);
-				ImGui::PushStyleColor(ImGuiCol_Text, col);
-				ImGui::TextUnformatted(item);
-				ImGui::PopStyleColor();
-			}
-			
-			if (ScrollToBottom)
-				ImGui::SetScrollHereY(1.0f);
-			ScrollToBottom = false;
-			ImGui::PopStyleVar();
-			ImGui::EndChild();
-			ImGui::Separator();
-
-			// Command-line
-			bool reclaim_focus = false;
-			if (ImGui::InputText( "input" , InputBuf, IM_ARRAYSIZE(InputBuf), ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory, &TextEditCallbackStub, (void*)this))
-			{
-				char* s = InputBuf;
-				Strtrim(s);
-				if (s[0])
-					ExecCommand(s);
-				strcpy(s, " " );
-				reclaim_focus = true;
-			}
-
-			// Auto-focus on window apparition
-			ImGui::SetItemDefaultFocus();
-			if (reclaim_focus)
-				ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
-
-			ImGui::End();
-		}
-
-		void    ExecCommand(const char* command_line)
-		{
-			AddLog( "# %s\n" , command_line);
-
-			// Insert into history. First find match and delete it so it can be pushed to the back. This isn't trying to be smart or optimal.
-			HistoryPos = -1;
-			for (int i = History.Size - 1; i >= 0; i--)
-				if (Stricmp(History[i], command_line) == 0)
-				{
-					free(History[i]);
-					History.erase(History.begin() + i);
-					break;
-				}
-			History.push_back(Strdup(command_line));
-
-			// Process command
-			if (Stricmp(command_line,  "CLEAR" ) == 0)
-			{
-				ClearLog();
-			}
-			else if (Stricmp(command_line,  "HELP" ) == 0)
-			{
-				AddLog( "Commands: ");
-				for (int i = 0; i < Commands.Size; i++)
-					AddLog( "- %s" , Commands[i]);
-			}
-			else if (Stricmp(command_line,  "HISTORY" ) == 0)
-			{
-				int first = History.Size - 10;
-				for (int i = first > 0 ? first : 0; i < History.Size; i++)
-					AddLog( "%3d: %s\n ", i, History[i]);
-			}
-			else
-			{
-				AddLog( "Unknown command: '%s'\n" , command_line);
-			}
-		}
-
-		static int TextEditCallbackStub(ImGuiInputTextCallbackData* data) // In C++11 you are better off using lambdas for this sort of forwarding callbacks
-		{
-			ExampleAppConsole* console = (ExampleAppConsole*)data->UserData;
-			return console->TextEditCallback(data);
-		}
-
-		int     TextEditCallback(ImGuiInputTextCallbackData* data)
-		{
-			//AddLog( cursor: %d, selection: %d-%d , data->CursorPos, data->SelectionStart, data->SelectionEnd);
-			switch (data->EventFlag)
-			{
-			case ImGuiInputTextFlags_CallbackCompletion:
-			{
-				// Example of TEXT COMPLETION
-
-				// Locate beginning of current word
-				const char* word_end = data->Buf + data->CursorPos;
-				const char* word_start = word_end;
-				while (word_start > data->Buf)
-				{
-					const char c = word_start[-1];
-					if (c == ' ' || c == '\t' || c == ',' || c == ';')
-						break;
-					word_start--;
-				}
-
-				// Build a list of candidates
-				ImVector<const char*> candidates;
-				for (int i = 0; i < Commands.Size; i++)
-					if (Strnicmp(Commands[i], word_start, (int)(word_end - word_start)) == 0)
-						candidates.push_back(Commands[i]);
-
-				if (candidates.Size == 0)
-				{
-					// No match
-					AddLog( "No match for \ %.*s\ !\n" , (int)(word_end - word_start), word_start);
-				}
-				else if (candidates.Size == 1)
-				{
-					// Single match. Delete the beginning of the word and replace it entirely so we've got nice casing
-					data->DeleteChars((int)(word_start - data->Buf), (int)(word_end - word_start));
-					data->InsertChars(data->CursorPos, candidates[0]);
-					data->InsertChars(data->CursorPos,  ""  );
-				}
-				else
-				{
-					// Multiple matches. Complete as much as we can, so inputing  C  will complete to  CL  and display  CLEAR  and  CLASSIFY 
-					int match_len = (int)(word_end - word_start);
-					for (;;)
-					{
-						int c = 0;
-						bool all_candidates_matches = true;
-						for (int i = 0; i < candidates.Size && all_candidates_matches; i++)
-							if (i == 0)
-								c = toupper(candidates[i][match_len]);
-							else if (c == 0 || c != toupper(candidates[i][match_len]))
-								all_candidates_matches = false;
-						if (!all_candidates_matches)
-							break;
-						match_len++;
-					}
-
-					if (match_len > 0)
-					{
-						data->DeleteChars((int)(word_start - data->Buf), (int)(word_end - word_start));
-						data->InsertChars(data->CursorPos, candidates[0], candidates[0] + match_len);
-					}
-
-					// List matches
-					AddLog( "Possible matches:\n" );
-					for (int i = 0; i < candidates.Size; i++)
-						AddLog( "- %s\n" , candidates[i]);
-				}
-
-				break;
-			}
-			case ImGuiInputTextFlags_CallbackHistory:
-			{
-				// Example of HISTORY
-				const int prev_history_pos = HistoryPos;
-				if (data->EventKey == ImGuiKey_UpArrow)
-				{
-					if (HistoryPos == -1)
-						HistoryPos = History.Size - 1;
-					else if (HistoryPos > 0)
-						HistoryPos--;
-				}
-				else if (data->EventKey == ImGuiKey_DownArrow)
-				{
-					if (HistoryPos != -1)
-						if (++HistoryPos >= History.Size)
-							HistoryPos = -1;
-				}
-
-				// A better implementation would preserve the data on the current input line along with cursor position.
-				if (prev_history_pos != HistoryPos)
-				{
-					const char* history_str = (HistoryPos >= 0) ? History[HistoryPos] : "" ;
-					data->DeleteChars(0, data->BufTextLen);
-					data->InsertChars(0, history_str);
-				}
-			}
-			}
-			return 0;
-		}
-	};
+		return  glm::vec3(ray_world.x, ray_world.y, ray_world.z);
+	}
 
 	bool ImGuiLayer::m_ShowStatistics = true;
 
@@ -347,6 +87,15 @@ namespace Engine {
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init( "#version 410" ); 
 
+		for (Material* mat : Loader::Get()->GetMaterials())
+		{
+			mat->RenderPreview();
+		}
+
+		for (std::pair<std::string, RawModel*> model : Loader::Get()->GetRawModels())
+		{
+			model.second->RenderPreview();
+		}
 		EN_CORE_INFO( "attached imGui layer" );
 	}
 	void ImGuiLayer::OnDetach()
@@ -364,9 +113,8 @@ namespace Engine {
 		RenderSceneWindow();
 		RenderInspectorWindow();
 		RenderConsoleWindow();
-		static ExampleAppConsole console;
+		RenderProjectWindow();
 		bool open = true;
-		console.Draw( "Example: Console" , &open);
 	}
 
 	void ImGuiLayer::Begin()
@@ -398,7 +146,7 @@ namespace Engine {
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
-		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
 
 		// Rendering
 		ImGui::Render();
@@ -474,16 +222,21 @@ namespace Engine {
 
 			if (ImGui::BeginMenu( "Window" ))
 			{
+				
 				if (m_ShowStatistics)
 				{
 					if (ImGui::MenuItem( "disable Statistics" )) { ToggleStatistics(); }
-					ImGui::EndMenu();
 				}
 				else
 				{
 					if (ImGui::MenuItem( "enable Statistics" )) { ToggleStatistics(); }
-					ImGui::EndMenu();
 				}
+				if (ImGui::MenuItem("start physics simmulation")) { Scene::Current()->RunPhysics(); }
+				ImGui::EndMenu();
+
+				
+
+
 				
 			}
 
@@ -525,7 +278,10 @@ namespace Engine {
 				ImGui::PopStyleVar();
 			}
 		}
-
+		if (Scene::SelectedMaterial())
+		{
+			Scene::SelectedMaterial()->RenderInspectorInfo();
+		}
 		
 
 		ImGui::End();
@@ -535,26 +291,57 @@ namespace Engine {
 	{
 		ImGui::Begin( "Scene" );
 
+		ImGui::BeginChild("scenewindow");
+		
+
+
 		ImVec2 startPos = ImGui::GetCursorScreenPos();
+		ImVec2 windowPos = ImGui::GetWindowPos();
 		ImVec2 size = ImGui::GetWindowSize();
+		ImVec2 mousePos = ImGui::GetMousePos();
+
+		
+
 		ImVec2 endPos = ImVec2(startPos.x + size.x, startPos.y + size.y);
-		ImTextureID texID = (void*)(2);
+		ImTextureID texID = (ImTextureID)(Application::Get().GetRenderAPI().GetSceneFrameBufferTexture());
 		ImGui::GetWindowDrawList()->AddImage(texID, startPos, ImVec2(startPos.x + size.x, startPos.y + size.y), ImVec2(0, 1), ImVec2(1, 0));
 
+
+		ImGui::EndChild();
+		if (ImGui::BeginDragDropTarget())
+		{
+			ImGuiDragDropFlags target_flags = 0;
+			target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
+			target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Model", target_flags))
+			{
+				if (!ImGui::IsMouseDown(0))
+				{
+					glm::vec3 vector = PickMouse((int)windowPos.x, (int)windowPos.y, (int)size.x, (int)size.y, (int)mousePos.x, (int)mousePos.y);
+					glm::vec3 camPos = Scene::Current()->GetSceneCamera()->GetTransform()->Position;
+					glm::vec3 point = (vector * 10.0f) - camPos;
+					GameObject* go = Scene::Current()->AddRawModel(Loader::Get()->SelectedRawModel());
+					go->GetComponent<Transform>()->Position = point;
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
 		ImGui::End();
 	}
 
 	void ImGuiLayer::RenderGameWindow()
 	{
-
+		
 		ImGui::Begin( "Game" );
-
+		
+		ImGui::BeginChild("testing");
+		
 		ImVec2 startPos = ImGui::GetCursorScreenPos();
 		ImVec2 size = ImGui::GetWindowSize();
 		ImVec2 endPos = ImVec2(startPos.x + size.x, startPos.y + size.y);
-		ImTextureID texID = (void*)(1);
+		ImTextureID texID = (ImTextureID)(Application::Get().GetRenderAPI().GetGameFrameBufferTexture());
 		ImGui::GetWindowDrawList()->AddImage(texID, startPos, ImVec2(startPos.x + size.x, startPos.y + size.y), ImVec2(0, 1), ImVec2(1, 0));
-
+		
 
 		if (m_ShowStatistics)
 		{	//TODO brol ervan tussen halen
@@ -573,8 +360,9 @@ namespace Engine {
 			ImGui::Indent(84);
 			ImGui::Text(" %.3f ms/frame" , 1000.0f / ImGui::GetIO().Framerate);
 			ImGui::EndChild();
+			
 		}
-
+		ImGui::EndChild();
 		ImGui::End();
 	}
 
@@ -592,7 +380,8 @@ namespace Engine {
 		unsigned int index = 0;
 		for (auto go : Scene::Current()->GameObjects())
 		{
-			go->OnHierarchyRender(Scene::SelectedGameObject(), node_clicked, index, selection_mask);
+			if(go)
+				go->OnHierarchyRender(Scene::SelectedGameObject(), node_clicked, index, selection_mask);
 		}
 
 		if (node_clicked != -1)
@@ -612,6 +401,16 @@ namespace Engine {
 			if (ImGui::Selectable( "add new gameobject" ))
 			{
 				AddEmptyGameObject();
+			}
+			
+			if (ImGui::Selectable("add target"))
+			{
+				Scene::Current()->AddCube();
+			}
+
+			if (ImGui::Selectable("add killhouse"))
+			{
+				Scene::Current()->AddSphere();
 			}
 			ImGui::EndPopup();
 		}
@@ -651,7 +450,7 @@ namespace Engine {
 			if (ImGui::BeginDragDropSource(src_flags))
 			{
 				if (!(src_flags & ImGuiDragDropFlags_SourceNoPreviewTooltip))
-					ImGui::Text( "Moving \ %s\"  , names[n]");
+					ImGui::Text( "Moving %s"  , names[n]);
 				ImGui::SetDragDropPayload( "DND_DEMO_NAME" , &n, sizeof(int));
 				ImGui::EndDragDropSource();
 			}
@@ -692,7 +491,48 @@ namespace Engine {
 		ImGui::End();
 	}
 
-	
+	void ImGuiLayer::RenderProjectWindow()
+	{
+		ImGui::Begin("Materials");
+		int ypos = 25;
+		int xpos = 25;
+		int index = 0;
+		for (Material* mat: Loader::Get()->GetMaterials())
+		{
+			xpos = 25 + (index % 10) * 75;
+			ypos = 25 + (index / 10) * 75;
+			ImGui::SetCursorPos(ImVec2((float)xpos, (float)ypos));
+			mat->RenderProjectInfo();
+			index++;
+		}
+			
+
+		ImGui::End();
+
+		ImGui::Begin("Objects");
+		ypos = 25;
+		xpos = 25;
+		index = 0;
+		for (std::pair<std::string, RawModel*> model : Loader::Get()->GetRawModels())
+		{
+			xpos = 25 + (index % 10) * 75;
+			ypos = 25 + (index / 10) * 75;
+			ImGui::SetCursorPos(ImVec2((float)xpos, (float)ypos));
+			model.second->RenderProjectInfo();
+			index++;
+		}
+
+		//ImTextureID texID = (void*)1;
+		//bool clicked = ImGui::ImageButton(texID, ImVec2(50, 50)); //TODO imgui pop
+
+		//if (ImGui::BeginDragDropSource())
+		//{
+		//	ImGui::SetDragDropPayload("obj", "test", 5);
+		//	ImGui::EndDragDropSource();
+		//	
+		//}
+		ImGui::End();
+	}	
 
 	void ImGuiLayer::ToggleStatistics()
 	{

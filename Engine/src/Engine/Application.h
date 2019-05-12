@@ -1,14 +1,18 @@
 #pragma once
 
-#include  "Core.h"
+#include "Core.h"
 
-#include  "window.h"
-#include  "Engine/LayerStack.h" 
-#include  "Events/Event.h" 
-#include  "Events/ApplicationEvent.h" 
-#include  "Engine/XMLParser/XMLReader.h" 
+#include "window.h"
+#include "Engine/LayerStack.h" 
+#include "Events/Event.h" 
+#include "Events/ApplicationEvent.h" 
+#include "Engine/XMLParser/XMLReader.h" 
 
-#include  "Engine/ImGui/ImGuiLayer.h" 
+#include "Engine/ImGui/ImGuiLayer.h" 
+#include "Renderer/RenderAPI.h"
+#include "Platform/OpenGl/GLRenderAPI.h"
+#include "Platform/Vulkan/VulkanRenderAPI.h"
+
 
 
 namespace Engine {
@@ -30,19 +34,16 @@ namespace Engine {
 
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
-		inline FrameBuffer* GetGameFrameBuffer() { return m_GameFrameBuffer; }
-		inline FrameBuffer* GetSceneFrameBuffer() { return m_SceneFrameBuffer; }
+		inline RenderAPI& GetRenderAPI() { return *m_RenderAPI; }
+		inline LayerStack& GetLayerStack() { return m_LayerStack; }
 
 	private:
 		bool OnWindowClosed(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
-		ImGuiLayer* m_ImGuiLayer;
+		std::unique_ptr<RenderAPI> m_RenderAPI;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-
-		FrameBuffer* m_GameFrameBuffer;
-		FrameBuffer* m_SceneFrameBuffer;
 
 	private:
 		static Application* s_Instance;

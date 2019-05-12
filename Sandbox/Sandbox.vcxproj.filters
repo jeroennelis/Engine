@@ -9,38 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Engine\src\Engine.h" />
-    <ClInclude Include="..\Engine\src\Engine\Application.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\src\Engine\Core.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\src\Engine\EntryPoint.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\src\Engine\Events\ApplicationEvent.h">
-      <Filter>Engine\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\src\Engine\Events\Event.h">
-      <Filter>Engine\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\src\Engine\Events\KeyEvent.h">
-      <Filter>Engine\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\src\Engine\Events\MouseEvent.h">
-      <Filter>Engine\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\src\Engine\Log.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Engine\src\Engine\Application.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\Engine\Log.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
+    <ClCompile Include="src\SandboxApp.cpp" />
   </ItemGroup>
 </Project>

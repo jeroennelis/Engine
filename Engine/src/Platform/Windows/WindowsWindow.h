@@ -3,13 +3,17 @@
 #include  "Engine/window.h" 
 
 #include <GLFW/glfw3.h>
+#include "Engine/Renderer/GraphicsContext.h"
+#include "Platform/OpenGl/OpenGLContext.h"
 
 namespace Engine {
+
+	
 
 	class WindowsWindow : public Window
 	{
 	public:
-		WindowsWindow(const WindowProperties& props);
+		WindowsWindow(RENDER_API api, const WindowProperties& props);
 		virtual ~WindowsWindow();
 
 		void OnUpdate() override;
@@ -20,15 +24,17 @@ namespace Engine {
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
+		virtual double GetFPS() override;
+		virtual double GetFrameRate() override;
 
 
 		virtual inline void* GetNativeWindow() const override { return m_Window; }
 	private:
-		virtual void Init(const WindowProperties& props);
 		virtual void Shutdown();
 
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext * m_Context;
 
 		struct WindowData
 		{
@@ -40,5 +46,8 @@ namespace Engine {
 		};
 
 		WindowData m_Data;
+
+		double previousTime;
+		double frameDelta;
 	};
 }

@@ -13,6 +13,7 @@ namespace Engine
 
 		void OnAttach() override;
 		void OnUpdate() override;
+		void OnEvent(Event& event) override;
 
 	private:
 		std::shared_ptr<Scene> m_Scene;

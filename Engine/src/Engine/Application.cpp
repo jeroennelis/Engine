@@ -1,33 +1,9 @@
 #include  "enpch.h" 
 #include  "Application.h" 
 
-#include  "Engine/Log.h" 
-
-#include <Glad/glad.h>""
-
-#include <openvr.h>
-#include "Components/TestComponent.h" 
-#include "GameObject.h"
-#include "Engine/Logic/Scene.h" 
-#include "Maths/src/Vector2.h" 
-#include "Components/Transform.h" 
-
 #include "Input.h" 
 
-#include "Platform/OpenGl/FrameBuffer.h" 
-#include <fstream>
-
-#include "Platform/OpenGl/GL.h"
-#include "Platform/OpenGl/Renderer.h"
-#include "Platform/OpenGl/VertexBuffer.h"
-#include "Platform/OpenGl/IndexBuffer.h"
-#include "Platform/OpenGl/VertexArray.h"
-#include "Platform/OpenGl/Shader.h"
-#include "Platform/OpenGl/VertexBufferLayout.h"
-#include "Platform/OpenGl/Texture.h"
-
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+#include "Logic/LogicLayer.h"
 
 namespace Engine {
 
@@ -35,17 +11,26 @@ namespace Engine {
 
 	Application* Application::s_Instance = nullptr;
 
+
+	glm::mat4 CreateProjectionMatrix();
+
 	Application::Application()
 	{
 		EN_CORE_ASSERT(!s_Instance, Application already exists!);
 		s_Instance = this;
-		m_Window = std::unique_ptr<Window>(Window::Create());
+
+		RENDER_API api = GL;
+
+
+		m_Window = std::unique_ptr<Window>(Window::Create(api));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
-		m_GameFrameBuffer = new FrameBuffer(GetWindow().GetWidth(), GetWindow().GetHeight());
-		m_SceneFrameBuffer = new FrameBuffer(GetWindow().GetWidth(), GetWindow().GetHeight());
-		m_ImGuiLayer = new ImGuiLayer;
-		PushOverLay(m_ImGuiLayer);
+		if(api == VULKAN)
+			m_RenderAPI = std::unique_ptr<RenderAPI>(VulkanRenderAPI::Create());
+		else if (api == GL)
+			m_RenderAPI = std::unique_ptr<RenderAPI>(GLRenderAPI::Create());
+		
+		PushLayer(new LogicLayer());
 	}
 
 	Application::~Application()
@@ -70,79 +55,21 @@ namespace Engine {
 	{
 		
 
-//------------ Temp rendering------------//
-		float positions[] = {
-			-50.5f, -50.0f, 0.0f, 0.0f,
-			 50.0f, -50.0f, 1.0f, 0.0f,
-			 50.0f,  50.0f, 1.0f, 1.0f,
-			-50.0f,  50.0f, 0.0f, 1.0f
-		};
-
-		unsigned int indices[] = {
-			0, 1, 2,
-			2, 3, 0
-		};
-
-		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-		GLCall(glEnable(GL_BLEND));
-
-		VertexArray va;
-		VertexBuffer vb(positions, 4 * 4 * sizeof(float));
-
-		VertexBufferLayout layout;
-		layout.Push<float>(2);
-		layout.Push<float>(2);
-		va.AddBuffer(vb, layout);
-		
-		IndexBuffer ib(indices, 6);
-
-		glm::mat4 proj = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, -1.0f, 1.0f);
-		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-
-		glm::mat4 mvp = proj * view * model;
-
-		Shader shader("../Engine/res/shaders/basic.shader");
-		shader.Bind();
-
-		Texture texture("../Engine/res/textures/fern.png");
-		texture.Bind();
-		shader.SetUniform1i("u_Texture", 0);
-		shader.SetUniformMat4f("u_MVP", mvp);
-
-		va.UnBind();
-		shader.UnBind();
-		vb.UnBind();
-		ib.UnBind();
-
-		Renderer renderer;
 
 		while (m_Running)
 		{
-			
-
-			m_GameFrameBuffer->Bind();
-			GLCall(glClearColor(0, 0, 0.5, 1));
-			renderer.Clear();
-			renderer.Draw(va, ib, shader);
-			m_GameFrameBuffer->Unbind();
-			
-			m_SceneFrameBuffer->Bind();
-			GLCall(glClearColor(0.5, 0, 0, 1));
-			renderer.Clear();
-			renderer.Draw(va, ib, shader);
-			m_SceneFrameBuffer->Unbind();
-
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
-			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
-			m_ImGuiLayer->End();
+			m_RenderAPI->Render();
 
 			m_Window->OnUpdate();
+
+			
+
+			
 		}		
+		m_RenderAPI->CleanUp();
 	}
 
 	void Application::PushLayer(Layer * layer)
@@ -161,6 +88,24 @@ namespace Engine {
 	{
 		m_Running = false;
 		return true;
+	}
+	glm::mat4 CreateProjectionMatrix()
+	{
+		float aspectRatio = (float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight();
+		//fov
+		float y_scale = (float)((1.0f / glm::tan(glm::radians(110 / 2.0f))) * aspectRatio);
+		float x_scale = y_scale / aspectRatio;
+		float frustum_length = 1000 - 0.1f;
+
+		glm::mat4 projectionMatrix = glm::mat4();
+		projectionMatrix[0][0] = x_scale;
+		projectionMatrix[1][1] = y_scale;
+		projectionMatrix[2][2] = -((1000 + 0.1f) / frustum_length);
+		projectionMatrix[2][3] = -1;
+		projectionMatrix[3][2] = -((2 * 0.1f * 1000) / frustum_length);
+		projectionMatrix[3][3] = 0;
+
+		return projectionMatrix;
 	}
 }
 

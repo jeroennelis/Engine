@@ -22,6 +22,13 @@ namespace Engine {
 	{
 		std::ifstream stream(filepath);
 
+		enum class Status
+		{
+			NONE = -1,
+			PROPERTIES = 0,
+			SHADER = 1
+		};
+
 		enum class ShaderType
 		{
 			NONE = -1,
@@ -30,14 +37,20 @@ namespace Engine {
 			GEOMETRY = 2
 		};
 
+		Status status = Status::NONE;
 		ShaderType type = ShaderType::NONE;
 
 		std::string line;
 		std::stringstream ss[3];
 		while (getline(stream, line))
 		{
-			if (line.find("#shader") != std::string::npos)
+			if (line.find("#properties") != std::string::npos)
 			{
+				status = Status::PROPERTIES;
+			}
+			else if (line.find("#shader") != std::string::npos)
+			{
+				status = Status::SHADER;
 				if (line.find("vertex") != std::string::npos)
 					type = ShaderType::VERTEX;
 				else if (line.find("fragment") != std::string::npos)
@@ -45,7 +58,25 @@ namespace Engine {
 				else if (line.find("geometry") != std::string::npos)
 					type = ShaderType::GEOMETRY;
 			}
-			else
+			else if (status == Status::PROPERTIES)
+			{
+				if (line.find("Color") != std::string::npos)
+				{
+					size_t begin = line.find("{");
+					size_t end = line.find("}");
+					std::string prop = line.substr(begin + 2, end - begin -3);
+					m_Properties.insert({ prop, "Color" });
+				}
+				if (line.find("float") != std::string::npos)
+				{
+
+					size_t begin = line.find("{");
+					size_t end = line.find("}");
+					std::string prop = line.substr(begin + 2, end - begin - 3);
+					m_Properties.insert({ prop, "float" });
+				}
+			}
+			else if(status == Status::SHADER)
 			{
 				ss[(int)type] << line << '\n';
 			}
@@ -114,14 +145,24 @@ namespace Engine {
 		GLCall(glUniform1f(GetUniformLocation(name), value));
 	}
 
-	void Shader::SetUniform4f(const std::string & name, float v0, float v1, float v2, float v3)
+	void Shader::SetUniform(const std::string & name, float value)
 	{
-		GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
+		GLCall(glUniform1f(GetUniformLocation(name), value));
 	}
 
-	void Shader::SetUniformMat4f(const std::string & name, glm::mat4 & matrix)
+	void Shader::SetUniform(const std::string & name, glm::vec4* v)
 	{
-		GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+		glUniform4f(GetUniformLocation(name), v->x, v->y, v->z, v->w);
+	}
+
+	void Shader::SetUniform(const std::string & name, glm::vec3 * v)
+	{
+		glUniform3f(GetUniformLocation(name), v->x, v->y, v->z);
+	}
+
+	void Shader::SetUniform(const std::string & name, glm::mat4 * matrix)
+	{
+		(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, (float*)matrix));
 	}
 
 	int Shader::GetUniformLocation(const std::string & name)

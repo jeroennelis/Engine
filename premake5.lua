@@ -26,8 +26,10 @@ include "Engine/Dependencies/Maths"
 
 project "Engine"
 	location "Engine"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -43,15 +45,14 @@ project "Engine"
 		"%{prj.name}/vendor/glm/glm/**.inl",
 		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/stb_image/**.h"
-
-
-
 	}
 
 	includedirs
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/Vulkan/include",
+		"%{prj.name}/vendor/tiny_obj",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
@@ -63,7 +64,8 @@ project "Engine"
 
 	libdirs
 	{
-		"%{prj.name}/vendor/openvr/lib/win64"
+		"%{prj.name}/vendor/openvr/lib/win64",
+		"%{prj.name}/vendor/Vulkan/lib"
 	}
 
 	links
@@ -73,40 +75,35 @@ project "Engine"
 		"ImGui",
 		"opengl32.lib",
 		"openvr_api.lib",
+		"vulkan-1.lib",
 		"Maths"
 	}
 
 	filter "system:windows"
-		cppdialect "c++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
 		{
 			"EN_PLATFORM_WINDOWS",
 			"EN_BUILD_DLL",
-			"GLFW_INCLUDE_NONE"
-		}
-
-		postbuildcommands
-		{
-			("{copy} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .."/Sandbox")
+			"GLFW_INCLUDE_NONE",
+			"_CRT_SECURE_NO_WARNINGS"
 		}
 
 	filter "configurations:Debug"
 		defines "EN_DEBUG"
-		buildoptions "/MDd"
-		symbols "On"
+		runtime "Debug"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "EN_RELEASE"
-		buildoptions "/MD"
-		optimize "On"
+		runtime "Release"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "EN_DIST"
-		buildoptions "/MD"
-		optimize "On"
+		runtime "Release"
+		optimize "on"
 
 
 
@@ -114,6 +111,8 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -129,7 +128,10 @@ project "Sandbox"
 	includedirs
 	{
 		"Engine/vendor/spdlog/include",
+		"Engine/vendor/Vulkan/include",
+		"Engine/vendor/tiny_obj",
 		"Engine/src",
+		"Engine/vendor",
 		"%{IncludeDir.glm}"
 	}
 
@@ -139,8 +141,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "c++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -150,15 +150,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "EN_DEBUG"
-		buildoptions "/MDd"
-		symbols "On"
+		runtime "Debug"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "EN_RELEASE"
-		buildoptions "/MD"
-		optimize "On"
+		runtime "Release"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "EN_DIST"
-		buildoptions "/MD"
-		optimize "On"
+		runtime "Release"
+		optimize "on"

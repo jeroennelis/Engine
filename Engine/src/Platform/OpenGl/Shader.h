@@ -17,6 +17,7 @@ namespace Engine {
 		std::string m_FilePath;
 		unsigned int m_RendererID;
 		std::unordered_map<std::string, int> m_LocationCache;
+		std::unordered_map<std::string, std::string> m_Properties;
 
 	public:
 		Shader(const std::string& filepath);
@@ -25,11 +26,16 @@ namespace Engine {
 		void Bind() const;
 		void UnBind() const;
 
+		const std::unordered_map<std::string, std::string>& GetProperties() { return m_Properties; }
+
 		// Set Uniforms
 		void SetUniform1i(const std::string& name, int value);
 		void SetUniform1f(const std::string& name, float value);
-		void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
-		void SetUniformMat4f(const std::string& name, glm::mat4& matrix);
+
+		void SetUniform(const std::string& name, float value);
+		void SetUniform(const std::string& name, glm::vec4* v);
+		void SetUniform(const std::string& name, glm::vec3* v);
+		void SetUniform(const std::string& name, glm::mat4* matrix);
 	
 	private:
 		ShaderProgramSource ParseShader(const std::string& filepath);
