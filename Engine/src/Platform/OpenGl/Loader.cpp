@@ -9,8 +9,8 @@ namespace Engine {
 	Loader::Loader()
 	{
 		LoadShaders();
-		LoadModels();
 		LoadMaterials();
+		LoadModels();
 	}
 
 	Loader::~Loader()

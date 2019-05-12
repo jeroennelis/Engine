@@ -6,6 +6,7 @@
 #include "Platform/OpenGl/Loader.h"
 #include "Engine/Application.h"
 
+#include "Platform/OpenGl/RawModel.h"
 
 namespace Engine {
 
@@ -26,11 +27,9 @@ namespace Engine {
 		camera->AddComponent(cam_comp);
 		AddGameObject(camera);
 		SetGameCamera(cam_comp.get());
-		camera->GetComponent<Transform>()->Position = glm::vec3(0,10,-10.0f);
-		camera->GetComponent<Transform>()->Rotation = glm::vec3(0, 0, 0);
+		camera->GetComponent<Transform>()->Position = glm::vec3(0,-10,-10.0f);
+		camera->GetComponent<Transform>()->Rotation = glm::vec3(20, 0, 0);
 		m_SceneCamera = cam_comp.get();
-
-		
 	}
 
 	Scene::Scene(const std::string & name = "New Scene")
@@ -47,6 +46,18 @@ namespace Engine {
 	void Scene::AddGameObject(std::shared_ptr<GameObject> go)
 	{
 		m_GameObjects.push_back(go);
+	}
+
+	GameObject* Scene::AddRawModel(RawModel * model)
+	{
+		Material* mat = Loader::Get()->GetMaterials().at(4);
+
+		std::shared_ptr<GameObject> go = std::make_shared<GameObject>("model");		//TODO
+		Transform* transform = go->GetComponent<Transform>();
+		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>(mat, model, transform);  //TODO: mem leak
+		go->AddComponent(meshRenderer);
+		Current()->AddGameObject(go);
+		return go.get();
 	}
 
 	void Scene::OnUpdate()
@@ -102,11 +113,11 @@ namespace Engine {
 
 	void Scene::DeleteGameObject(const std::shared_ptr<GameObject>& object)
 	{
-		/*for (auto it = m_GameObjects.begin(); it!= m_GameObjects.end() ; it++)
+		for (auto it = m_GameObjects.begin(); it!= m_GameObjects.end() ; it++)
 		{
 			if(*it == object)
 				EN_CORE_INFO("deleting {0}", object->Name());
-		}*/
+		}
 	}
 
 	void Scene::AddCube(const glm::vec3& position)

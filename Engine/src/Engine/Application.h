@@ -44,6 +44,7 @@ namespace Engine {
 
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<RenderAPI> m_RenderAPI;
+		std::unique_ptr<RenderAPI> m_RenderAPI;
 		std::unique_ptr<OpenVRContext> m_OpenVRContext;
 		bool m_Running = true;
 		LayerStack m_LayerStack;

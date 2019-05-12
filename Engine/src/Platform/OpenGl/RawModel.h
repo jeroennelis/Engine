@@ -3,6 +3,7 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "VertexBuffer.h"
+#include "FrameBuffer.h"
 
 namespace Engine {
 	struct RawModel {
@@ -10,5 +11,14 @@ namespace Engine {
 		IndexBuffer* ib;
 
 		RawModel(VertexArray* vertexArray, IndexBuffer* indexBuffer);
+
+		void RenderPreview();
+
+		void RenderProjectInfo();
+
+		FrameBuffer* m_Preview;
+
+
+		
 	};
 }

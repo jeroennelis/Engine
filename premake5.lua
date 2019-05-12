@@ -16,11 +16,13 @@ IncludeDir["GLFW"] = "Engine/vendor/GLFW/include"
 IncludeDir["Glad"] = "Engine/vendor/Glad/include"
 IncludeDir["ImGui"] = "Engine/vendor/imgui"
 IncludeDir["glm"] = "Engine/vendor/glm"
+IncludeDir["Maths"] = "Engine/Dependencies/Maths"
 IncludeDir["stb_image"] = "Engine/vendor/stb_image"
 
 include "Engine/vendor/GLFW"
 include "Engine/vendor/Glad"
 include "Engine/vendor/imgui"
+include "Engine/Dependencies/Maths"
 
 project "Engine"
 	location "Engine"
@@ -56,6 +58,7 @@ project "Engine"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{prj.name}/vendor/openvr/include",
+		"%{IncludeDir.Maths}",
 		"%{IncludeDir.stb_image}"
 	}
 
@@ -73,6 +76,7 @@ project "Engine"
 		"opengl32.lib",
 		"openvr_api.lib",
 		"vulkan-1.lib",
+		"Maths"
 	}
 
 	filter "system:windows"
@@ -128,7 +132,6 @@ project "Sandbox"
 		"Engine/vendor/tiny_obj",
 		"Engine/src",
 		"Engine/vendor",
-		"Engine/vendor/openvr/include",
 		"%{IncludeDir.glm}"
 	}
 

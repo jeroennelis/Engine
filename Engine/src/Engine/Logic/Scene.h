@@ -5,9 +5,15 @@
 #include "Engine/Physics/ParticleLinks.h"
 
 
+
+
+
+
 namespace Engine {
 
 	class Material;
+
+	struct RawModel;
 
 	class Scene
 	{
@@ -31,6 +37,7 @@ namespace Engine {
 		inline std::vector<std::shared_ptr<GameObject>>& GameObjects() { return m_GameObjects; }
 
 		void AddGameObject(std::shared_ptr<GameObject> go);
+		GameObject* AddRawModel(RawModel* model);
 
 		void OnUpdate();
 

@@ -69,7 +69,6 @@ namespace Engine {
 		{
 			Scene::SetSelectedMaterial(const_cast<Material*>(this));
 		}
-		
 	}
 
 	void Material::RenderPreview()

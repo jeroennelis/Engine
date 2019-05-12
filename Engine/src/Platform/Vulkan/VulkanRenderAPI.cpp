@@ -1284,6 +1284,9 @@ namespace Engine {
 
 	bool VulkanRenderAPI::IsDeviceSuitable(VkPhysicalDevice device)
 	{
+		VkPhysicalDeviceProperties props;
+		vkGetPhysicalDeviceProperties(device, &props);
+		std::cout << "max uniform buffer range: " << props.limits.maxUniformBufferRange << std::endl;
 		QueueFamilyIndices indices = FindQueueFamilies(device);
 
 		bool extensionsSupported = CheckDeviceExtensionSupport(device);

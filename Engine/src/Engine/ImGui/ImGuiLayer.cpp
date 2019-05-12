@@ -87,6 +87,15 @@ namespace Engine {
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init( "#version 410" ); 
 
+		for (Material* mat : Loader::Get()->GetMaterials())
+		{
+			mat->RenderPreview();
+		}
+
+		for (std::pair<std::string, RawModel*> model : Loader::Get()->GetRawModels())
+		{
+			model.second->RenderPreview();
+		}
 		EN_CORE_INFO( "attached imGui layer" );
 	}
 	void ImGuiLayer::OnDetach()
@@ -304,14 +313,15 @@ namespace Engine {
 			ImGuiDragDropFlags target_flags = 0;
 			target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
 			target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("obj", target_flags))
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Model", target_flags))
 			{
 				if (!ImGui::IsMouseDown(0))
 				{
 					glm::vec3 vector = PickMouse((int)windowPos.x, (int)windowPos.y, (int)size.x, (int)size.y, (int)mousePos.x, (int)mousePos.y);
 					glm::vec3 camPos = Scene::Current()->GetSceneCamera()->GetTransform()->Position;
 					glm::vec3 point = (vector * 10.0f) - camPos;
-					Scene::AddCube(point);
+					GameObject* go = Scene::Current()->AddRawModel(Loader::Get()->SelectedRawModel());
+					go->GetComponent<Transform>()->Position = point;
 				}
 			}
 			ImGui::EndDragDropTarget();
@@ -502,16 +512,25 @@ namespace Engine {
 		ImGui::Begin("Objects");
 		ypos = 25;
 		xpos = 25;
-
-		ImTextureID texID = (void*)1;
-		bool clicked = ImGui::ImageButton(texID, ImVec2(50, 50)); //TODO imgui pop
-
-		if (ImGui::BeginDragDropSource())
+		index = 0;
+		for (std::pair<std::string, RawModel*> model : Loader::Get()->GetRawModels())
 		{
-			ImGui::SetDragDropPayload("obj", "test", 5);
-			ImGui::EndDragDropSource();
-			
+			xpos = 25 + (index % 10) * 75;
+			ypos = 25 + (index / 10) * 75;
+			ImGui::SetCursorPos(ImVec2((float)xpos, (float)ypos));
+			model.second->RenderProjectInfo();
+			index++;
 		}
+
+		//ImTextureID texID = (void*)1;
+		//bool clicked = ImGui::ImageButton(texID, ImVec2(50, 50)); //TODO imgui pop
+
+		//if (ImGui::BeginDragDropSource())
+		//{
+		//	ImGui::SetDragDropPayload("obj", "test", 5);
+		//	ImGui::EndDragDropSource();
+		//	
+		//}
 		ImGui::End();
 	}	
 

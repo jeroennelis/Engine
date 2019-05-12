@@ -16,11 +16,15 @@ namespace Engine {
 		static Loader* Get();
 
 		inline const std::vector<Material*>& GetMaterials() const  { return m_Materials; };
+		inline const std::unordered_map<std::string, RawModel*>& GetRawModels() const { return m_Models; }
 		Material* DraggedMaterial();
 		void SetDraggedMaterial(Material* material);
 
 		inline Material* SelectedMaterial() { return m_SelectedMaterial; }
 		inline void SetSelectedMaterial(Material* material) { m_SelectedMaterial = material; }
+
+		inline RawModel* SelectedRawModel() { return m_SelectedRawModel; }
+		inline void SetDraggedRawModel(RawModel* model) { m_SelectedRawModel = model; }
 
 		Shader* GetShader(const std::string&);
 		RawModel* GetModel(const std::string&);
@@ -45,7 +49,8 @@ namespace Engine {
 		{
 			{"basic",	"../Engine/res/shaders/basic.shader" },
 			{"diffuse",	"../Engine/res/shaders/diffuse.shader" },
-			{"texture",	"../Engine/res/shaders/texture.shader"}
+			{"texture",	"../Engine/res/shaders/texture.shader"},
+			{"preview",	"../Engine/res/shaders/preview.shader"}
 		};
 
 		const std::unordered_map<std::string, std::string> m_ModelPaths =
@@ -60,5 +65,6 @@ namespace Engine {
 		std::vector<Material*> m_Materials;
 		Material * m_DraggedMaterial;
 		Material * m_SelectedMaterial;
+		RawModel * m_SelectedRawModel;
 	};
 }
