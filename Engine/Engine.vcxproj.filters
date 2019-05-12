@@ -19,6 +19,9 @@
     <Filter Include="src\Engine\Logic">
       <UniqueIdentifier>{8F04C0A8-7BFD-DEFA-A42F-C47F9087BE06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Engine\Physics">
+      <UniqueIdentifier>{8496B3FD-707A-7453-D9DA-6EA6C5DD5ED5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Engine\Renderer">
       <UniqueIdentifier>{F838018B-649A-DE98-ED07-254B59681558}</UniqueIdentifier>
     </Filter>
@@ -30,6 +33,12 @@
     </Filter>
     <Filter Include="src\Platform\OpenGl">
       <UniqueIdentifier>{55A49437-C105-7245-4A73-B8F7B6D3A804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\OpenVR">
+      <UniqueIdentifier>{2AA69437-9607-7245-1F75-B8F78BD5A804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Vulkan">
+      <UniqueIdentifier>{81084748-ED69-2456-76D7-6A08E2375B15}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
@@ -66,7 +75,13 @@
     <ClInclude Include="src\Engine\Application.h">
       <Filter>src\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Components\Camera.h">
+      <Filter>src\Engine\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\Components\Component.h">
+      <Filter>src\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Components\Light.h">
       <Filter>src\Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Components\TestComponent.h">
@@ -123,7 +138,31 @@
     <ClInclude Include="src\Engine\MouseButtonCodes.h">
       <Filter>src\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Renderer\RenderLayer.h">
+    <ClInclude Include="src\Engine\Physics\Particle.h">
+      <Filter>src\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physics\ParticleContact.h">
+      <Filter>src\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physics\ParticleForceGenerator.h">
+      <Filter>src\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physics\ParticleLinks.h">
+      <Filter>src\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physics\ParticleWorld.h">
+      <Filter>src\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physics\PhysicsLayer.h">
+      <Filter>src\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physics\Precision.h">
+      <Filter>src\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Renderer\GraphicsContext.h">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Renderer\RenderAPI.h">
       <Filter>src\Engine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\XMLParser\XMLNode.h">
@@ -141,7 +180,34 @@
     <ClInclude Include="src\Platform\OpenGl\FrameBuffer.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\GL.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\GLRenderAPI.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\IndexBuffer.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Loader.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Material.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\MaterialProperty.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\MeshRenderer.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\OBJLoader.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\OpenGLContext.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\RawModel.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\Renderer.h">
@@ -161,6 +227,21 @@
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\VertexBufferLayout.h">
       <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenVR\OpenVRContext.h">
+      <Filter>src\Platform\OpenVR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Vulkan\VKIndexBuffer.h">
+      <Filter>src\Platform\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Vulkan\VKVertexBuffer.h">
+      <Filter>src\Platform\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Vulkan\VulkanContext.h">
+      <Filter>src\Platform\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Vulkan\VulkanRenderAPI.h">
+      <Filter>src\Platform\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>src\Platform\Windows</Filter>
@@ -1260,13 +1341,17 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\GL.h" />
-    <ClInclude Include="..\..\VR_engine\VR Engine\OBJLoader.h" />
-    <ClInclude Include="src\Engine\Loaders\OBJLoader.h" />
+    <ClInclude Include="src\Engine\Maths.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
       <Filter>src\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Components\Camera.cpp">
+      <Filter>src\Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Components\Light.cpp">
+      <Filter>src\Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Components\TestComponent.cpp">
       <Filter>src\Engine\Components</Filter>
@@ -1298,8 +1383,23 @@
     <ClCompile Include="src\Engine\Logic\Scene.cpp">
       <Filter>src\Engine\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Renderer\RenderLayer.cpp">
-      <Filter>src\Engine\Renderer</Filter>
+    <ClCompile Include="src\Engine\Physics\Particle.cpp">
+      <Filter>src\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physics\ParticleContact.cpp">
+      <Filter>src\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physics\ParticleForceGenerator.cpp">
+      <Filter>src\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physics\ParticleLinks.cpp">
+      <Filter>src\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physics\ParticleWorld.cpp">
+      <Filter>src\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physics\PhysicsLayer.cpp">
+      <Filter>src\Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp">
       <Filter>src\Engine\XMLParser</Filter>
@@ -1313,7 +1413,31 @@
     <ClCompile Include="src\Platform\OpenGl\FrameBuffer.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\GLRenderAPI.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\IndexBuffer.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Loader.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Material.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\MaterialProperty.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\MeshRenderer.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\OBJLoader.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\RawModel.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\Renderer.cpp">
@@ -1331,6 +1455,21 @@
     <ClCompile Include="src\Platform\OpenGl\VertexBuffer.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenVR\OpenVRContext.cpp">
+      <Filter>src\Platform\OpenVR</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Vulkan\VKVertexBuffer.cpp">
+      <Filter>src\Platform\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Vulkan\VkIndexBuffer.cpp">
+      <Filter>src\Platform\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Vulkan\VulkanContext.cpp">
+      <Filter>src\Platform\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Vulkan\VulkanRenderAPI.cpp">
+      <Filter>src\Platform\Vulkan</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
@@ -1343,7 +1482,6 @@
     <ClCompile Include="vendor\stb_image\std_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\VR_engine\VR Engine\OBJLoader.cpp" />
-    <ClCompile Include="src\Engine\Loaders\OBJLoader.cpp" />
+    <ClCompile Include="src\Engine\Maths.cpp" />
   </ItemGroup>
 </Project>

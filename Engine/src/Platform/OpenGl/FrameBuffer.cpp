@@ -1,5 +1,6 @@
 #include  "enpch.h" 
 #include  "FrameBuffer.h" 
+#include  "glad/glad.h" 
 
 namespace Engine {
 	FrameBuffer::FrameBuffer(int width, int height)

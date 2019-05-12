@@ -7,6 +7,11 @@
 
 namespace Engine {
 
+	enum RENDER_API {
+		GL,
+		VULKAN
+	};
+
 	struct WindowProperties
 	{
 		std::string Title;
@@ -34,10 +39,13 @@ namespace Engine {
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
+		virtual double GetFPS() = 0;
+		virtual double GetFrameRate() = 0;
 
 		virtual void* GetNativeWindow() const = 0;
 
-		static Window* Create(const WindowProperties& props = WindowProperties());
+		static Window* Create(RENDER_API api, const WindowProperties& props = WindowProperties());
+
 
 	};
 }

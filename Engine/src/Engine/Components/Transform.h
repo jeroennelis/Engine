@@ -1,13 +1,14 @@
 #pragma once
 #include  "Component.h" 
-#include <Maths/src/Vector3.h>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 namespace Engine {
 
 	class Transform : public Component
 	{
 	public:
-		Transform();
+		Transform(Transform* ParentTransform = nullptr);
 		~Transform();
 
 		virtual void Update() override;
@@ -18,9 +19,17 @@ namespace Engine {
 
 		const static unsigned int ComponentType;
 
-		Maths::Vector3 Position;
-		Maths::Vector3 Rotation;
-		Maths::Vector3 Scale = Maths::Vector3(1.0f,1.0f,1.0f);
+		glm::vec3 Position = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 Scale = glm::vec3(1.0f,1.0f,1.0f);
+
+		glm::mat4 TransformationMatrix;
+
+	private:
+		void CalculateTransform();
+
+	private:
+		Transform* m_ParentTransform;
 	};
 }
 

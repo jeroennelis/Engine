@@ -20,9 +20,7 @@ class Sandbox : public Engine::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new Engine::LogicLayer());
 		PushLayer(new ExampleLayer());
-		PushLayer(new Engine::RenderLayer());
 	}
 
 	~Sandbox()

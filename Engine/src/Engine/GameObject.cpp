@@ -5,12 +5,17 @@
 #include  "imgui.h"
 #include  "Engine/Logic/Scene.h"
 #include "Components/Transform.h"
+#include "Platform/OpenGl/MeshRenderer.h"
+#include "Platform/OpenGl/Loader.h"
 
 namespace Engine {
-	GameObject::GameObject(const std::string & name)
-		:m_Name(name)
+	GameObject::GameObject(const std::string & name, GameObject* parent)
+		:m_Name(name), m_Index(Scene::ObjectCount++), m_Parent(parent)
 	{
-		m_Components.push_back(std::make_shared<Transform>());
+		if (parent)
+			m_Components.push_back(std::make_shared<Transform>(parent->GetComponent<Transform>()));
+		else
+			m_Components.push_back(std::make_shared<Transform>());
 	}
 
 	GameObject::~GameObject()
@@ -31,13 +36,32 @@ namespace Engine {
 		if (!m_Children.size())
 		{	
 			ImGui::Indent();
-			if (ImGui::Selectable(m_Name.c_str(), (selection_mask & (1 << index))))
+			std::stringstream name;
+			name << m_Name << "##" << index;
+			if (ImGui::Selectable(name.str().c_str(), (selection_mask & (1 << index))))
 			{
 				node_clicked = index;
 				Scene::SetSelectedGameObject(this);
 			}
 			ContextMenu(node_clicked,index);
-			
+			if (ImGui::BeginDragDropTarget())
+			{
+				MeshRenderer* renderer = GetComponent<MeshRenderer>();
+				if (renderer)
+				{
+					if (const ImGuiPayload* pl = ImGui::AcceptDragDropPayload("Material"))
+					{
+
+						{
+							renderer->SetMaterial(Loader::Get()->DraggedMaterial());
+							Loader::Get()->SetDraggedMaterial(nullptr);
+						}
+
+					}
+				}
+				
+				ImGui::EndDragDropTarget();
+			}
 
 			index++;
 			ImGui::Unindent();
@@ -55,6 +79,24 @@ namespace Engine {
 				{
 					edit = true;
 				}
+			}
+			if (ImGui::BeginDragDropTarget())
+			{
+				MeshRenderer* renderer = GetComponent<MeshRenderer>();
+				if (renderer)
+				{
+					if (const ImGuiPayload* pl = ImGui::AcceptDragDropPayload("Material"))
+					{
+
+						{
+							renderer->SetMaterial(Loader::Get()->DraggedMaterial());
+							Loader::Get()->SetDraggedMaterial(nullptr);
+						}
+
+					}
+				}
+
+				ImGui::EndDragDropTarget();
 			}
 			ContextMenu(node_clicked, index);
 
@@ -79,6 +121,19 @@ namespace Engine {
 
 	}
 
+	void GameObject::Render()
+	{
+		MeshRenderer* renderer = GetComponent<MeshRenderer>();
+		if (renderer)
+		{
+			renderer->Draw();
+		}
+		for (auto child : m_Children)
+		{
+			child->Render();
+		}
+	}
+
 	void GameObject::AddChild(std::shared_ptr<GameObject> go)
 	{
 		m_Children.push_back(go);
@@ -94,9 +149,9 @@ namespace Engine {
 				return;
 			}
 		}
-		EN_CORE_INFO( "Added a {0}" , newComp->Name());
 		m_Components.push_back(newComp);
 	}
+
 	void GameObject::GetNrOfChildrenRecursively(unsigned int& nrSoFar)
 	{
 		if (!m_Children.size())
@@ -132,30 +187,46 @@ namespace Engine {
 				renaming = true;
 				
 			}
-			if (ImGui::MenuItem( "Ducplicate" , ""  , false, false))
+			/*if (ImGui::MenuItem( "Ducplicate" , ""  , false, false))
 			{
 
-			}
-			if (ImGui::MenuItem( "Delete" , "" , false, false))
+			}*/
+			if (ImGui::MenuItem( "Delete" , "" , false, true))
 			{
+				for (std::vector<std::shared_ptr<GameObject>>::iterator it = Scene::Current()->GameObjects().begin(); it != Scene::Current()->GameObjects().end(); ++it)
+				{
+					GameObject* temp = it->get();
+					if(temp->Index() == m_Index)
+					{ 
+						Scene::Current()->GameObjects().erase(it);
 
+						// temp
+						ImGui::EndPopup();
+						
+						return;
+					}
+				}
 			}
 			ImGui::Separator();
 			ImGui::Separator();
 
 			if (ImGui::MenuItem( "Create Empty" , "" , false, true))
 			{
-				AddChild(std::make_shared<GameObject>(GameObject( "GameObject" )));
+				AddChild(std::make_shared<GameObject>(GameObject( "GameObject" , this)));
 			}
 			if (ImGui::BeginMenu( "3D Object" ))
 			{
-				if (ImGui::MenuItem( "Cube" , ""  , false, false))
+				if (ImGui::MenuItem( "Cube" , ""  , false, true))
 				{
-
+					AddChild(Scene::CreateCube(this));
 				}
-				if (ImGui::MenuItem( "Sphere" , ""  , false, false))
+				if (ImGui::MenuItem( "Sphere" , ""  , false, true))
 				{
-
+					AddChild(Scene::CreateSphere(this));
+				}
+				if (ImGui::MenuItem("target", "", false, true))
+				{
+					AddChild(Scene::CreateTarget(this));
 				}
 				ImGui::EndMenu();
 			}

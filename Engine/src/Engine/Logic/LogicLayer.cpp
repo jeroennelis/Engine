@@ -22,6 +22,13 @@ namespace Engine
 	void LogicLayer::OnUpdate()
 	{
 		Scene::Current()->OnUpdate();
+		Scene::Current()->Render();
+	}
+
+	void LogicLayer::OnEvent(Event & event)
+	{
+		Scene::Current()->GetSceneCamera()->OnEvent(event);
+		//EN_CORE_INFO("{0}",event.ToString());
 	}
 }
 
