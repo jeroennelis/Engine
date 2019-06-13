@@ -7,8 +7,7 @@
 
 #include "Platform/OpenGl/OpenGLContext.h"
 #include "Platform/Vulkan/VulkanContext.h"
-
-//#include <glad/glad.h>
+#include "Engine/Renderer/Renderer.h"
 
 namespace Engine {
 
@@ -19,12 +18,12 @@ namespace Engine {
 		EN_CORE_ERROR( "GLFW Error ({ 0 }) : {1}" , error, description);
 	}
 
-	Window* Window::Create(RENDER_API api,const WindowProperties& props)
+	Window* Window::Create(RendererAPItest api, const WindowProperties& props)
 	{
 		return new WindowsWindow(api, props);
 	}
 
-	WindowsWindow::WindowsWindow(RENDER_API api, const WindowProperties& props)
+	WindowsWindow::WindowsWindow(RendererAPItest api, const WindowProperties& props)
 	{
 
 		m_Data.Title = props.Title;
@@ -45,10 +44,11 @@ namespace Engine {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		switch (api) {
-			case GL:
+		switch (api) 
+		{
+		case RendererAPItest::OpenGL:
 				break;
-			case VULKAN:
+		case RendererAPItest::Vulkan:
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 				break;
 		}
@@ -57,15 +57,18 @@ namespace Engine {
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		switch (api) {
-		case GL:
-			m_Context = new OpenGLContext(m_Window);
-			m_Context->Init();
-			break;
-		case VULKAN:
-			m_Context = new VulkanContext(m_Window);
-			m_Context->Init();
-			break;
-		}			
+			case RendererAPItest::OpenGL:
+				m_Context = new OpenGLContext(m_Window);
+				break;
+
+			case RendererAPItest::Vulkan:
+				m_Context = new VulkanContext(m_Window);
+				break;
+
+			
+		}		
+		m_Context->Init();
+			
 
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow * window, int width, int height)
 			{

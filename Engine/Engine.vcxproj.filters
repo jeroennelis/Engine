@@ -43,6 +43,9 @@
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\ZED">
+      <UniqueIdentifier>{7340C8DF-5F39-E731-886B-CCB674C3C63D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -135,6 +138,9 @@
     <ClInclude Include="src\Engine\Logic\Scene.h">
       <Filter>src\Engine\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Maths.h">
+      <Filter>src\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\MouseButtonCodes.h">
       <Filter>src\Engine</Filter>
     </ClInclude>
@@ -159,12 +165,6 @@
     <ClInclude Include="src\Engine\Physics\Precision.h">
       <Filter>src\Engine\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Renderer\GraphicsContext.h">
-      <Filter>src\Engine\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Renderer\RenderAPI.h">
-      <Filter>src\Engine\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\XMLParser\XMLNode.h">
       <Filter>src\Engine\XMLParser</Filter>
     </ClInclude>
@@ -181,12 +181,6 @@
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\GL.h">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\GLRenderAPI.h">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\IndexBuffer.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\Loader.h">
@@ -210,37 +204,16 @@
     <ClInclude Include="src\Platform\OpenGl\RawModel.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\Renderer.h">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\Shader.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\Texture.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\VertexArray.h">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\VertexBuffer.h">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\VertexBufferLayout.h">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\OpenVR\OpenVRContext.h">
       <Filter>src\Platform\OpenVR</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Vulkan\VKIndexBuffer.h">
-      <Filter>src\Platform\Vulkan</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Vulkan\VKVertexBuffer.h">
-      <Filter>src\Platform\Vulkan</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Vulkan\VulkanContext.h">
-      <Filter>src\Platform\Vulkan</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Vulkan\VulkanRenderAPI.h">
       <Filter>src\Platform\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
@@ -248,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\ZED\ZedTest.h">
+      <Filter>src\Platform\ZED</Filter>
     </ClInclude>
     <ClInclude Include="src\enpch.h">
       <Filter>src</Filter>
@@ -1341,7 +1317,18 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Maths.h" />
+    <ClInclude Include="src\Platform\OpenGl\Terrain.h" />
+    <ClInclude Include="src\Platform\OpenGl\TerrainRenderer.h" />
+    <ClInclude Include="src\Engine\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLBuffer.h" />
+    <ClInclude Include="src\Engine\Renderer\Renderer.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanRenderer.h" />
+    <ClInclude Include="src\Engine\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Engine\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Platform\OpenGl\GLRenderAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
@@ -1383,6 +1370,9 @@
     <ClCompile Include="src\Engine\Logic\Scene.cpp">
       <Filter>src\Engine\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Maths.cpp">
+      <Filter>src\Engine</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\Physics\Particle.cpp">
       <Filter>src\Engine\Physics</Filter>
     </ClCompile>
@@ -1413,12 +1403,6 @@
     <ClCompile Include="src\Platform\OpenGl\FrameBuffer.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\GLRenderAPI.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\IndexBuffer.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\Loader.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
@@ -1440,34 +1424,16 @@
     <ClCompile Include="src\Platform\OpenGl\RawModel.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\Renderer.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\Shader.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\Texture.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\VertexArray.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\VertexBuffer.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\OpenVR\OpenVRContext.cpp">
       <Filter>src\Platform\OpenVR</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Vulkan\VKVertexBuffer.cpp">
-      <Filter>src\Platform\Vulkan</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Vulkan\VkIndexBuffer.cpp">
-      <Filter>src\Platform\Vulkan</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\Vulkan\VulkanContext.cpp">
-      <Filter>src\Platform\Vulkan</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Vulkan\VulkanRenderAPI.cpp">
       <Filter>src\Platform\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -1476,12 +1442,31 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\ZED\GLObject.cpp">
+      <Filter>src\Platform\ZED</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\ZED\ZedShader.cpp">
+      <Filter>src\Platform\ZED</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\ZED\ZedTest.cpp">
+      <Filter>src\Platform\ZED</Filter>
+    </ClCompile>
     <ClCompile Include="src\enpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\std_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Maths.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\Terrain.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\TerrainRenderer.cpp" />
+    <ClCompile Include="src\Engine\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Engine\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanBuffer.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanRenderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\OpenGLRenderer.cpp" />
+    <ClCompile Include="src\Engine\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\GLRenderAPI.cpp" />
   </ItemGroup>
 </Project>

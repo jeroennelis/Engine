@@ -51,7 +51,7 @@ namespace Engine {
 		if (!file.is_open())
 		{
 			std::cout << "file: " << objFile << "could not be opened!" << std::endl;
-			return RawModel{ nullptr,nullptr };
+			return RawModel{ nullptr };
 		}
 
 		while (file.good())
@@ -107,7 +107,7 @@ namespace Engine {
 			delete vertex;
 		RawModel rawmodel = ConvertVectorsToRawModel(verticesVectors, texturesVectors, normalsVectors, indices);
 		rawmodel.va->Bind();
-		rawmodel.ib->Bind();
+		rawmodel.va->GetIndexBuffer()->Bind();
 		return rawmodel;
 	}
 
@@ -220,35 +220,45 @@ namespace Engine {
 		std::vector<float> data;
 		for (int i = 0; i < verticesVector.size()/3; i++)
 		{
-			data.push_back(verticesVector[i * 3]);
-			data.push_back(verticesVector[i * 3 + 1]);
-			data.push_back(verticesVector[i * 3 + 2]);
+			data.push_back(verticesVector[long(i * 3)]);
+			data.push_back(verticesVector[long(i * 3 + 1)]);
+			data.push_back(verticesVector[long(i * 3 + 2)]);
 
-			data.push_back(normalsVector[i * 3]);
-			data.push_back(normalsVector[i * 3 + 1]);
-			data.push_back(normalsVector[i * 3 + 2]);
+			data.push_back(normalsVector[long(i * 3)]);
+			data.push_back(normalsVector[long(i * 3 + 1)]);
+			data.push_back(normalsVector[long(i * 3 + 2)]);
 
-			data.push_back(texturesVector[i * 2]);
-			data.push_back(texturesVector[i * 2 + 1]);
+			data.push_back(texturesVector[long(i * 2)]);
+			data.push_back(texturesVector[long(i * 2 + 1)]);
 
 		}
 
-		VertexArray* va = new VertexArray();
+		std::shared_ptr<VertexArray> va;
+		va.reset(VertexArray::Create());
 		va->Bind();
-		VertexBuffer vb (data.data(), (int)verticesVector.size() / 3 * 8 * sizeof(float));
 
-		VertexBufferLayout layout;
-		layout.Push<float>(3);
-		layout.Push<float>(3);
-		layout.Push<float>(2);
-		va->AddBuffer(vb, layout);
 
-		IndexBuffer* ib = new IndexBuffer(indices.data(), (int)indices.size());
+		std::shared_ptr<VertexBuffer> vb;
+		vb.reset(VertexBuffer::Create(data.data(), (int)verticesVector.size() / 3 * 8 * sizeof(float)));
+		
+		BufferLayout layout = {
+			{ShaderDataType::Float3, "a_Position"},
+			{ShaderDataType::Float3, "a_Normal"},
+			{ShaderDataType::Float2, "a_TexCoords"} 
+		};
+		vb->SetLayout(layout);
+		
+		va->AddVertexBuffer(vb);
+
+		std::shared_ptr<IndexBuffer> ib;
+		ib.reset(IndexBuffer::Create(indices.data(), (int)indices.size()));
+		va->SetIndexBuffer(ib);
+
 
 		va->UnBind();
-		vb.UnBind();
+		vb->UnBind();
 		ib->UnBind();
-		return RawModel{ va, ib };
+		return RawModel{ va };
 	}
 
 	void OBJLoader::ParseMaterialFile(const std::string & materialFile)

@@ -13,7 +13,7 @@ namespace Engine {
 	class WindowsWindow : public Window
 	{
 	public:
-		WindowsWindow(RENDER_API api, const WindowProperties& props);
+		WindowsWindow(RendererAPItest api, const WindowProperties& props);
 		virtual ~WindowsWindow();
 
 		void OnUpdate() override;

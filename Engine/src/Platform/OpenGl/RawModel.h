@@ -1,16 +1,15 @@
 #pragma once
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "VertexBufferLayout.h"
-#include "VertexBuffer.h"
+
+#include "Engine/Renderer/VertexArray.h"
 #include "FrameBuffer.h"
 
 namespace Engine {
-	struct RawModel {
-		VertexArray* va;
-		IndexBuffer* ib;
 
-		RawModel(VertexArray* vertexArray, IndexBuffer* indexBuffer);
+	struct RawModel {
+		std::shared_ptr<VertexArray> va;
+
+		RawModel();
+		RawModel(const std::shared_ptr<VertexArray>& vertexArray);
 
 		void RenderPreview();
 

@@ -16,13 +16,11 @@ IncludeDir["GLFW"] = "Engine/vendor/GLFW/include"
 IncludeDir["Glad"] = "Engine/vendor/Glad/include"
 IncludeDir["ImGui"] = "Engine/vendor/imgui"
 IncludeDir["glm"] = "Engine/vendor/glm"
-IncludeDir["Maths"] = "Engine/Dependencies/Maths"
 IncludeDir["stb_image"] = "Engine/vendor/stb_image"
 
 include "Engine/vendor/GLFW"
 include "Engine/vendor/Glad"
 include "Engine/vendor/imgui"
-include "Engine/Dependencies/Maths"
 
 project "Engine"
 	location "Engine"
@@ -58,14 +56,21 @@ project "Engine"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{prj.name}/vendor/openvr/include",
-		"%{IncludeDir.Maths}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{prj.name}/vendor/zed/include",
+		"%{prj.name}/vendor/opencv_3.1.0/include",
+		"%{prj.name}/vendor/CUDA/include"
+		
 	}
 
 	libdirs
 	{
 		"%{prj.name}/vendor/openvr/lib/win64",
-		"%{prj.name}/vendor/Vulkan/lib"
+		"%{prj.name}/vendor/Vulkan/lib",
+		"%{prj.name}/vendor/CUDA/lib/x64",
+		"%{prj.name}/vendor/zed/lib",
+		"%{prj.name}/vendor/opencv_3.1.0/x64/vc14/lib"
+
 	}
 
 	links
@@ -76,7 +81,13 @@ project "Engine"
 		"opengl32.lib",
 		"openvr_api.lib",
 		"vulkan-1.lib",
-		"Maths"
+		"sl_core64.lib",
+		"sl_input64.lib",
+		"sl_zed64.lib",
+		"opencv_world310.lib",
+		"opencv_world310d.lib",
+		"cuda.lib",
+		"cudart.lib"
 	}
 
 	filter "system:windows"
@@ -131,8 +142,12 @@ project "Sandbox"
 		"Engine/vendor/Vulkan/include",
 		"Engine/vendor/tiny_obj",
 		"Engine/src",
-		"Engine/vendor",
-		"%{IncludeDir.glm}"
+		"Engine/vendor/openvr/include",
+		"Engine/vendor/Glad/include",
+		"%{IncludeDir.glm}",
+		"Engine/vendor/zed/include",
+		"Engine/vendor/opencv_3.1.0/include",
+		"Engine/vendor/CUDA/include"
 	}
 
 	links

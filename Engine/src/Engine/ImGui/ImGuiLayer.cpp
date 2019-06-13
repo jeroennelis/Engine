@@ -303,7 +303,8 @@ namespace Engine {
 		
 
 		ImVec2 endPos = ImVec2(startPos.x + size.x, startPos.y + size.y);
-		ImTextureID texID = (ImTextureID)(Application::Get().GetRenderAPI().GetSceneFrameBufferTexture());
+		ImTextureID texID = (ImTextureID)(Renderer::Get()->GetSceneFrameBufferTexture());
+		//ImTextureID texID = (ImTextureID)14;
 		ImGui::GetWindowDrawList()->AddImage(texID, startPos, ImVec2(startPos.x + size.x, startPos.y + size.y), ImVec2(0, 1), ImVec2(1, 0));
 
 
@@ -339,7 +340,7 @@ namespace Engine {
 		ImVec2 startPos = ImGui::GetCursorScreenPos();
 		ImVec2 size = ImGui::GetWindowSize();
 		ImVec2 endPos = ImVec2(startPos.x + size.x, startPos.y + size.y);
-		ImTextureID texID = (ImTextureID)(Application::Get().GetRenderAPI().GetGameFrameBufferTexture());
+		ImTextureID texID = (ImTextureID)(Renderer::Get()->GetGameFrameBufferTexture());
 		ImGui::GetWindowDrawList()->AddImage(texID, startPos, ImVec2(startPos.x + size.x, startPos.y + size.y), ImVec2(0, 1), ImVec2(1, 0));
 		
 

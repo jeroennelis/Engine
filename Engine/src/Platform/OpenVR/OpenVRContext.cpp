@@ -2,6 +2,10 @@
 
 #include "OpenVRContext.h"
 
+#include "Platform/ZED/ZedTest.h"
+
+//#include "Platform/ZED/ZedTest.h"
+
 namespace Engine {
 
 	//Constructor
@@ -80,6 +84,14 @@ namespace Engine {
 
 		//ToDo render models (controllers)
 
+		//ZED
+		
+		
+		m_System->GetRecommendedRenderTargetSize(&m_Width, &m_Height);
+
+
+		zedTest.Init(m_Width, m_Height);
+
 		return true;
 	}
 
@@ -112,12 +124,24 @@ namespace Engine {
 					default:										m_DevClassChar[devIndex] = '?'; break;
 					}
 				}
-			}
+			} 
 		}
 		if (m_TrackedDevicePoses[vr::k_unTrackedDeviceIndex_Hmd].bPoseIsValid)
 		{
 			m_HMDPose = glm::inverse(m_DevicePoses[vr::k_unTrackedDeviceIndex_Hmd]);
 		}
+
+		vr::Texture_t leftEyeTexture = { (void*)(uintptr_t)14, vr::TextureType_OpenGL, vr::ColorSpace_Gamma };
+		vr::VRTextureBounds_t boundsLeft{ -0.0f,-0.0f,0.5f, 1.00f };
+		vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture, &boundsLeft);
+		vr::Texture_t rightEyeTexture = { (void*)(uintptr_t)14, vr::TextureType_OpenGL, vr::ColorSpace_Gamma };
+		vr::VRTextureBounds_t boundsRight{ 0.5f,-0.00f,1.00f, 1.00f };
+		vr::EVRCompositorError error = vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture, &boundsRight);
+		std::cout << error << std::endl;
+
+
+
+		zedTest.Update();
 	}
 
 	void OpenVRContext::UpdateProjections()

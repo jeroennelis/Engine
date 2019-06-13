@@ -58,7 +58,7 @@ namespace Engine {
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_BACK);
 		m_RawModel->va->Bind();
-		m_RawModel->ib->Bind();
+		//m_RawModel->ib->Bind();
 		m_Material->Bind();
 
 		glm::mat4 projection = CreateProjectionMatrix();
@@ -71,7 +71,7 @@ namespace Engine {
 		
 		m_Material->m_Shader->SetUniform("u_transformationMatrix", &m_Transform->TransformationMatrix);
 
-		GLCall(glDrawElements(GL_TRIANGLES, m_RawModel->ib->GetCount(), GL_UNSIGNED_INT, nullptr));
+		glDrawElements(GL_TRIANGLES, m_RawModel->va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
 	glm::mat4 MeshRenderer::CreateProjectionMatrix()

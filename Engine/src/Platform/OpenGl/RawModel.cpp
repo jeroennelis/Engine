@@ -4,8 +4,13 @@
 #include "Engine/Application.h"
 #include "imgui.h"
 
-Engine::RawModel::RawModel(VertexArray* vertexArray, IndexBuffer* indexBuffer)
-	:va(vertexArray), ib(indexBuffer)
+Engine::RawModel::RawModel()
+	:va(nullptr), m_Preview(nullptr)
+{	
+}
+
+Engine::RawModel::RawModel(const std::shared_ptr<VertexArray>& vertexArray)
+	:va(vertexArray)
 {
 	m_Preview = new FrameBuffer(512, 512);
 }
@@ -20,7 +25,7 @@ void Engine::RawModel::RenderPreview()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BACK);
 	va->Bind();
-	ib->Bind();
+	/*ib->Bind();*/
 	Loader::Get()->GetShader("preview")->Bind();
 
 	glm::mat4 projection = glm::mat4(1.0);
@@ -35,7 +40,7 @@ void Engine::RawModel::RenderPreview()
 	//transform = glm::translate(transform, glm::vec3(0, 0, 10));
 	Loader::Get()->GetShader("preview")->SetUniform("u_transformationMatrix", &transform);
 
-	GLCall(glDrawElements(GL_TRIANGLES, ib->GetCount(), GL_UNSIGNED_INT, nullptr));
+	glDrawElements(GL_TRIANGLES, va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	m_Preview->Unbind();
 	glViewport(0, 0, Application::Get().GetWindow().GetWidth(), Application::Get().GetWindow().GetHeight());			//TODO set viewport while binding fb
 }

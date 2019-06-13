@@ -1,9 +1,8 @@
 #pragma once
 
-#include  "enpch.h" 
-
 #include  "Engine/Core.h" 
 #include  "Engine/Events/Event.h" 
+#include "Engine/Renderer/Renderer.h"
 
 namespace Engine {
 
@@ -44,8 +43,6 @@ namespace Engine {
 
 		virtual void* GetNativeWindow() const = 0;
 
-		static Window* Create(RENDER_API api, const WindowProperties& props = WindowProperties());
-
-
+		static Window* Create(RendererAPItest api, const WindowProperties& props = WindowProperties());
 	};
 }

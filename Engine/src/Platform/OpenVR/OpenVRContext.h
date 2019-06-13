@@ -1,7 +1,10 @@
 #pragma once
 
-#include "openvr.h"
+
 #include "Engine/Maths.h"
+#include "openvr.h"
+#include "Platform/ZED/ZedTest.h"
+
 
 namespace Engine {
 
@@ -50,6 +53,8 @@ namespace Engine {
 
 		char m_DevClassChar[vr::k_unMaxTrackedDeviceCount];
 
+		uint32_t m_Width, m_Height;
 
+		ZedTest zedTest;
 	};
 }

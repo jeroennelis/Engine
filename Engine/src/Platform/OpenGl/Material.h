@@ -25,7 +25,6 @@ namespace Engine {
 		const void RenderProjectInfo()const ;
 
 		void RenderPreview();
-		glm::mat4 CreateProjectionMatrix();
 
 	private:
 		std::vector<MaterialProperty*> m_Properties;

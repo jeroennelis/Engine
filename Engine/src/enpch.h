@@ -19,6 +19,12 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "openvr.h"
+
+
+
+
+
 #ifdef EN_PLATFORM_WINDOWS
 	#include <Windows.h>
 	

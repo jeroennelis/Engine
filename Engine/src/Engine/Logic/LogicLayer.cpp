@@ -22,6 +22,10 @@ namespace Engine
 	void LogicLayer::OnUpdate()
 	{
 		Scene::Current()->OnUpdate();
+	}
+
+	void LogicLayer::OnRender()
+	{
 		Scene::Current()->Render();
 	}
 

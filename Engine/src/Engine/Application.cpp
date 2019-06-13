@@ -4,6 +4,8 @@
 #include "Input.h" 
 
 #include "Logic/LogicLayer.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/Buffer.h"
 
 namespace Engine {
 
@@ -19,21 +21,26 @@ namespace Engine {
 		EN_CORE_ASSERT(!s_Instance, Application already exists!);
 		s_Instance = this;
 
-		RENDER_API api = GL;
+		Renderer::Create(RendererAPItest::OpenGL);
 
-
-		m_Window = std::unique_ptr<Window>(Window::Create(api));
+		m_Window = std::unique_ptr<Window>(Window::Create(Renderer::GetAPI()));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_Window->SetVSync(false);
 
-		if(api == VULKAN)
-			m_RenderAPI = std::unique_ptr<RenderAPI>(VulkanRenderAPI::Create());
-		else if (api == GL)
-			m_RenderAPI = std::unique_ptr<RenderAPI>(GLRenderAPI::Create());
-
-		m_OpenVRContext = std::unique_ptr<OpenVRContext>(new OpenVRContext());
-		m_OpenVRContext->Init();
+		Renderer::Get()->Init();
+		
+		//m_OpenVRContext = std::unique_ptr<OpenVRContext>(new OpenVRContext());
+		//m_OpenVRContext->Init();
 		
 		PushLayer(new LogicLayer());
+
+		BufferLayout layout = {
+			{ShaderDataType::Float3, "a_Position"},
+			{ShaderDataType::Float4, "a_Color"},
+			{ShaderDataType::Float3, "a_normal"}
+		};
+
+
 	}
 
 	Application::~Application()
@@ -60,16 +67,14 @@ namespace Engine {
 		{
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
-			m_OpenVRContext->Update();
-			m_RenderAPI->Render();
+			if(m_OpenVRContext)
+				m_OpenVRContext->Update();
+			Renderer::Get()->Render();
 
-			m_Window->OnUpdate();
-
-			
-
-			
+			m_Window->OnUpdate();			
 		}		
-		m_RenderAPI->CleanUp();
+
+		Renderer::Get()->CleanUp();
 	}
 
 	void Application::PushLayer(Layer * layer)
@@ -89,6 +94,7 @@ namespace Engine {
 		m_Running = false;
 		return true;
 	}
+
 	glm::mat4 CreateProjectionMatrix()
 	{
 		float aspectRatio = (float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight();

@@ -6,6 +6,7 @@
 #include <GLM\glm.hpp>
 
 #include "RawModel.h"
+#include "Engine/Renderer/VertexArray.h"
 
 #define NO_INDEX -1
 

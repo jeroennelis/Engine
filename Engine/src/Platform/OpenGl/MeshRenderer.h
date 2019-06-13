@@ -1,5 +1,4 @@
 #pragma once
-#include "Renderer.h"
 #include "Engine/Components/Component.h"
 #include "RawModel.h"
 #include "Platform/OpenGl/Material.h"

@@ -11,7 +11,6 @@
 #include "Engine/ImGui/ImGuiLayer.h" 
 #include "Renderer/RenderAPI.h"
 #include "Platform/OpenGl/GLRenderAPI.h"
-#include "Platform/Vulkan/VulkanRenderAPI.h"
 #include "Platform/OpenVR/OpenVRContext.h"
 
 
@@ -43,7 +42,6 @@ namespace Engine {
 		bool OnWindowClosed(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
-		std::unique_ptr<RenderAPI> m_RenderAPI;
 		std::unique_ptr<RenderAPI> m_RenderAPI;
 		std::unique_ptr<OpenVRContext> m_OpenVRContext;
 		bool m_Running = true;

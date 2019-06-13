@@ -50,7 +50,8 @@ namespace Engine {
 			{"basic",	"../Engine/res/shaders/basic.shader" },
 			{"diffuse",	"../Engine/res/shaders/diffuse.shader" },
 			{"texture",	"../Engine/res/shaders/texture.shader"},
-			{"preview",	"../Engine/res/shaders/preview.shader"}
+			{"preview",	"../Engine/res/shaders/preview.shader"},
+			{"terrain", "../Engine/res/shaders/terrain.shader"}
 		};
 
 		const std::unordered_map<std::string, std::string> m_ModelPaths =
