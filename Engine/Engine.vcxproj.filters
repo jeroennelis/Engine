@@ -73,9 +73,6 @@
     <Filter Include="src\vendor\lodepng">
       <UniqueIdentifier>{22CB0AAF-0EAF-CB04-770F-C6576312B686}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\vendor\lodepng\include">
-      <UniqueIdentifier>{95F4B939-8104-660A-EABD-CA28D6EC54A3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -356,6 +353,9 @@
     </ClInclude>
     <ClInclude Include="src\enpch.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\lodepng\lodepng.h">
+      <Filter>src\vendor\lodepng</Filter>
     </ClInclude>
     <ClInclude Include="vendor\glm\glm\common.hpp">
       <Filter>vendor\glm\glm</Filter>
@@ -1446,9 +1446,8 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\vendor\lodepng\lodepng.h">
-      <Filter>src\vendor\lodepng\include</Filter>
-    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTCamera.h" />
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTPinhole.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
@@ -1673,5 +1672,7 @@
     <ClCompile Include="vendor\stb_image\std_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTCamera.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTPinhole.cpp" />
   </ItemGroup>
 </Project>

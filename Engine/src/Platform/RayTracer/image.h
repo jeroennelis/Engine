@@ -20,7 +20,7 @@ namespace Engine {
 		int getHeight() const;
 
 		glm::vec3* getPixel(int x, int y);
-		void setPixel(int x, int y, glm::vec3& color);
+		void setPixel(int x, int y, const glm::vec3& color);
 
 		void saveImage(std::string filename) const;
 	};

@@ -35,17 +35,16 @@ namespace Engine {
 		return data + (x + y * width);
 	}
 
-	void Image::setPixel(int x, int y, glm::vec3& color)
+	void Image::setPixel(int x, int y, const glm::vec3& color)
 	{
 		data[y + x * width] = color;
-
-		imgData[4 * (x + y * width) + 0] = 255;
-		imgData[4 * (x + y * width) + 1] =
-			(unsigned char)(color.b * 255.0f);
-		imgData[4 * (x + y * width) + 2] =
-			(unsigned char)(color.g * 255.0f);
-		imgData[4 * (x + y * width) + 3] =
+		imgData[4 * (x + y * width) + 0] =
 			(unsigned char)(color.r * 255.0f);
+		imgData[4 * (x + y * width) + 1] =
+			(unsigned char)(color.g * 255.0f);
+		imgData[4 * (x + y * width) + 2] =
+			(unsigned char)(color.b * 255.0f);
+		imgData[4 * (x + y * width) + 3] = 255;
 	}
 
 	void Image::saveImage(std::string filename) const
@@ -75,7 +74,7 @@ namespace Engine {
 		/*glTexSubImage2D(GL_TEXTURE_2D, 0,0,0,300,300,GL_RGB, GL_FLOAT, imgData)
 		glDrawPixels(300, 300, GL_ABGR_EXT, GL_UNSIGNED_BYTE, imgData);
 */
-		std::reverse(imgData, (unsigned char*)(imgData + 300 * 300 * 4));
+		//std::reverse(imgData, (unsigned char*)(imgData + 300 * 300 * 4));
 
 		/*Encode the image*/
 		unsigned error = lodepng_encode32_file(filename.c_str(), imgData, width, height);

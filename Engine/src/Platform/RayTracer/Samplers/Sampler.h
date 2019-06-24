@@ -21,6 +21,12 @@ namespace Engine {
 
 		glm::vec2 sample_unit_square(void);		// get next sample on the unit square
 
+		glm::vec2 sample_unit_disk(void);		// get next sample on the unit square
+
+		void map_samples_to_unit_disk(void);	// map the unit square samples on a disk
+
+		void map_samples_hemisphere(const float exp);		// map the unit square samples on a hemisphere
+
 		int const get_num_samples(void) const;
 
 	protected:
@@ -28,6 +34,9 @@ namespace Engine {
 		int num_sets;							// the number of sample sets stored
 		std::vector<glm::vec2> samples;			// sample points on a unit square
 		std::vector<int> shuffled_indices;		// the current number of sample points used
+		std::vector<glm::vec2>		disk_samples;			// sample points on a unit disk
+		std::vector<glm::vec3> 		hemisphere_samples;		// sample points on a unit hemisphere
+		std::vector<glm::vec3> 		sphere_samples;			// sample points on a unit sphere
 		unsigned long count;					// random index jump
 		int jump;
 	};

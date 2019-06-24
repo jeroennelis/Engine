@@ -55,7 +55,7 @@ namespace Engine {
 
 	ViewPlane::~ViewPlane(void)
 	{
-		delete sampler_ptr;
+		//delete sampler_ptr;
 	}
 
 	void ViewPlane::set_sampler(Sampler* sampler)

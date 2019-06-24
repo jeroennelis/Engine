@@ -3,6 +3,7 @@
 #include "World.h"
 
 #include <iostream>
+#include "../Cameras/RTPinhole.h"
 
 namespace Engine {
 	World::World()
@@ -30,21 +31,26 @@ namespace Engine {
 		vp.set_vres(300);
 		vp.set_sampler(new MultiJittered(num_samples));
 		vp.set_pixel_size(1);
+		
 		background_color = black;
 		tracer_ptr = new MultipleObjects(this);
 
-		Sphere* sphere_ptr = new Sphere;
-		sphere_ptr->set_center(0, -25, 0);
-		sphere_ptr->set_radius(80);
-		sphere_ptr->set_color(1, 0, 0);
-		add_object(sphere_ptr);
 
-		sphere_ptr = new Sphere(glm::vec3(0, 30, 0), 60);
+		Sphere* sphere_ptr = new Sphere(glm::vec3(0, 0, 0), 50);
 		sphere_ptr->set_color(0, 1, 0);
 		add_object(sphere_ptr);
 
-		Plane* plane_ptr = new Plane(glm::vec3(0, 0, 0), glm::vec3(0, 1, 1));
-		plane_ptr->set_color(0, 0.3f, 0.0);
+
+		RTPinhole* pinhole_ptr = new RTPinhole();
+		pinhole_ptr->SetEye(glm::vec3(0, 1, 500));
+		pinhole_ptr->SetLookat(glm::vec3(0, 0, 0));
+		pinhole_ptr->SetViewDistance(500);
+		pinhole_ptr->compute_uvw();
+
+		SetCamera(pinhole_ptr);
+
+		Plane* plane_ptr = new Plane(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+		plane_ptr->set_color(glm::vec3(1,0,0));
 		add_object(plane_ptr);
 
 		image = new Image(300, 300);
@@ -117,8 +123,42 @@ namespace Engine {
 		image->saveImage(filename.append(".png"));
 	}
 
+	void World::render_perspective(std::string& filename) const
+	{
+		if (tracer_ptr == NULL)
+		{
+			// TODO exit & logging
+			std::cout << "tracer was not initialised" << std::endl;
+			return;
+		}
+		printf("rendering the scene\n");
+
+		glm::vec3 pixel_color;
+		Ray ray;
+		float eye = 0;
+		float d = 10.0;
+
+		ray.o = glm::vec3(0, 0, eye);
+
+		for (int r = 0; r < vp.vres; r++)
+		{
+			for (int c = 0; c < vp.hres; c++)
+			{
+				ray.d = glm::vec3(vp.s * (c - 0.5 * (vp.hres - 1.0)), vp.s * (r - 0.5 * (vp.vres - 1.0)), -d);
+				ray.d = glm::normalize(ray.d);
+				pixel_color = tracer_ptr->trace_ray(ray);
+				set_pixel(r, c, pixel_color);
+				image->setPixel(r, c, pixel_color);
+			}
+		}
+		image->saveImage(filename.append(".png"));
+
+
+	}
+
 	void World::set_pixel(const int row, const int column, const glm::vec3& pixelColor) const
 	{
+		image->setPixel(row, column, pixelColor);
 	}
 
 }

@@ -11,6 +11,8 @@
 #include "../image.h"
 #include <stdio.h>
 
+#include "../Cameras/RTPinhole.h"
+
 namespace Engine{
 
 	class World
@@ -21,6 +23,7 @@ namespace Engine{
 		Sphere		sphere;
 		Tracer*		tracer_ptr;
 		Image*		image;
+		RTCamera*	camera_ptr;
 
 		std::vector<GeometricObject*>	objects;
 
@@ -35,7 +38,11 @@ namespace Engine{
 
 		void render_scene(std::string& filename) const;
 
+		void render_perspective(std::string& filename) const;
+
 		void set_pixel(const int row, const int column, const glm::vec3& pixelColor) const;
+		
+		inline void SetCamera(RTCamera* camera) { camera_ptr = camera; }
 	};
 
 	inline void World::add_object(GeometricObject* object_ptr)

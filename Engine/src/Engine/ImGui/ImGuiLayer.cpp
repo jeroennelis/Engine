@@ -182,7 +182,10 @@ namespace Engine {
 					EN_CORE_INFO("tracing scene!");
 					World w;
 					w.build();
-					w.render_scene(std::string("test"));
+					//w.render_scene(std::string("test"));
+					//w.render_perspective(std::string("test"));
+					w.camera_ptr->render_scene(&w);
+					w.image->saveImage("test.png");
 				}
 				ImGui::EndMenu();
 			}
