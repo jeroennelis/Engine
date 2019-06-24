@@ -37,6 +37,27 @@
     <Filter Include="src\Platform\OpenVR">
       <UniqueIdentifier>{2AA69437-9607-7245-1F75-B8F78BD5A804}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\OpenVR\OpenGL">
+      <UniqueIdentifier>{1E7C47BE-0A8C-F38E-7345-58AD5F74E227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer">
+      <UniqueIdentifier>{DD00B7A8-C9FA-DFFA-B267-760B9E004667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\GeometricObjects">
+      <UniqueIdentifier>{359BB233-A12A-741E-AA26-55361635AF2A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\Samplers">
+      <UniqueIdentifier>{730D2211-DFF0-3051-E8F3-5E8D5456F7A1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\Tracers">
+      <UniqueIdentifier>{60F955B2-4C1F-2019-3565-A5E4212A45E5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\Utilities">
+      <UniqueIdentifier>{889DD369-74EE-BEAB-9D52-AD6D89025215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\World">
+      <UniqueIdentifier>{540D05FE-40C8-F4A9-E97F-6DF4D5193F3A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform\Vulkan">
       <UniqueIdentifier>{81084748-ED69-2456-76D7-6A08E2375B15}</UniqueIdentifier>
     </Filter>
@@ -45,6 +66,15 @@
     </Filter>
     <Filter Include="src\Platform\ZED">
       <UniqueIdentifier>{7340C8DF-5F39-E731-886B-CCB674C3C63D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\vendor">
+      <UniqueIdentifier>{EA4CE07F-D604-22CD-3F0C-FB282BE3BCBD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\vendor\lodepng">
+      <UniqueIdentifier>{22CB0AAF-0EAF-CB04-770F-C6576312B686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\vendor\lodepng\include">
+      <UniqueIdentifier>{95F4B939-8104-660A-EABD-CA28D6EC54A3}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
@@ -165,6 +195,24 @@
     <ClInclude Include="src\Engine\Physics\Precision.h">
       <Filter>src\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Renderer\Buffer.h">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Renderer\GraphicsContext.h">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Renderer\RenderCommand.h">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Renderer\Renderer.h">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Renderer\RendererAPI.h">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Renderer\VertexArray.h">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\XMLParser\XMLNode.h">
       <Filter>src\Engine\XMLParser</Filter>
     </ClInclude>
@@ -198,7 +246,22 @@
     <ClInclude Include="src\Platform\OpenGl\OBJLoader.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\OpenGLBuffer.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\OpenGLContext.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\OpenGLRenderer.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\OpenGLVertexArray.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\PointCloudRenderer.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\RawModel.h">
@@ -207,13 +270,79 @@
     <ClInclude Include="src\Platform\OpenGl\Shader.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Terrain.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\TerrainRenderer.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\Texture.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenVR\OpenVRContext.h">
-      <Filter>src\Platform\OpenVR</Filter>
+    <ClInclude Include="src\Platform\OpenGl\XYZLoader.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLContext.h">
+      <Filter>src\Platform\OpenVR\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLRenderer.h">
+      <Filter>src\Platform\OpenVR\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\GeometricObject.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Plane.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Sphere.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Samplers\Jittered.h">
+      <Filter>src\Platform\RayTracer\Samplers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Samplers\MultiJittered.h">
+      <Filter>src\Platform\RayTracer\Samplers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Samplers\NRooks.h">
+      <Filter>src\Platform\RayTracer\Samplers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Samplers\Sampler.h">
+      <Filter>src\Platform\RayTracer\Samplers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Tracers\MultipleObjects.h">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Tracers\SingleSphere.h">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Tracers\Tracer.h">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Utilities\Constants.h">
+      <Filter>src\Platform\RayTracer\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Utilities\Ray.h">
+      <Filter>src\Platform\RayTracer\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Utilities\ShadeRec.h">
+      <Filter>src\Platform\RayTracer\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\World\ViewPlane.h">
+      <Filter>src\Platform\RayTracer\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\World\World.h">
+      <Filter>src\Platform\RayTracer\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\image.h">
+      <Filter>src\Platform\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Vulkan\VulkanBuffer.h">
+      <Filter>src\Platform\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Vulkan\VulkanContext.h">
+      <Filter>src\Platform\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Vulkan\VulkanRenderer.h">
       <Filter>src\Platform\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
@@ -1317,18 +1446,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\Terrain.h" />
-    <ClInclude Include="src\Platform\OpenGl\TerrainRenderer.h" />
-    <ClInclude Include="src\Engine\Renderer\Buffer.h" />
-    <ClInclude Include="src\Platform\OpenGl\OpenGLBuffer.h" />
-    <ClInclude Include="src\Engine\Renderer\Renderer.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanBuffer.h" />
-    <ClInclude Include="src\Platform\OpenGl\OpenGLRenderer.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanRenderer.h" />
-    <ClInclude Include="src\Engine\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Engine\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Platform\OpenGl\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Platform\OpenGl\GLRenderAPI.h" />
+    <ClInclude Include="src\vendor\lodepng\lodepng.h">
+      <Filter>src\vendor\lodepng\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
@@ -1391,6 +1511,21 @@
     <ClCompile Include="src\Engine\Physics\PhysicsLayer.cpp">
       <Filter>src\Engine\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Renderer\Buffer.cpp">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Renderer\RenderCommand.cpp">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Renderer\Renderer.cpp">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Renderer\RendererAPI.cpp">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Renderer\VertexArray.cpp">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp">
       <Filter>src\Engine\XMLParser</Filter>
     </ClCompile>
@@ -1418,7 +1553,22 @@
     <ClCompile Include="src\Platform\OpenGl\OBJLoader.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\OpenGLBuffer.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\OpenGLRenderer.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\OpenGLVertexArray.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\PointCloudRenderer.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\RawModel.cpp">
@@ -1427,13 +1577,76 @@
     <ClCompile Include="src\Platform\OpenGl\Shader.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Terrain.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\TerrainRenderer.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\Texture.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenVR\OpenVRContext.cpp">
-      <Filter>src\Platform\OpenVR</Filter>
+    <ClCompile Include="src\Platform\OpenGl\XYZLoader.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLContext.cpp">
+      <Filter>src\Platform\OpenVR\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLRenderer.cpp">
+      <Filter>src\Platform\OpenVR\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\GeometricObject.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Plane.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Sphere.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Samplers\Jittered.cpp">
+      <Filter>src\Platform\RayTracer\Samplers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Samplers\MultiJittered.cpp">
+      <Filter>src\Platform\RayTracer\Samplers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Samplers\NRooks.cpp">
+      <Filter>src\Platform\RayTracer\Samplers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Samplers\Sampler.cpp">
+      <Filter>src\Platform\RayTracer\Samplers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Tracers\MultipleObjects.cpp">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Tracers\SingleSphere.cpp">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Tracers\Tracer.cpp">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Utilities\Ray.cpp">
+      <Filter>src\Platform\RayTracer\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Utilities\ShadeRec.cpp">
+      <Filter>src\Platform\RayTracer\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\World\ViewPlane.cpp">
+      <Filter>src\Platform\RayTracer\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\World\World.cpp">
+      <Filter>src\Platform\RayTracer\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\image.cpp">
+      <Filter>src\Platform\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Vulkan\VulkanBuffer.cpp">
+      <Filter>src\Platform\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Vulkan\VulkanContext.cpp">
+      <Filter>src\Platform\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Vulkan\VulkanRenderer.cpp">
       <Filter>src\Platform\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -1454,19 +1667,11 @@
     <ClCompile Include="src\enpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\vendor\lodepng\lodepng.cpp">
+      <Filter>src\vendor\lodepng</Filter>
+    </ClCompile>
     <ClCompile Include="vendor\stb_image\std_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\Terrain.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\TerrainRenderer.cpp" />
-    <ClCompile Include="src\Engine\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\OpenGLBuffer.cpp" />
-    <ClCompile Include="src\Engine\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanBuffer.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanRenderer.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\OpenGLRenderer.cpp" />
-    <ClCompile Include="src\Engine\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\GLRenderAPI.cpp" />
   </ItemGroup>
 </Project>

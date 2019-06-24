@@ -10,7 +10,7 @@ namespace Engine {
 		Length = (float)position.length();
 		TextureIndex = NO_INDEX;
 		NormalIndex = NO_INDEX;
-		DuplicateVertex = NULL;
+		DuplicateVertex = NULL; 
 	}
 
 
@@ -44,7 +44,7 @@ namespace Engine {
 		std::vector<Vertex*> vertices;
 		std::vector<glm::vec2> textures;
 		std::vector<glm::vec3> normals;
-		std::vector<unsigned int> indices;
+		std::vector<unsigned int> indices; 
 
 
 		std::string line;

@@ -8,6 +8,7 @@ namespace Engine {
 #define COMP_MESHRENDERER	2
 #define COMP_CAMERA			3
 #define COMP_LIGHT			4
+#define COMP_POINTCLOUDRENDERER 5
 #define COMP_TEST			100
 
 	class ENGINE_API Component

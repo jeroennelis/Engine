@@ -5,6 +5,7 @@
 #include "Engine/Components/Camera.h"
 #include "Platform/OpenGl/Loader.h"
 #include "Engine/Application.h"
+#include "Platform/OpenGl/PointCloudRenderer.h"
 
 #include "Platform/OpenGl/RawModel.h"
 
@@ -27,9 +28,11 @@ namespace Engine {
 		camera->AddComponent(cam_comp);
 		AddGameObject(camera);
 		SetGameCamera(cam_comp.get());
-		camera->GetComponent<Transform>()->Position = glm::vec3(0,-10,-10.0f);
-		camera->GetComponent<Transform>()->Rotation = glm::vec3(20, 0, 0);
+		camera->GetComponent<Transform>()->Position = glm::vec3(0, 0, 0);
+		camera->GetComponent<Transform>()->Rotation = glm::vec3(0, 0, 0);
 		m_SceneCamera = cam_comp.get();
+
+		
 	}
 
 	Scene::Scene(const std::string & name = "New Scene")
@@ -142,5 +145,21 @@ namespace Engine {
 		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>(mat, rawModel, transform);  //TODO: mem leak
 		sphere.AddComponent(meshRenderer);
 		Current()->AddGameObject(std::make_shared<GameObject>(sphere));
+	}
+
+	void Scene::AddPointCloud()
+	{
+		GameObject pointcloud("statie");
+		Transform* transform = pointcloud.GetComponent<Transform>();
+		std::vector<RawModel> pcm = Loader::Get()->GetPointCloud();
+		Material* mat = new Material(Loader::Get()->GetShader("pointcloud"), "pointcloud");
+		transform->Position = glm::vec3(0.4, 35.2, -0.4);
+		transform->Rotation = glm::vec3(-90, 0, 0);
+
+
+		std::shared_ptr<PointCloudRenderer> pcr = std::make_shared<PointCloudRenderer>(mat, pcm, transform);
+		pointcloud.AddComponent(pcr);
+
+		Current()->AddGameObject(std::make_shared<GameObject>(pointcloud));
 	}
 }

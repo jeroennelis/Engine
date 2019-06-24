@@ -11,7 +11,7 @@ namespace Engine {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-	Application* Application::s_Instance = nullptr;
+	Application* Application::s_Instance = nullptr; 
 
 
 	glm::mat4 CreateProjectionMatrix();
@@ -21,26 +21,14 @@ namespace Engine {
 		EN_CORE_ASSERT(!s_Instance, Application already exists!);
 		s_Instance = this;
 
-		Renderer::Create(RendererAPItest::OpenGL);
-
 		m_Window = std::unique_ptr<Window>(Window::Create(Renderer::GetAPI()));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 		m_Window->SetVSync(false);
+		
+		Renderer::Create();
 
-		Renderer::Get()->Init();
-		
-		//m_OpenVRContext = std::unique_ptr<OpenVRContext>(new OpenVRContext());
-		//m_OpenVRContext->Init();
-		
+				
 		PushLayer(new LogicLayer());
-
-		BufferLayout layout = {
-			{ShaderDataType::Float3, "a_Position"},
-			{ShaderDataType::Float4, "a_Color"},
-			{ShaderDataType::Float3, "a_normal"}
-		};
-
-
 	}
 
 	Application::~Application()
@@ -67,9 +55,9 @@ namespace Engine {
 		{
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
-			if(m_OpenVRContext)
-				m_OpenVRContext->Update();
 			Renderer::Get()->Render();
+
+			
 
 			m_Window->OnUpdate();			
 		}		

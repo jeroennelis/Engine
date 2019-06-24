@@ -61,7 +61,8 @@ namespace Engine {
 		//m_RawModel->ib->Bind();
 		m_Material->Bind();
 
-		glm::mat4 projection = CreateProjectionMatrix();
+		//glm::mat4 projection = CreateProjectionMatrix();
+		glm::mat4 projection = Renderer::GetProjectionMatrix();
 		m_Material->m_Shader->SetUniform("u_projectionMatrix", &projection);
 
 		Camera* camera = Scene::Current()->GetGameCamera();

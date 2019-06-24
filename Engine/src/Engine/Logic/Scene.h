@@ -51,6 +51,8 @@ namespace Engine {
 		static void AddCube(const glm::vec3& position = glm::vec3(0,0,0));
 		static void AddSphere();
 
+		static void AddPointCloud();
+
 		
 
 		static unsigned int ObjectCount;

@@ -43,6 +43,6 @@ namespace Engine {
 
 		virtual void* GetNativeWindow() const = 0;
 
-		static Window* Create(RendererAPItest api, const WindowProperties& props = WindowProperties());
+		static Window* Create(RendererAPI::API api, const WindowProperties& props = WindowProperties());
 	};
 }

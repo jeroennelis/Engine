@@ -7,6 +7,7 @@
 #include "Components/Transform.h"
 #include "Platform/OpenGl/MeshRenderer.h"
 #include "Platform/OpenGl/Loader.h"
+#include "Platform/OpenGl/PointCloudRenderer.h"
 
 namespace Engine {
 	GameObject::GameObject(const std::string & name, GameObject* parent)
@@ -127,6 +128,15 @@ namespace Engine {
 		if (renderer)
 		{
 			renderer->Draw();
+		}
+		for (auto child : m_Children)
+		{
+			child->Render();
+		}
+		PointCloudRenderer* pcrenderer = GetComponent<PointCloudRenderer>();
+		if (pcrenderer)
+		{
+			pcrenderer->Draw();
 		}
 		for (auto child : m_Children)
 		{

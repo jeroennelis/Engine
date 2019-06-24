@@ -8,7 +8,6 @@
 
 // TEMP
 #include <GLFW/glfw3.h>
-//#include <glad/glad.h>
 
 #include  "Engine/GameObject.h" 
 
@@ -23,6 +22,8 @@
 #include "Platform/OpenGl/Loader.h"
 #include "Engine/Logic/Scene.h"
 #include "Engine/Components/Camera.h"
+
+#include "Platform/RayTracer/World/World.h"
 
 //
 //#include  imgui_internal.h 
@@ -176,6 +177,13 @@ namespace Engine {
 				if (ImGui::MenuItem( "New Project" , ""  , false, false)) {}
 				if (ImGui::MenuItem( "Open Project" , ""  , false, false)) {}
 				if (ImGui::MenuItem( "Save Project" , ""  , false, false)) {}
+				if (ImGui::MenuItem("trace scene", "", false, true)) 
+				{
+					EN_CORE_INFO("tracing scene!");
+					World w;
+					w.build();
+					w.render_scene(std::string("test"));
+				}
 				ImGui::EndMenu();
 			}
 

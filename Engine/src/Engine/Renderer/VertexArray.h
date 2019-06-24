@@ -19,5 +19,11 @@ namespace Engine {
 		virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const = 0;
 
 		static VertexArray* Create();
+
+		inline uint32_t GetCount() { return m_count; }
+		inline void SetCount(const uint32_t count) { m_count = count; }
+
+	protected:
+		uint32_t m_count = 0;
 	};
 }

@@ -7,6 +7,7 @@
 
 #include "Platform/OpenGl/OpenGLContext.h"
 #include "Platform/Vulkan/VulkanContext.h"
+#include "Platform/OpenVR/OpenGL/OpenVR_OpenGLContext.h"
 #include "Engine/Renderer/Renderer.h"
 
 namespace Engine {
@@ -18,12 +19,12 @@ namespace Engine {
 		EN_CORE_ERROR( "GLFW Error ({ 0 }) : {1}" , error, description);
 	}
 
-	Window* Window::Create(RendererAPItest api, const WindowProperties& props)
+	Window* Window::Create(RendererAPI::API api, const WindowProperties& props)
 	{
 		return new WindowsWindow(api, props);
 	}
 
-	WindowsWindow::WindowsWindow(RendererAPItest api, const WindowProperties& props)
+	WindowsWindow::WindowsWindow(RendererAPI::API api, const WindowProperties& props)
 	{
 
 		m_Data.Title = props.Title;
@@ -46,9 +47,9 @@ namespace Engine {
 
 		switch (api) 
 		{
-		case RendererAPItest::OpenGL:
+		case RendererAPI::API::OpenGL:
 				break;
-		case RendererAPItest::Vulkan:
+		case RendererAPI::API::Vulkan:
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 				break;
 		}
@@ -57,13 +58,16 @@ namespace Engine {
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		switch (api) {
-			case RendererAPItest::OpenGL:
+			case RendererAPI::API::OpenGL:
 				m_Context = new OpenGLContext(m_Window);
 				break;
 
-			case RendererAPItest::Vulkan:
+			case RendererAPI::API::Vulkan:
 				m_Context = new VulkanContext(m_Window);
 				break;
+
+			case RendererAPI::API::OpenVR_OpenGL:
+				m_Context = new OpenVR_OpenGLContext(m_Window);
 
 			
 		}		

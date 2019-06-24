@@ -8,28 +8,17 @@
 
 namespace Engine {
 	
-	/*VertexArrayTemp* VertexArrayTemp::Create()
-	{
-		switch (Renderer::GetAPI())
-		{
-		case RendererAPItest::None: EN_CORE_ASSERT(false, "RendererAPI::NONE currently not supported"); return nullptr;
-
-		case RendererAPItest::OpenGL: return new OpenGLVertexArrayTemp();
-		}
-
-		EN_CORE_ASSERT(false, "Unknown RendererAPI!");
-		return nullptr;
-	}*/
-
 	VertexBuffer* VertexBuffer::Create(const void* data, uint32_t size)
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPItest::None: EN_CORE_ASSERT(false, "RendererAPI::NONE currently not supported"); return nullptr;
+			case RendererAPI::API::None: EN_CORE_ASSERT(false, "RendererAPI::NONE currently not supported"); return nullptr;
 
-			case RendererAPItest::OpenGL: return new OpenGLVertexBuffer(data, size);
+			case RendererAPI::API::OpenGL: return new OpenGLVertexBuffer(data, size);
 
-			case RendererAPItest::Vulkan:return new VulkanVertexBuffer(data, size);
+			case RendererAPI::API::Vulkan:return new VulkanVertexBuffer(data, size);
+
+			case RendererAPI::API::OpenVR_OpenGL: return new OpenGLVertexBuffer(data, size);
 		}
 
 		EN_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -40,11 +29,13 @@ namespace Engine {
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPItest::None: EN_CORE_ASSERT(false, "RendererAPI::NONE currently not supported"); return nullptr;
+			case RendererAPI::API::None: EN_CORE_ASSERT(false, "RendererAPI::NONE currently not supported"); return nullptr;
 
-		case RendererAPItest::OpenGL: return new OpenGLIndexBuffer(indices, count);
+			case RendererAPI::API::OpenGL: return new OpenGLIndexBuffer(indices, count);
 
-		case RendererAPItest::Vulkan:return new VulkanIndexBuffer(indices, count);
+			case RendererAPI::API::Vulkan:return new VulkanIndexBuffer(indices, count);
+
+			case RendererAPI::API::OpenVR_OpenGL: return new OpenGLIndexBuffer(indices, count);
 		}
 
 		EN_CORE_ASSERT(false, "Unknown RendererAPI!");

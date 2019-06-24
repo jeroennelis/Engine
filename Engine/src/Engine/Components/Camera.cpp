@@ -73,16 +73,16 @@ namespace Engine {
 
 		glm::mat4 scaleMatrix = glm::scale(glm::vec3(m_Transform->Scale.x, m_Transform->Scale.y, m_Transform->Scale.z));
 
-		if (&Application::Get().GetOpenVRContext())
+		/*if (Application::Get().GetOpenVRContext())
 		{
-			m_ViewMatrix = glm::inverse(Application::Get().GetOpenVRContext().GetDevicePoses()[vr::k_unTrackedDeviceIndex_Hmd]);
+			m_ViewMatrix = glm::inverse(Application::Get().GetOpenVRContext()->GetDevicePoses()[vr::k_unTrackedDeviceIndex_Hmd]);
 			glm::quat rot;
 			glm::vec3 skew;
 			glm::vec4 pers;
 			glm::decompose(m_ViewMatrix, m_Transform->Scale, rot, m_Transform->Position, skew, pers);
 			m_Transform->Rotation = glm::eulerAngles(rot);
 		}
-		else
+		else*/
 			m_ViewMatrix = (rotMatrix * posMatrix * scaleMatrix);
 	}
 

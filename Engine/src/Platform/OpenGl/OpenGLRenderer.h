@@ -15,7 +15,7 @@ namespace Engine {
 		OpenGLRenderer();
 		virtual ~OpenGLRenderer();
 
-		virtual void Init() override;
+		virtual bool Init() override;
 		virtual void Render() override;
 		virtual void CleanUp() override;
 
@@ -27,5 +27,14 @@ namespace Engine {
 		FrameBuffer* m_SceneFrameBuffer;
 
 		ImGuiLayer* m_ImGuiLayer;
+
+	protected:
+		void RenderScene();
+
+		void RenderGame();
+
+		void RenderFrame();
+
+		void RenderImGui();
 	};
 }

@@ -1,22 +1,17 @@
 #pragma once
 
+#include "RenderCommand.h"
+
 namespace Engine {
-
-	enum class RendererAPItest
-	{
-		None = 0, OpenGL = 1, Vulkan = 2
-	};
-
-	
 
 	class Renderer
 	{
 	public:
-		inline static RendererAPItest GetAPI() { return s_RendererAPI; }
+		
 
-		static void Create(RendererAPItest api);
+		static void Create();
 		inline static Renderer* Get() { return s_Renderer; }
-		virtual void Init() = 0;
+		virtual bool Init() = 0;
 
 		virtual void Render() = 0;
 		virtual void CleanUp() = 0;
@@ -24,9 +19,25 @@ namespace Engine {
 		virtual void* GetSceneFrameBufferTexture() = 0;
 		virtual void* GetGameFrameBufferTexture() = 0;
 
+		inline static void SetProjectionMatrix(const glm::mat4& projectionMatrix) { s_ProjectionMatrix = projectionMatrix; }
+		inline static const glm::mat4& GetProjectionMatrix() { return s_ProjectionMatrix; }
+
+
+
+		static void BeginScene();
+		static void EndScene();
+
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+
 	private:
-		static RendererAPItest s_RendererAPI;
 		static Renderer* s_Renderer;
+
+		static glm::mat4 s_ProjectionMatrix;
+
+	protected:
+		glm::mat4 CreateProjectionMatrix();
 
 	};
 }

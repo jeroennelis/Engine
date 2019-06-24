@@ -46,10 +46,11 @@ namespace Engine{
 	{
 	}
 
-	void Engine::VulkanRenderer::Init()
+	bool Engine::VulkanRenderer::Init()
 	{
 		EN_CORE_INFO("Initializing Vulkan Renderer");
 		InitVulkan();
+		return true;
 	}
 
 	void Engine::VulkanRenderer::Render()

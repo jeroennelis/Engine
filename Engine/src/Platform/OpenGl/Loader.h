@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "RawModel.h"
 #include "OBJLoader.h"
+#include "XYZLoader.h"
 #include "Material.h"
 
 namespace Engine {
@@ -17,6 +18,8 @@ namespace Engine {
 
 		inline const std::vector<Material*>& GetMaterials() const  { return m_Materials; };
 		inline const std::unordered_map<std::string, RawModel*>& GetRawModels() const { return m_Models; }
+		inline const std::vector<RawModel>& GetPointCloud() const { return m_PointCloud; }
+
 		Material* DraggedMaterial();
 		void SetDraggedMaterial(Material* material);
 
@@ -44,6 +47,7 @@ namespace Engine {
 	
 		std::unordered_map<std::string, Shader*> m_Shaders;
 		std::unordered_map<std::string, RawModel*> m_Models;
+		std::vector<RawModel> m_PointCloud;
 
 		const std::unordered_map<std::string, std::string> m_ShaderPaths =
 		{
@@ -51,7 +55,8 @@ namespace Engine {
 			{"diffuse",	"../Engine/res/shaders/diffuse.shader" },
 			{"texture",	"../Engine/res/shaders/texture.shader"},
 			{"preview",	"../Engine/res/shaders/preview.shader"},
-			{"terrain", "../Engine/res/shaders/terrain.shader"}
+			{"terrain", "../Engine/res/shaders/terrain.shader"},
+			{"pointcloud", "../Engine/res/shaders/pointcloud.shader" }
 		};
 
 		const std::unordered_map<std::string, std::string> m_ModelPaths =
@@ -61,6 +66,11 @@ namespace Engine {
 			{"dragon",		"../Engine/res/models/dragon.obj"},
 			{"killhouse",	"../Engine/res/models/killhouse.obj"},
 			{"target",		"../Engine/res/models/target.obj"}
+		};
+
+		const std::unordered_map<std::string, std::string> m_PointCloudPaths =
+		{
+			{"statie", "../Engine/res/models/oude statie.xyz"}
 		};
 
 		std::vector<Material*> m_Materials;

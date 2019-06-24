@@ -76,6 +76,10 @@ namespace Engine {
 	{
 		for (const auto& m : m_ModelPaths)
 			m_Models.insert({ m.first, new RawModel(OBJLoader::loadOBJModel(m.second)) });
+		/*for (const auto& m : m_PointCloudPaths)
+		{
+			m_PointCloud = XYZLoader::LoadXYZModel(m.second);
+		}*/
 	}
 
 	void Loader::LoadMaterials()

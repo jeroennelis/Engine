@@ -58,24 +58,18 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.lib</TargetExt>
-    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\Release-windows-x86_64\Engine\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.lib</TargetExt>
-    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <OutDir>..\bin\Dist-windows-x86_64\Engine\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\Engine\</IntDir>
     <TargetName>Engine</TargetName>
     <TargetExt>.lib</TargetExt>
-    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -88,14 +82,13 @@
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;sl_core64.lib;sl_input64.lib;sl_zed64.lib;opencv_world310.lib;opencv_world310d.lib;cuda.lib;cudart.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;sl_core64.lib;sl_input64.lib;sl_zed64.lib;opencv_world310.lib;opencv_world310d.lib;cuda.lib;cudart.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;vendor\CUDA\lib\x64;vendor\zed\lib;vendor\opencv_3.1.0\x64\vc14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -113,7 +106,6 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,7 +113,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;sl_core64.lib;sl_input64.lib;sl_zed64.lib;opencv_world310.lib;opencv_world310d.lib;cuda.lib;cudart.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;sl_core64.lib;sl_input64.lib;sl_zed64.lib;opencv_world310.lib;opencv_world310d.lib;cuda.lib;cudart.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;vendor\CUDA\lib\x64;vendor\zed\lib;vendor\opencv_3.1.0\x64\vc14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -139,7 +131,6 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,7 +138,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;sl_core64.lib;sl_input64.lib;sl_zed64.lib;opencv_world310.lib;opencv_world310d.lib;cuda.lib;cudart.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;sl_core64.lib;sl_input64.lib;sl_zed64.lib;opencv_world310.lib;opencv_world310d.lib;cuda.lib;cudart.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;vendor\CUDA\lib\x64;vendor\zed\lib;vendor\opencv_3.1.0\x64\vc14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -185,7 +176,9 @@
     <ClInclude Include="src\Engine\Physics\Precision.h" />
     <ClInclude Include="src\Engine\Renderer\Buffer.h" />
     <ClInclude Include="src\Engine\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Engine\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Engine\Renderer\Renderer.h" />
+    <ClInclude Include="src\Engine\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Engine\Renderer\VertexArray.h" />
     <ClInclude Include="src\Engine\XMLParser\XMLNode.h" />
     <ClInclude Include="src\Engine\XMLParser\XMLReader.h" />
@@ -193,7 +186,6 @@
     <ClInclude Include="src\Engine\window.h" />
     <ClInclude Include="src\Platform\OpenGl\FrameBuffer.h" />
     <ClInclude Include="src\Platform\OpenGl\GL.h" />
-    <ClInclude Include="src\Platform\OpenGl\GLRenderAPI.h" />
     <ClInclude Include="src\Platform\OpenGl\Loader.h" />
     <ClInclude Include="src\Platform\OpenGl\Material.h" />
     <ClInclude Include="src\Platform\OpenGl\MaterialProperty.h" />
@@ -202,13 +194,33 @@
     <ClInclude Include="src\Platform\OpenGl\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGl\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGl\OpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGl\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Platform\OpenGl\PointCloudRenderer.h" />
     <ClInclude Include="src\Platform\OpenGl\RawModel.h" />
     <ClInclude Include="src\Platform\OpenGl\Shader.h" />
     <ClInclude Include="src\Platform\OpenGl\Terrain.h" />
     <ClInclude Include="src\Platform\OpenGl\TerrainRenderer.h" />
     <ClInclude Include="src\Platform\OpenGl\Texture.h" />
-    <ClInclude Include="src\Platform\OpenVR\OpenVRContext.h" />
+    <ClInclude Include="src\Platform\OpenGl\XYZLoader.h" />
+    <ClInclude Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\GeometricObject.h" />
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Plane.h" />
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Sphere.h" />
+    <ClInclude Include="src\Platform\RayTracer\Samplers\Jittered.h" />
+    <ClInclude Include="src\Platform\RayTracer\Samplers\MultiJittered.h" />
+    <ClInclude Include="src\Platform\RayTracer\Samplers\NRooks.h" />
+    <ClInclude Include="src\Platform\RayTracer\Samplers\Sampler.h" />
+    <ClInclude Include="src\Platform\RayTracer\Tracers\MultipleObjects.h" />
+    <ClInclude Include="src\Platform\RayTracer\Tracers\SingleSphere.h" />
+    <ClInclude Include="src\Platform\RayTracer\Tracers\Tracer.h" />
+    <ClInclude Include="src\Platform\RayTracer\Utilities\Constants.h" />
+    <ClInclude Include="src\Platform\RayTracer\Utilities\Ray.h" />
+    <ClInclude Include="src\Platform\RayTracer\Utilities\ShadeRec.h" />
+    <ClInclude Include="src\Platform\RayTracer\World\ViewPlane.h" />
+    <ClInclude Include="src\Platform\RayTracer\World\World.h" />
+    <ClInclude Include="src\Platform\RayTracer\image.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanBuffer.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanContext.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanRenderer.h" />
@@ -216,6 +228,7 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Platform\ZED\ZedTest.h" />
     <ClInclude Include="src\enpch.h" />
+    <ClInclude Include="src\vendor\lodepng\lodepng.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -602,13 +615,14 @@
     <ClCompile Include="src\Engine\Physics\ParticleWorld.cpp" />
     <ClCompile Include="src\Engine\Physics\PhysicsLayer.cpp" />
     <ClCompile Include="src\Engine\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Engine\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Engine\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Engine\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Engine\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp" />
     <ClCompile Include="src\Engine\XMLParser\XMLReader.cpp" />
     <ClCompile Include="src\Engine\XMLParser\XMLWriter.cpp" />
     <ClCompile Include="src\Platform\OpenGl\FrameBuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\GLRenderAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Loader.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Material.cpp" />
     <ClCompile Include="src\Platform\OpenGl\MaterialProperty.cpp" />
@@ -617,13 +631,32 @@
     <ClCompile Include="src\Platform\OpenGl\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGl\OpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGl\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\PointCloudRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\RawModel.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Shader.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Terrain.cpp" />
     <ClCompile Include="src\Platform\OpenGl\TerrainRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Texture.cpp" />
-    <ClCompile Include="src\Platform\OpenVR\OpenVRContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\XYZLoader.cpp" />
+    <ClCompile Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\GeometricObject.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Plane.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Sphere.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Samplers\Jittered.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Samplers\MultiJittered.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Samplers\NRooks.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Samplers\Sampler.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Tracers\MultipleObjects.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Tracers\SingleSphere.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Tracers\Tracer.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Utilities\Ray.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Utilities\ShadeRec.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\World\ViewPlane.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\World\World.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\image.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanBuffer.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanContext.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanRenderer.cpp" />
@@ -635,6 +668,7 @@
     <ClCompile Include="src\enpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\vendor\lodepng\lodepng.cpp" />
     <ClCompile Include="vendor\stb_image\std_image.cpp" />
   </ItemGroup>
   <ItemGroup>

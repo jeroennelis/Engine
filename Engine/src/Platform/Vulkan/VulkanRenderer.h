@@ -68,7 +68,7 @@ namespace Engine {
 		VulkanRenderer();
 		~VulkanRenderer();
 
-		virtual void Init() override;
+		virtual bool Init() override;
 
 		// Inherited via Renderer
 		virtual void Render() override;

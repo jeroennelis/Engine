@@ -1,7 +1,5 @@
 #pragma once
 
-#include "glad/glad.h"
-
 #define EN_FALSE 0
 #define EN_TRUE 1
 #define EN_FLOAT 0x1406

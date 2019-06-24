@@ -14,7 +14,7 @@ namespace Engine {
 	{
 	}
 
-	void OpenGLRenderer::Init()
+	bool OpenGLRenderer::Init()
 	{
 		EN_CORE_INFO("Initializing OpenGL Renderer");
 		//Loader
@@ -34,31 +34,21 @@ namespace Engine {
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glEnable(GL_DEPTH_TEST));
+
+		return true;
 	}
 
 	void OpenGLRenderer::Render()
 	{
-		m_GameFrameBuffer->Bind();
+		SetProjectionMatrix(CreateProjectionMatrix());
+		RenderGame();
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		GLCall(glClearColor(0.5, 0, 0, 1));
-		GLCall(glClear(GL_COLOR_BUFFER_BIT));
+		RenderScene();
+		
+		
+		RenderImGui();
 
-		m_GameFrameBuffer->Unbind();
-
-		m_SceneFrameBuffer->Bind();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		GLCall(glClearColor(0, 0, 0.5, 1));
-		GLCall(glClear(GL_COLOR_BUFFER_BIT));
-		for (Layer* layer : Application::Get().GetLayerStack())
-			layer->OnRender();
-
-		m_SceneFrameBuffer->Unbind();
-
-		m_ImGuiLayer->Begin();
-		for (Layer* layer : Application::Get().GetLayerStack())
-			layer->OnImGuiRender();
-		m_ImGuiLayer->End();
+		
 	}
 
 	void OpenGLRenderer::CleanUp()
@@ -73,5 +63,43 @@ namespace Engine {
 	void* OpenGLRenderer::GetGameFrameBufferTexture()
 	{
 		return (void*)(UINT_PTR)m_GameFrameBuffer->GetTexture();
+	}
+
+	void OpenGLRenderer::RenderScene()
+	{
+		m_SceneFrameBuffer->Bind();
+		RenderFrame();
+		m_SceneFrameBuffer->Unbind();
+	}
+
+	void OpenGLRenderer::RenderGame()
+	{
+		m_GameFrameBuffer->Bind();
+		RenderCommand::SetClearColor({ 0.5, 0, 0, 1 });
+		RenderCommand::Clear();
+		m_GameFrameBuffer->Unbind();
+	}
+
+	void OpenGLRenderer::RenderFrame()
+	{
+		RenderCommand::SetClearColor({ 0.0, 0, 0.0, 1 });
+		RenderCommand::Clear();
+
+		Renderer::BeginScene();
+		{
+			for (Layer* layer : Application::Get().GetLayerStack())
+				layer->OnRender();
+
+
+		}
+		Renderer::EndScene();
+	}
+
+	void OpenGLRenderer::RenderImGui()
+	{
+		m_ImGuiLayer->Begin();
+		for (Layer* layer : Application::Get().GetLayerStack())
+			layer->OnImGuiRender();
+		m_ImGuiLayer->End();
 	}
 }
