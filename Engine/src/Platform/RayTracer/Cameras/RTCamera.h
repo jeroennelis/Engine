@@ -14,6 +14,7 @@ namespace Engine {
 		void compute_uvw(void);
 
 		virtual void render_scene(World* world) = 0;
+		virtual void RenderStereo(World* world, float x, int offset) = 0;
 
 		inline void SetEye(const glm::vec3& eye) { m_Eye = eye; }
 		inline void SetLookat(const glm::vec3& lookat) { m_Lookat = lookat; }

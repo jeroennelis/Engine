@@ -205,8 +205,13 @@
     <ClInclude Include="src\Platform\OpenGl\XYZLoader.h" />
     <ClInclude Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\RayTracer\BRDFs\BRDF.h" />
+    <ClInclude Include="src\Platform\RayTracer\BRDFs\Lambertian.h" />
     <ClInclude Include="src\Platform\RayTracer\Cameras\RTCamera.h" />
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTFishEye.h" />
     <ClInclude Include="src\Platform\RayTracer\Cameras\RTPinhole.h" />
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTSpherical.h" />
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTStereoCamera.h" />
     <ClInclude Include="src\Platform\RayTracer\GeometricObjects\GeometricObject.h" />
     <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Plane.h" />
     <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Sphere.h" />
@@ -644,8 +649,13 @@
     <ClCompile Include="src\Platform\OpenGl\XYZLoader.cpp" />
     <ClCompile Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\BRDFs\BRDF.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\BRDFs\Lambertian.cpp" />
     <ClCompile Include="src\Platform\RayTracer\Cameras\RTCamera.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTFishEye.cpp" />
     <ClCompile Include="src\Platform\RayTracer\Cameras\RTPinhole.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTSpherical.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTStereoCamera.cpp" />
     <ClCompile Include="src\Platform\RayTracer\GeometricObjects\GeometricObject.cpp" />
     <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Plane.cpp" />
     <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Sphere.cpp" />

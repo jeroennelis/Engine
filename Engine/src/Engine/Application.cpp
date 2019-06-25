@@ -23,7 +23,7 @@ namespace Engine {
 
 		m_Window = std::unique_ptr<Window>(Window::Create(Renderer::GetAPI()));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
-		m_Window->SetVSync(true);
+		m_Window->SetVSync(true );
 		
 		Renderer::Create();
 

@@ -1448,6 +1448,11 @@
     </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\Cameras\RTCamera.h" />
     <ClInclude Include="src\Platform\RayTracer\Cameras\RTPinhole.h" />
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTFishEye.h" />
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTSpherical.h" />
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTStereoCamera.h" />
+    <ClInclude Include="src\Platform\RayTracer\BRDFs\BRDF.h" />
+    <ClInclude Include="src\Platform\RayTracer\BRDFs\Lambertian.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
@@ -1674,5 +1679,10 @@
     </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\Cameras\RTCamera.cpp" />
     <ClCompile Include="src\Platform\RayTracer\Cameras\RTPinhole.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTFishEye.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTSpherical.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTStereoCamera.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\BRDFs\BRDF.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\BRDFs\Lambertian.cpp" />
   </ItemGroup>
 </Project>

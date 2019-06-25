@@ -38,13 +38,13 @@ namespace Engine {
 	void Image::setPixel(int x, int y, const glm::vec3& color)
 	{
 		data[y + x * width] = color;
-		imgData[4 * (x + y * width) + 0] =
+		imgData[4 * (x *width + y) + 0] =
 			(unsigned char)(color.r * 255.0f);
-		imgData[4 * (x + y * width) + 1] =
+		imgData[4 * (x * width + y) + 1] =
 			(unsigned char)(color.g * 255.0f);
-		imgData[4 * (x + y * width) + 2] =
+		imgData[4 * (x * width + y) + 2] =
 			(unsigned char)(color.b * 255.0f);
-		imgData[4 * (x + y * width) + 3] = 255;
+		imgData[4 * (x * width + y) + 3] = 255;
 	}
 
 	void Image::saveImage(std::string filename) const

@@ -12,6 +12,7 @@ namespace Engine {
 		virtual ~RTPinhole() {}
 
 		virtual void render_scene(World * world) override;
+		virtual void RenderStereo(World* world, float x, int offset);
 
 		glm::vec3 ray_direction(const glm::vec2& p) const;
 

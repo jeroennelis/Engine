@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include "../Cameras/RTPinhole.h"
+#include "../Cameras/RTFishEye.h"
+#include "../Cameras/RTSpherical.h"
+#include "../Cameras/RTStereoCamera.h"
 
 namespace Engine {
 	World::World()
@@ -25,7 +28,7 @@ namespace Engine {
 	{
 		printf("building the world\n");
 
-		int num_samples = 1024;
+		int num_samples = 256;
 
 		vp.set_hres(300);
 		vp.set_vres(300);
@@ -35,25 +38,39 @@ namespace Engine {
 		background_color = black;
 		tracer_ptr = new MultipleObjects(this);
 
-
-		Sphere* sphere_ptr = new Sphere(glm::vec3(0, 0, 0), 50);
+		Sphere* sphere_ptr = new Sphere(glm::vec3(50, 0, 20), 50);
 		sphere_ptr->set_color(0, 1, 0);
 		add_object(sphere_ptr);
 
+		Sphere* sphere_ptr2 = new Sphere(glm::vec3(-50, 0, 0), 50);
+		sphere_ptr2->set_color(1, 0, 0);
+		add_object(sphere_ptr2);
 
-		RTPinhole* pinhole_ptr = new RTPinhole();
-		pinhole_ptr->SetEye(glm::vec3(0, 1, 500));
-		pinhole_ptr->SetLookat(glm::vec3(0, 0, 0));
-		pinhole_ptr->SetViewDistance(500);
-		pinhole_ptr->compute_uvw();
+		float vpd = 100;
 
-		SetCamera(pinhole_ptr);
+		RTPinhole *leftCam = new RTPinhole();
+		leftCam->SetViewDistance(vpd);
+		RTPinhole *rightCam = new RTPinhole();
+		rightCam->SetViewDistance(vpd);
 
-		Plane* plane_ptr = new Plane(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+		RTStereoCamera* stereoCam = new RTStereoCamera;
+		stereoCam->SetLeftCamera(leftCam);
+		stereoCam->SetRightCamera(rightCam);
+		stereoCam->UseParallelViewing();
+		stereoCam->SetPixelGap(5);
+		stereoCam->SetEye(glm::vec3(5, 0, 100));
+		stereoCam->SetLookat(glm::vec3(0.0));
+		stereoCam->compute_uvw();
+		stereoCam->SetStereoAngle(5);
+		stereoCam->SetUpCameras();
+		SetCamera(stereoCam);
+
+
+		/*Plane* plane_ptr = new Plane(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 		plane_ptr->set_color(glm::vec3(1,0,0));
-		add_object(plane_ptr);
+		add_object(plane_ptr);*/
 
-		image = new Image(300, 300);
+		image = new Image(2 * 300 + 10, 300);
 	}
 
 	ShadeRec World::hit_bare_bones_objects(const Ray& ray)
