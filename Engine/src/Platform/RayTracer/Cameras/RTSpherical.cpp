@@ -58,7 +58,7 @@ namespace Engine {
 					pp.y = s * (r - 0.5 * vres + sp.y);
 					ray.d = RayDirection(pp, hres, vres, s);
 
-					L += world->tracer_ptr->trace_ray(ray);
+					L += world->tracer_ptr->trace_ray(ray, 0);
 				}
 
 				L /= vp.num_samples;

@@ -30,15 +30,28 @@ namespace Engine {
 	// -------------------------------------------------------------------- trace_ray
 
 	glm::vec3
-		Tracer::trace_ray(const Ray& ray) const {
-		return (black);
+		Tracer::trace_ray(const Ray& ray) const 
+	{
+		EN_CORE_ASSERT(false, "not implemented yet");
+		return black;
 	}
 
 
 	// -------------------------------------------------------------------- trace_ray
 
 	glm::vec3
-		Tracer::trace_ray(const Ray ray, const int depth) const {
-		return (black);
+		Tracer::trace_ray(const Ray ray, const int depth) const 
+	{
+		EN_CORE_ASSERT(false, "not implemented yet");
+		return black;
+	}
+
+
+	// -------------------------------------------------------------------- trace_ray
+
+	glm::vec3 Tracer::trace_ray(const Ray ray, float& tmin, const int depth)
+	{
+		EN_CORE_ASSERT(false, "not implemented yet");
+		return black;
 	}
 }

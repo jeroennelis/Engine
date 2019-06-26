@@ -12,6 +12,8 @@
 #include <stdio.h>
 
 #include "../Cameras/RTPinhole.h"
+#include "../Lights/RTLight.h"
+#include "..//Lights/RTAmbient.h"
 
 namespace Engine{
 
@@ -19,13 +21,17 @@ namespace Engine{
 	{
 	public:
 		ViewPlane	vp;
-		glm::vec3	background_color;
-		Sphere		sphere;
-		Tracer*		tracer_ptr;
-		Image*		image;
 		RTCamera*	camera_ptr;
-
+		Tracer*		tracer_ptr;
+		glm::vec3	background_color;
+		RTLight*	ambient_ptr;
 		std::vector<GeometricObject*>	objects;
+		std::vector<RTLight*> lights;
+
+		Image*		image;
+		
+		
+
 
 		World(void);
 		~World(void);
@@ -34,7 +40,11 @@ namespace Engine{
 
 		void add_object(GeometricObject* object_ptr);
 
-		ShadeRec hit_bare_bones_objects(const Ray& ray);
+		void AddLight(RTLight* light);
+
+		inline void SetAmbientLight(RTAmbient* ambient) { ambient_ptr = ambient; }
+
+		ShadeRec hit_objects(const Ray& ray);
 
 		void render_scene(std::string& filename) const;
 
@@ -48,6 +58,11 @@ namespace Engine{
 	inline void World::add_object(GeometricObject* object_ptr)
 	{
 		objects.push_back(object_ptr);
+	}
+
+	inline void World::AddLight(RTLight* light)
+	{
+		lights.push_back(light);
 	}
 }
 

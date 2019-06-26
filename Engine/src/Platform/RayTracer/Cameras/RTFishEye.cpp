@@ -65,7 +65,7 @@ namespace Engine {
 					ray.d = RayDirection(pp, hres, vres, s, r_squared);
 					
 					if (r_squared <= 1.0)
-						L += world->tracer_ptr->trace_ray(ray);
+						L += world->tracer_ptr->trace_ray(ray,0);
 				}
 
 				L /= vp.num_samples;

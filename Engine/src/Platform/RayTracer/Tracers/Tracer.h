@@ -18,14 +18,13 @@ namespace Engine {
 
 		Tracer(World* _world_ptr);
 
-		virtual
-			~Tracer(void);
+		virtual ~Tracer(void);
 
-		virtual glm::vec3
-			trace_ray(const Ray& ray) const;
+		virtual glm::vec3 trace_ray(const Ray& ray) const;
 
-		virtual glm::vec3
-			trace_ray(const Ray ray, const int depth) const;
+		virtual glm::vec3 trace_ray(const Ray ray, const int depth) const;
+
+		virtual glm::vec3 trace_ray(const Ray ray, float& tmin, const int depth);
 
 	protected:
 

@@ -11,9 +11,7 @@ namespace Engine {
 	{
 	}
 
-	Light::~Light()
-	{
-	}
+	
 	void Light::Update()
 	{
 	}

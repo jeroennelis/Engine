@@ -3,6 +3,7 @@
 
 namespace Engine{
 	Lambertian::Lambertian()
+		:BRDF()
 	{
 	}
 	Lambertian::~Lambertian()

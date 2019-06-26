@@ -3,6 +3,10 @@
 
 namespace Engine {
 
+	BRDF::BRDF()
+	{
+	}
+
 	BRDF::~BRDF()
 	{
 	}

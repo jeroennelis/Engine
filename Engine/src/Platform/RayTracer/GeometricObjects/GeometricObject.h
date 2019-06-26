@@ -38,10 +38,15 @@ namespace Engine {
 		glm::vec3
 			get_color(void);
 
+		inline RTMaterial* GetMaterial() { return m_Material; }
+		inline void SetMaterial(RTMaterial* material) { m_Material = material; }
+
 
 	protected:
 
 		glm::vec3   color;						// only used for Bare Bones ray tracing
+
+		RTMaterial* m_Material;
 
 		GeometricObject&						// assignment operator
 			operator= (const GeometricObject& rhs);

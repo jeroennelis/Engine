@@ -18,8 +18,9 @@ namespace Engine {
 
 	ShadeRec::ShadeRec(World& wr)
 		: 	hit_an_object(false),
-			local_hit_point(),
-			normal(),
+			material_ptr(nullptr),
+			hit_point(0.0), local_hit_point(0.0), normal(0.0),
+			ray(), depth(0), dir(),
 			color(black),
 			w(wr)
 	{}
@@ -29,7 +30,10 @@ namespace Engine {
 
 	ShadeRec::ShadeRec(const ShadeRec& sr)
 		: 	hit_an_object(sr.hit_an_object),
-			local_hit_point(sr.local_hit_point),
+			material_ptr(sr.material_ptr),
+			hit_point(sr.hit_point), local_hit_point(sr.local_hit_point), 
+			normal(sr.normal),
+			ray(sr.ray), depth(sr.depth), dir(sr.dir),
 			color(sr.color),
 			w(sr.w)
 	{}
