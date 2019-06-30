@@ -85,6 +85,13 @@ namespace Engine {
 		return (disk_samples[jump + shuffled_indices[jump + count++ % num_samples]]);
 	}
 
+	glm::vec3 Sampler::SampleHemisphere()
+	{
+		if (count % num_samples == 0)
+			jump = (rand_int() % num_sets) * num_samples;
+		return (hemisphere_samples[jump + shuffled_indices[jump + count++ % num_samples]]);
+	}
+
 	void Sampler::map_samples_to_unit_disk(void)
 	{
 		int size = samples.size();	

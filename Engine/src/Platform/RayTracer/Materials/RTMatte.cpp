@@ -43,7 +43,16 @@ namespace Engine {
 
 			if (ndotwi > 0.0)
 			{
-				L += m_DiffuseBRDF->f(sr, wo, wi) * sr.w.lights[j]->L(sr) * ndotwi;
+				bool in_shadow = false;
+
+				if (sr.w.lights[j]->CastsShadows())
+				{
+					Ray shadowRay(sr.local_hit_point, wi);
+					in_shadow = sr.w.lights[j]->InShadow(shadowRay, sr);
+				}
+
+				if(!in_shadow)
+					L += m_DiffuseBRDF->f(sr, wo, wi) * sr.w.lights[j]->L(sr) * ndotwi;
 			}
 				
 		}

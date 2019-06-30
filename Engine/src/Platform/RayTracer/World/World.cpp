@@ -12,6 +12,10 @@
 #include "..//Lights/RTAmbient.h"
 #include "..//Materials/RTMatte.h"
 #include "..//Lights/RTPointLight.h"
+#include "../Materials/RTPhong.h"
+#include "Engine/Maths.h"
+
+#include "../Lights/RTAmbientOccluder.h"
 
 
 namespace Engine {
@@ -38,80 +42,68 @@ namespace Engine {
 	{
 		printf("building the world\n");
 
-		int num_samples = 256;
+		int num_samples = 1024;
 
-		vp.set_hres(400);
-		vp.set_vres(400);
-		vp.set_pixel_size(1);
-		vp.sampler_ptr = new MultiJittered(16);
-		vp.num_samples = 16;
+		vp.set_hres(1024);
+		vp.set_vres(1024);
+		vp.sampler_ptr = new MultiJittered(128);
+		vp.num_samples = 128;
 
 		background_color = black;
 		tracer_ptr = new RayCast(this);
 
-		RTAmbient* ambient_ptr = new RTAmbient;
-		ambient_ptr->SetLs(1.0);
-		SetAmbientLight(ambient_ptr);
+		RTAmbient* occluder_ptr = new RTAmbient;
+		//occluder_ptr->SetSampler(vp.sampler_ptr);
+
+		SetAmbientLight(occluder_ptr);
 
 		RTPinhole* pinhole_ptr = new RTPinhole;
-		pinhole_ptr->SetEye(glm::vec3(0, 0, 500));
-		pinhole_ptr->SetLookat(glm::vec3(-5, 0, 0));
-		pinhole_ptr->SetViewDistance(850.0);
+		pinhole_ptr->SetEye(glm::vec3(7.5, 4, 10));
+		pinhole_ptr->SetLookat(glm::vec3(-1, 3.7, 0));
+		pinhole_ptr->SetViewDistance(340);
 		pinhole_ptr->compute_uvw();
 		SetCamera(pinhole_ptr);
 
 		RTPointLight* light_ptr2 = new RTPointLight;
-		light_ptr2->SetLocation(glm::vec3(100, 50, 150));
+		light_ptr2->SetLocation(glm::vec3(200, 100, 50));
 		//light_ptr2->SetColor(glm::vec3(1.0, 0, 0));
 		light_ptr2->SetLs(3.0);
 		AddLight(light_ptr2);
 
 		RTMatte* matte_ptr1 = new RTMatte;
 		matte_ptr1->SetKa(0.25);
-		matte_ptr1->SetKd(0.65);
-		matte_ptr1->SetCd(glm::vec3(1, 1, 0));	  				// yellow	
-		Sphere* sphere_ptr1 = new Sphere(glm::vec3(10, -5, 0), 27);
-		sphere_ptr1->SetMaterial(matte_ptr1);
+		matte_ptr1->SetKd(0.80);
+		matte_ptr1->SetCd(glm::vec3(0.1, 0.1, 0.5));	  				// yellow
+
+		RTPhong* phong = new RTPhong;
+		phong->SetKa(0.25);
+		phong->SetKd(0.75);
+		phong->SetKs(0.25);
+		phong->SetExp(50);
+		phong->SetCd(glm::vec3(0.75, 0.75, 0));
+
+		Sphere* sphere_ptr1 = new Sphere(glm::vec3(3.85, 2.3, -2.55), 2.3);
+		sphere_ptr1->SetMaterial(phong);
 		add_object(sphere_ptr1);
 
-		RTMatte* matteptr2 = new RTMatte;
-		matteptr2->SetKa(0.15);
-		matteptr2->SetKd(0.85);
-		matteptr2->SetCd(glm::vec3(0.71, 0.40, 0.16));
+		RTPhong* phong2 = new RTPhong;
+		phong2->SetKa(0.15);
+		phong2->SetKd(0.85);
+		phong2->SetKs(0.25);
+		phong2->SetExp(50);
+		phong2->SetCd(glm::vec3(0.71, 0.40, 0.16));
 
-		Sphere* sphere_ptr = new Sphere(glm::vec3(-25, 10, -35), 27);
-		sphere_ptr->SetMaterial(matteptr2);
+		Sphere* sphere_ptr = new Sphere(glm::vec3(-0.7, 1, 4.2), 2);
+		sphere_ptr->SetMaterial(phong2);
 		add_object(sphere_ptr);
 
-		//Sphere* sphere_ptr2 = new Sphere(glm::vec3(-50, 0, 0), 50);
-		//sphere_ptr2->set_color(1, 0, 0);
-		//add_object(sphere_ptr2);
-
-		//float vpd = 100;
-
-		//RTPinhole *leftCam = new RTPinhole();
-		//leftCam->SetViewDistance(vpd);
-		//RTPinhole *rightCam = new RTPinhole();
-		//rightCam->SetViewDistance(vpd);
-
-		//RTStereoCamera* stereoCam = new RTStereoCamera;
-		//stereoCam->SetLeftCamera(leftCam);
-		//stereoCam->SetRightCamera(rightCam);
-		//stereoCam->UseParallelViewing();
-		//stereoCam->SetPixelGap(5);
-		//stereoCam->SetEye(glm::vec3(5, 0, 100));
-		//stereoCam->SetLookat(glm::vec3(0.0));
-		//stereoCam->compute_uvw();
-		//stereoCam->SetStereoAngle(5);
-		//stereoCam->SetUpCameras();
-		//SetCamera(stereoCam);
 
 
-		///*Plane* plane_ptr = new Plane(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-		//plane_ptr->set_color(glm::vec3(1,0,0));
-		//add_object(plane_ptr);*/
+		Plane* plane_ptr = new Plane(glm::vec3(0, -1, 0), glm::vec3(0, 1, 0));
+		plane_ptr->SetMaterial(matte_ptr1);
+		add_object(plane_ptr);
 
-		image = new Image(400,400);
+		image = new Image(1024,1024);
 	}
 
 	ShadeRec World::hit_objects(const Ray& ray)
@@ -227,7 +219,31 @@ namespace Engine {
 
 	void World::set_pixel(const int row, const int column, const glm::vec3& pixelColor) const
 	{
-		image->setPixel(row, column, pixelColor);
+		glm::vec3 mappedColor = MaxToOne(pixelColor);
+		image->setPixel(row, column, mappedColor);
+	}
+
+	glm::vec3 World::MaxToOne(const glm::vec3 & c) const
+	{
+		float maxValue = max(c.r, max(c.g, c.b));
+
+		if (maxValue > 1.0)
+			return (c / maxValue);
+		else
+			return c;
+	}
+
+	glm::vec3 World::ClampToColor(const glm::vec3 & rawColor) const
+	{
+		glm::vec3 c(rawColor);
+
+		if (rawColor.r > 1.0 || rawColor.g > 1.0 || rawColor.b > 0)
+		{
+			c.r = 1.0;
+			c.g = 1.0;
+			c.b = 0.0;
+		}
+		return c;
 	}
 
 }

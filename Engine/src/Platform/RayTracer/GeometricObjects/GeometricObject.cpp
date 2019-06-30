@@ -36,6 +36,10 @@ namespace Engine{
 	// ---------------------------------------------------------------------- destructor
 
 	GeometricObject::~GeometricObject(void) {}
+	bool GeometricObject::ShadowHit(const Ray &, float& tmin) const
+	{
+		return false;
+	}
 }
 
 

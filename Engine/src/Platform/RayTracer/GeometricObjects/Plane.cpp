@@ -3,7 +3,7 @@
 #include "Plane.h"
 
 namespace Engine {
-	const double Plane::kEpsilon = 0.001;
+	const double Plane::kEpsilon = 0.00001;
 
 	// ----------------------------------------------------------------------  default constructor
 
@@ -81,6 +81,19 @@ namespace Engine {
 		}
 
 		return(false);
+	}
+
+	bool Plane::ShadowHit(const Ray & ray, float& tmin) const
+	{
+		float t = glm::dot((point - ray.o), normal) / glm::dot(ray.d, normal);
+
+		if (t > kEpsilon)
+		{
+			tmin = t;
+			return true;
+		}
+		else
+			return false;
 	}
 }
 

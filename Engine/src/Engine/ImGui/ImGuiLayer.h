@@ -37,6 +37,7 @@ namespace Engine {
 		void RenderConsoleWindow();
 		void RenderProjectWindow();
 
+		void RT();
 
 	private:
 		void ToggleStatistics();
@@ -44,6 +45,9 @@ namespace Engine {
 		glm::vec3 PickMouse(int windowPosX, int windowPosY, int imGuiWindowWidth, int imGuiWindowHeigth, int mouseX, int mouseY);
 		void AddCube();
 		void AddSphere();
+
+
+		std::thread test;
 
 
 	private:

@@ -10,6 +10,7 @@
 
 #include "Engine/ImGui/ImGuiLayer.h" 
 
+#include "Platform/OpenGl/Texture.h"
 
 
 namespace Engine {

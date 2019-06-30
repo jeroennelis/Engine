@@ -26,6 +26,9 @@ namespace Engine {
 		virtual bool
 			hit(const Ray& ray, double& t, ShadeRec& s) const = 0;
 
+		virtual bool
+			ShadowHit(const Ray&, float& tmin) const;
+
 
 		// the following three functions are only required for Chapter 3
 

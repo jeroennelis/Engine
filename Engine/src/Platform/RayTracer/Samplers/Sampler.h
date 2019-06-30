@@ -23,6 +23,8 @@ namespace Engine {
 
 		glm::vec2 sample_unit_disk(void);		// get next sample on the unit square
 
+		glm::vec3 SampleHemisphere();
+
 		void map_samples_to_unit_disk(void);	// map the unit square samples on a disk
 
 		void map_samples_hemisphere(const float exp);		// map the unit square samples on a hemisphere

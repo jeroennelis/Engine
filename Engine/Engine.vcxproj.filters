@@ -1456,6 +1456,9 @@
     <ClInclude Include="src\Platform\RayTracer\Tracers\RayCast.h" />
     <ClInclude Include="src\Platform\RayTracer\Materials\RTMaterial.h" />
     <ClInclude Include="src\Platform\RayTracer\Materials\RTMatte.h" />
+    <ClInclude Include="src\Platform\RayTracer\BRDFs\GlossySpecular.h" />
+    <ClInclude Include="src\Platform\RayTracer\Materials\RTPhong.h" />
+    <ClInclude Include="src\Platform\RayTracer\Lights\RTAmbientOccluder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
@@ -1690,5 +1693,8 @@
     <ClCompile Include="src\Platform\RayTracer\Tracers\RayCast.cpp" />
     <ClCompile Include="src\Platform\RayTracer\Materials\RTMaterial.cpp" />
     <ClCompile Include="src\Platform\RayTracer\Materials\RTMatte.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\BRDFs\GlossySpecular.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Materials\RTPhong.cpp" />
+    <ClCompile Include="src\Platform\RayTracer\Lights\RTAmbientOccluder.cpp" />
   </ItemGroup>
 </Project>

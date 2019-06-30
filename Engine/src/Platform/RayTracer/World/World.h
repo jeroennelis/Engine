@@ -42,7 +42,7 @@ namespace Engine{
 
 		void AddLight(RTLight* light);
 
-		inline void SetAmbientLight(RTAmbient* ambient) { ambient_ptr = ambient; }
+		inline void SetAmbientLight(RTLight* ambient) { ambient_ptr = ambient; }
 
 		ShadeRec hit_objects(const Ray& ray);
 
@@ -53,6 +53,11 @@ namespace Engine{
 		void set_pixel(const int row, const int column, const glm::vec3& pixelColor) const;
 		
 		inline void SetCamera(RTCamera* camera) { camera_ptr = camera; }
+
+
+		glm::vec3 MaxToOne(const glm::vec3& c) const;
+
+		glm::vec3 ClampToColor(const glm::vec3& rawColor) const;
 	};
 
 	inline void World::add_object(GeometricObject* object_ptr)

@@ -41,6 +41,9 @@ namespace Engine
 		virtual bool
 			hit(const Ray& ray, double& t, ShadeRec& s) const;
 
+		virtual bool
+			ShadowHit(const Ray&, float& tmin) const;
+
 	private:
 
 		glm::vec3 	center;   			// center coordinates as a point  

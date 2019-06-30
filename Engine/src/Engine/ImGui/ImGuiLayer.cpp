@@ -162,6 +162,19 @@ namespace Engine {
 		}
 	}
 
+	void ImGuiLayer::RT()
+	{
+		EN_CORE_INFO("tracing scene!");
+		World w;
+		w.build();
+		//w.render_scene(std::string("test"));
+		//w.render_perspective(std::string("test"));
+		w.camera_ptr->render_scene(&w);
+		w.image->saveImage("test.png");
+		EN_CORE_INFO("tracing complete!");
+		test.joinable();
+	}
+
 	void ImGuiLayer::RenderMenuBar()
 	{
 		if (ImGui::BeginMainMenuBar())
@@ -177,15 +190,9 @@ namespace Engine {
 				if (ImGui::MenuItem( "New Project" , ""  , false, false)) {}
 				if (ImGui::MenuItem( "Open Project" , ""  , false, false)) {}
 				if (ImGui::MenuItem( "Save Project" , ""  , false, false)) {}
-				if (ImGui::MenuItem("trace scene", "", false, true)) 
+				if (ImGui::MenuItem( "trace scene", "", false, true)) 
 				{
-					EN_CORE_INFO("tracing scene!");
-					World w;
-					w.build();
-					//w.render_scene(std::string("test"));
-					//w.render_perspective(std::string("test"));
-					w.camera_ptr->render_scene(&w);
-					w.image->saveImage("test.png");
+					test = std::thread(&ImGuiLayer::RT, this);
 				}
 				ImGui::EndMenu();
 			}

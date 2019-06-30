@@ -28,6 +28,9 @@ namespace Engine {
 		virtual bool
 			hit(const Ray& ray, double& tmin, ShadeRec& sr) const;
 
+		virtual bool
+			ShadowHit(const Ray&, float& tmin) const;
+
 	private:
 
 		glm::vec3 	point;   				// point through which plane passes 

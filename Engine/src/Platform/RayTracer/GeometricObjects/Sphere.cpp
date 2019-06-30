@@ -102,4 +102,36 @@ namespace Engine {
 
 		return (false);
 	}
+
+	bool Sphere::ShadowHit(const Ray &ray, float & tmin) const
+	{
+		double 		t;
+		glm::vec3	temp = ray.o - center;
+		double 		a = glm::dot(ray.d, ray.d);
+		double 		b = 2.0 * glm::dot(temp, ray.d);
+		double 		c = glm::dot(temp, temp) - radius * radius;
+		double 		disc = b * b - 4.0 * a * c;
+
+		if (disc < 0.0)
+			return(false);
+		else {
+			double e = sqrt(disc);
+			double denom = 2.0 * a;
+			t = (-b - e) / denom;    // smaller root
+
+			if (t > kEpsilon) {
+				tmin = t;
+				return (true);
+			}
+
+			t = (-b + e) / denom;    // larger root
+
+			if (t > kEpsilon) {
+				tmin = t;
+				return (true);
+			}
+		}
+
+		return (false);
+	}
 }
