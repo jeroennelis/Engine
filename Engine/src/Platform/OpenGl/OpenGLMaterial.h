@@ -7,11 +7,11 @@
 
 namespace Engine {
 
-	class Material
+	class OpenGLMaterial
 	{
 	public:
-		Material(Shader* shader, const std::string& name);
-		~Material();
+		OpenGLMaterial(Shader* shader, const std::string& name);
+		~OpenGLMaterial();
 
 		Shader* m_Shader;
 

@@ -108,6 +108,7 @@ namespace Engine {
 		RawModel rawmodel = ConvertVectorsToRawModel(verticesVectors, texturesVectors, normalsVectors, indices);
 		rawmodel.va->Bind();
 		rawmodel.va->GetIndexBuffer()->Bind();
+		rawmodel.path = objFile;
 		return rawmodel;
 	}
 

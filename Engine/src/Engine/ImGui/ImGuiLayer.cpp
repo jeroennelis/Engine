@@ -88,7 +88,7 @@ namespace Engine {
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init( "#version 410" ); 
 
-		for (Material* mat : Loader::Get()->GetMaterials())
+		for (OpenGLMaterial* mat : Loader::Get()->GetMaterials())
 		{
 			mat->RenderPreview();
 		}
@@ -166,11 +166,12 @@ namespace Engine {
 	{
 		EN_CORE_INFO("tracing scene!");
 		World w;
-		w.build();
+		w.build(*Scene::Current());
 		//w.render_scene(std::string("test"));
 		//w.render_perspective(std::string("test"));
 		w.camera_ptr->render_scene(&w);
-		w.image->saveImage("test.png");
+		w.SaveImage("test.png");
+		
 		EN_CORE_INFO("tracing complete!");
 		test.joinable();
 	}
@@ -192,7 +193,7 @@ namespace Engine {
 				if (ImGui::MenuItem( "Save Project" , ""  , false, false)) {}
 				if (ImGui::MenuItem( "trace scene", "", false, true)) 
 				{
-					test = std::thread(&ImGuiLayer::RT, this);
+					RT();
 				}
 				ImGui::EndMenu();
 			}
@@ -516,7 +517,7 @@ namespace Engine {
 		int ypos = 25;
 		int xpos = 25;
 		int index = 0;
-		for (Material* mat: Loader::Get()->GetMaterials())
+		for (OpenGLMaterial* mat: Loader::Get()->GetMaterials())
 		{
 			xpos = 25 + (index % 10) * 75;
 			ypos = 25 + (index / 10) * 75;

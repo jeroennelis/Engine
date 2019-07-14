@@ -67,12 +67,12 @@ namespace Engine {
 					pp.y = vp.s * (r - 0.5 * vp.vres + sp.y);
 
 					ray.d = ray_direction(pp);
-					L += world->tracer_ptr->trace_ray(ray);
+					L += world->tracer_ptr->trace_ray(ray, 0);
 				}
 
 				L /= vp.num_samples;
 				L *= m_ExposureTime;
-				world->image->setPixel(r, c + offset, L);
+				world->image->setPixel(c, r + offset, L);
 				world->set_pixel(r, c + offset, L);
 			}
 		}

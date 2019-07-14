@@ -11,7 +11,7 @@ namespace Engine{
 
 	const unsigned int PointCloudRenderer::ComponentType = COMP_POINTCLOUDRENDERER;
 
-	PointCloudRenderer::PointCloudRenderer(Material* material, const std::vector<RawModel>& rawModel, Transform* transform)
+	PointCloudRenderer::PointCloudRenderer(OpenGLMaterial* material, const std::vector<RawModel>& rawModel, Transform* transform)
 		:Component("PointCloudRenderer", ComponentType), m_Material(material),  m_RawModels(rawModel), m_Transform(transform)
 	{
 	}

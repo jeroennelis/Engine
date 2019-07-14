@@ -32,12 +32,12 @@ namespace Engine {
 		return s_Instance;
 	}
 
-	Material * Loader::DraggedMaterial()
+	OpenGLMaterial* Loader::DraggedMaterial()
 	{
 		return m_DraggedMaterial; 
 	}
 
-	void Loader::SetDraggedMaterial(Material * material)
+	void Loader::SetDraggedMaterial(OpenGLMaterial* material)
 	{
 		 m_DraggedMaterial = material; 
 	}
@@ -60,7 +60,7 @@ namespace Engine {
 
 	void Loader::RenderMaterialPreviews()
 	{
-		for (Material* mat : m_Materials)
+		for (OpenGLMaterial* mat : m_Materials)
 		{
 			mat->RenderPreview();
 		}
@@ -85,7 +85,7 @@ namespace Engine {
 	void Loader::LoadMaterials()
 	{
 		//TEST
-		Material* mat1 = new Material(GetShader("diffuse"), "Red");
+		OpenGLMaterial* mat1 = new OpenGLMaterial(GetShader("diffuse"), "Red");
 		for (MaterialProperty* prop : mat1->MaterialProperties())
 		{
 			if (prop->Name() == "u_Cd")
@@ -115,7 +115,7 @@ namespace Engine {
 			}
 		}
 
-		Material* mat2 = new Material(GetShader("diffuse"),"Green");
+		OpenGLMaterial* mat2 = new OpenGLMaterial(GetShader("diffuse"),"Green");
 		for (MaterialProperty* prop : mat2->MaterialProperties())
 		{
 			if (prop->Name() == "u_Cd")
@@ -145,7 +145,7 @@ namespace Engine {
 			}
 		}
 
-		Material* mat3 = new Material(GetShader("diffuse"), "Blue");
+		OpenGLMaterial* mat3 = new OpenGLMaterial(GetShader("diffuse"), "Blue");
 		for (MaterialProperty* prop : mat3->MaterialProperties())
 		{
 			if (prop->Name() == "u_Cd")
@@ -175,7 +175,7 @@ namespace Engine {
 			}
 		}
 
-		Material* mat4 = new Material(GetShader("diffuse"), "Black");
+		OpenGLMaterial* mat4 = new OpenGLMaterial(GetShader("diffuse"), "Black");
 		for (MaterialProperty* prop : mat4->MaterialProperties())
 		{
 			if (prop->Name() == "u_Cd")
@@ -205,7 +205,7 @@ namespace Engine {
 			}
 		}
 		
-		Material* mat5 = new Material(GetShader("diffuse"), "white");
+		OpenGLMaterial* mat5 = new OpenGLMaterial(GetShader("diffuse"), "white");
 		for (MaterialProperty* prop : mat5->MaterialProperties())
 		{
 			if (prop->Name() == "u_Cd")

@@ -6,7 +6,10 @@
 namespace Engine {
 
 	inline double
-		max(double x0, double x1);
+		min(double x0, double x1)
+	{
+		return ((x0 < x1) ? x0 : x1);
+	}
 
 	inline double
 		max(double x0, double x1)
@@ -37,6 +40,11 @@ namespace Engine {
 	inline int
 		rand_int(int l, int h) {
 		return ((int)(rand_float(0, h - l + 1) + l));
+	}
+
+	inline float Clamp(float x, float min, float max)
+	{
+		return(x < min ? min : (x > max ? max : x));
 	}
 
 	class Maths

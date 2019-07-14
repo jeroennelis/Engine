@@ -17,7 +17,6 @@ namespace Engine {
 
 		virtual glm::vec3 ShadePath(ShadeRec& sr);
 
-
-
+		virtual glm::vec3 GetLe(ShadeRec& sr) const;
 	};
 }

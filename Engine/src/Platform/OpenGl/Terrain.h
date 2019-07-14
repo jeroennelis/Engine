@@ -3,7 +3,7 @@
 #include "Engine/Components/Component.h"
 #include "Engine/Components/Transform.h"
 #include "RawModel.h"
-#include "Texture.h"
+#include "OpenGLTexture.h"
 #include "Loader.h"
 
 namespace Engine {
@@ -11,7 +11,7 @@ namespace Engine {
 	class Terrain
 	{
 	public:
-		Terrain(int gridX, int gridZ, Texture * texure, Loader* loader);
+		Terrain(int gridX, int gridZ, OpenGLTexture* texure, Loader* loader);
 		~Terrain();
 
 	private:
@@ -22,7 +22,7 @@ namespace Engine {
 		float x;
 		float z;
 		RawModel m_Model;
-		Texture * texture;
+		OpenGLTexture* texture;
 
 		RawModel GenerateTerrain(Loader* loader);
 

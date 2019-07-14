@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RTMaterial.h"
-#include "..//BRDFs/Lambertian.h"
+#include "..//BRDFs/RTLambertian.h"
 
 namespace Engine {
 
@@ -16,13 +16,15 @@ namespace Engine {
 
 		void SetKd(const float kd);
 
-		void SetCd(const glm::vec3& c);
+		void SetCd(Texture* c);
 
 		virtual glm::vec3 Shade(ShadeRec& sr)override;
 
+		virtual glm::vec3 ShadeAreaLight(ShadeRec& sr) override;
+
 	private:
 
-		Lambertian* m_AmbientBRDF;
-		Lambertian* m_DiffuseBRDF;
+		RTLambertian* m_AmbientBRDF;
+		RTLambertian* m_DiffuseBRDF;
 	};
 }

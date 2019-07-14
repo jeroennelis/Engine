@@ -8,6 +8,8 @@
 
 #include "../Utilities/Constants.h"
 
+#include "..//Utilities/BBox.h"
+
 namespace Engine {
 	class GeometricObject {
 
@@ -30,55 +32,29 @@ namespace Engine {
 			ShadowHit(const Ray&, float& tmin) const;
 
 
-		// the following three functions are only required for Chapter 3
 
-		void
-			set_color(const glm::vec3& c);
-
-		void
-			set_color(const float r, const float g, const float b);
-
-		glm::vec3
-			get_color(void);
 
 		inline RTMaterial* GetMaterial() { return m_Material; }
 		inline void SetMaterial(RTMaterial* material) { m_Material = material; }
 
+		virtual void AddObject(GeometricObject* object);		// used for compounds
+
+		virtual glm::vec3 Sample();
+
+		virtual float Pdf(ShadeRec& sr);
+
+		virtual glm::vec3 GetNormal(const glm::vec3& p);
+
+		virtual BBox GetBoundingBox();
 
 	protected:
 
-		glm::vec3   color;						// only used for Bare Bones ray tracing
-
-		RTMaterial* m_Material;
+		mutable RTMaterial* m_Material;
 
 		GeometricObject&						// assignment operator
 			operator= (const GeometricObject& rhs);
-	};
-
-
-	// --------------------------------------------------------------------  set_colour
-
-	inline void
-		GeometricObject::set_color(const glm::vec3& c) {
-		color = c;
-	}
-
-	// --------------------------------------------------------------------  set_colour
-
-	inline void
-		GeometricObject::set_color(const float r, const float g, const float b) {
-		color.r = r;
-		color.b = b;
-		color.g = g;
-	}
-
-	// --------------------------------------------------------------------  get_colour
-
-	inline glm::vec3
-		GeometricObject::get_color(void) {
-		return (color);
-	}
+	};	
 }
 					
-
+ 
 

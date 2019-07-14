@@ -8,14 +8,12 @@ namespace Engine{
 	// ---------------------------------------------------------------------- default constructor
 
 	GeometricObject::GeometricObject(void)
-		: color(black)
 	{}
 
 
 	// ---------------------------------------------------------------------- copy constructor
 
 	GeometricObject::GeometricObject(const GeometricObject& object)
-		: color(object.color)
 	{}
 
 
@@ -27,8 +25,6 @@ namespace Engine{
 		if (this == &rhs)
 			return (*this);
 
-		color = rhs.color;
-
 		return (*this);
 	}
 
@@ -38,7 +34,34 @@ namespace Engine{
 	GeometricObject::~GeometricObject(void) {}
 	bool GeometricObject::ShadowHit(const Ray &, float& tmin) const
 	{
+		EN_CORE_ASSERT(false, "not implemented");
 		return false;
+	}
+
+	void GeometricObject::AddObject(GeometricObject* object) {}
+
+	inline glm::vec3 GeometricObject::Sample()
+	{
+		EN_CORE_ASSERT(false, "not implemented");
+		return glm::vec3();
+	}
+
+	inline float GeometricObject::Pdf(ShadeRec& sr)
+	{
+		EN_CORE_ASSERT(false, "not implemented");
+		return 1.0f;
+	}
+
+	glm::vec3 GeometricObject::GetNormal(const glm::vec3& p)
+	{
+		EN_CORE_ASSERT(false, "not implemented");
+		return glm::vec3();
+	}
+
+	BBox GeometricObject::GetBoundingBox()
+	{
+		EN_CORE_ASSERT(false, "not implemented");
+		return BBox();
 	}
 }
 

@@ -16,11 +16,16 @@ namespace Engine {
 
 		virtual glm::vec3 GetDirection(ShadeRec& sr) = 0;
 
-		virtual glm::vec3 L(ShadeRec& sr) = 0;
-
 		virtual bool InShadow(const Ray& ray, const ShadeRec& sr) const;
 
+		virtual glm::vec3 L(ShadeRec& sr) = 0;
+
+		virtual float G(const ShadeRec& sr) const;
+
+		virtual float Pdf(ShadeRec& sr) const;
+
 		inline bool CastsShadows() { return m_Shadows; }
+
 		inline void EnableShadows(bool enabled) { m_Shadows = enabled; }
 
 	protected:

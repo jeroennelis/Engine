@@ -103,6 +103,7 @@ namespace Engine {
 		return (false);
 	}
 
+	//---------------------------------------------------------------- Shadow Hit
 	bool Sphere::ShadowHit(const Ray &ray, float & tmin) const
 	{
 		double 		t;

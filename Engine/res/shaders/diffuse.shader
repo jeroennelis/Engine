@@ -31,7 +31,7 @@ void main()
 	gl_Position = u_projectionMatrix * positionRelativeToCam;
 
 	surfaceNormal = normalize((u_transformationMatrix * normal).xyz);
-	toLightVector = worldcoordinates.xyz -lightPos;
+	toLightVector = worldcoordinates.xyz - lightPos;
 	toLightVector = normalize(toLightVector);
 
 	// phong

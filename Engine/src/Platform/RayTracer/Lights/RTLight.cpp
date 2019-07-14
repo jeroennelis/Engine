@@ -18,5 +18,15 @@ namespace Engine {
 	{
 		return false;
 	}
+
+	float RTLight::G(const ShadeRec& sr) const
+	{
+		return 1.0f;
+	}
+
+	float RTLight::Pdf(ShadeRec& sr) const
+	{
+		return 1.0f;
+	}
 }
 

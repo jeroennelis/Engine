@@ -1,6 +1,6 @@
 #include "enpch.h"
 
-#include "Material.h"
+#include "OpenGLMaterial.h"
 #include "imgui.h"
 #include "Loader.h"
 
@@ -11,26 +11,26 @@
 
 namespace Engine {
 
-	Material::Material(Shader* shader, const std::string& name)
+	OpenGLMaterial::OpenGLMaterial(Shader* shader, const std::string& name)
 		:m_Shader(shader), m_Name(name)
 	{
 		InitProperties();
 		m_Preview = new FrameBuffer(512, 512);
 	}
 
-	Material::~Material()
+	OpenGLMaterial::~OpenGLMaterial()
 	{
 		delete m_Preview;
 		for (MaterialProperty* prop : m_Properties)
 			delete prop;
 	}
 
-	void Material::AddProperty(MaterialProperty *prop)
+	void OpenGLMaterial::AddProperty(MaterialProperty *prop)
 	{
 		m_Properties.push_back(prop);
 	}
 	
-	void Material::Bind()
+	void OpenGLMaterial::Bind()
 	{
 		m_Shader->Bind();
 		
@@ -40,7 +40,7 @@ namespace Engine {
 		}
 	}
 
-	void Material::RenderInspectorInfo()
+	void OpenGLMaterial::RenderInspectorInfo()
 	{
 		if(ImGui::TreeNode("Material"))
 		{
@@ -53,7 +53,7 @@ namespace Engine {
 		}
 	}
 
-	const void Material::RenderProjectInfo()const
+	const void OpenGLMaterial::RenderProjectInfo()const
 	{
 		ImTextureID texID = (ImTextureID)(UINT_PTR)m_Preview->GetTexture();
 		bool clicked = ImGui::ImageButton(texID, ImVec2(50, 50)); //TODO imgui pop
@@ -61,17 +61,17 @@ namespace Engine {
 		if (ImGui::BeginDragDropSource())
 		{
 			ImGui::SetDragDropPayload("Material", "test", 5);
-			Loader::Get()->SetDraggedMaterial(const_cast<Material*>(this));
+			Loader::Get()->SetDraggedMaterial(const_cast<OpenGLMaterial*>(this));
 			EN_CORE_INFO("dragging");
 			ImGui::EndDragDropSource();
 		}
 		else if (clicked)
 		{
-			Scene::SetSelectedMaterial(const_cast<Material*>(this));
+			Scene::SetSelectedMaterial(const_cast<OpenGLMaterial*>(this));
 		}
 	}
 
-	void Material::RenderPreview()
+	void OpenGLMaterial::RenderPreview()
 	{
 		glViewport(0, 0, 512, 512);
 		m_Preview->Bind();
@@ -100,7 +100,7 @@ namespace Engine {
 		glViewport(0, 0, Application::Get().GetWindow().GetWidth(), Application::Get().GetWindow().GetHeight());			//TODO set viewport while binding fb
 	}
 
-	void Material::InitProperties()
+	void OpenGLMaterial::InitProperties()
 	{
 		for (const auto& prop : m_Shader->GetProperties())
 		{

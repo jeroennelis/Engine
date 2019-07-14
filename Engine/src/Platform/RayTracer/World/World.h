@@ -8,12 +8,14 @@
 #include "Platform/RayTracer/Tracers/Tracer.h"
 #include "Platform/RayTracer/Tracers/MultipleObjects.h"
 
-#include "../image.h"
+#include "Engine/image.h"
 #include <stdio.h>
 
 #include "../Cameras/RTPinhole.h"
 #include "../Lights/RTLight.h"
 #include "..//Lights/RTAmbient.h"
+
+#include "Engine/Logic/Scene.h"
 
 namespace Engine{
 
@@ -36,7 +38,7 @@ namespace Engine{
 		World(void);
 		~World(void);
 
-		void build(void);
+		void build(Scene& scene);
 
 		void add_object(GeometricObject* object_ptr);
 
@@ -53,6 +55,8 @@ namespace Engine{
 		void set_pixel(const int row, const int column, const glm::vec3& pixelColor) const;
 		
 		inline void SetCamera(RTCamera* camera) { camera_ptr = camera; }
+
+		inline void SaveImage(const std::string& path) { image->saveImage(path); }
 
 
 		glm::vec3 MaxToOne(const glm::vec3& c) const;

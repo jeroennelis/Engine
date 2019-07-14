@@ -8,6 +8,8 @@ namespace Engine {
 	struct RawModel {
 		std::shared_ptr<VertexArray> va;
 
+		std::string path;
+
 		RawModel();
 		RawModel(const std::shared_ptr<VertexArray>& vertexArray);
 

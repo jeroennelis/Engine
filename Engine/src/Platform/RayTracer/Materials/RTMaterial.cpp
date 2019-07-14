@@ -30,4 +30,10 @@ namespace Engine {
 		EN_CORE_ASSERT(false, "not implemented");
 		return black;
 	}
+
+	glm::vec3 RTMaterial::GetLe(ShadeRec& sr) const
+	{
+		EN_CORE_ASSERT(false, "not implemented");
+		return black;
+	}
 }

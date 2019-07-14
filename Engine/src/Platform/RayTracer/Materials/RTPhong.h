@@ -1,8 +1,8 @@
 #pragma once
 
 #include "RTMaterial.h"
-#include "../BRDFs/Lambertian.h"
-#include "../BRDFs/GlossySpecular.h"
+#include "../BRDFs/RTLambertian.h"
+#include "../BRDFs/RTGlossySpecular.h"
 
 namespace Engine {
 
@@ -14,6 +14,8 @@ namespace Engine {
 
 		virtual glm::vec3 Shade(ShadeRec& sr);
 
+		virtual glm::vec3 ShadeAreaLight(ShadeRec& sr) override;
+
 		void SetKa(const float ka);
 
 		void SetKd(const float kd);
@@ -22,11 +24,11 @@ namespace Engine {
 
 		void SetExp(const float exp);
 
-		void SetCd(const glm::vec3& c);
+		void SetCd(Texture* c);
 
 	private:
-		Lambertian* m_AmbientBRDF;
-		Lambertian* m_DiffuseBRDF;
-		GlossySpecular* m_SpecularBRDF;
+		RTLambertian* m_AmbientBRDF;
+		RTLambertian* m_DiffuseBRDF;
+		RTGlossySpecular* m_SpecularBRDF;
 	};
 }

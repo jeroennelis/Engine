@@ -1,50 +1,71 @@
 #include "enpch.h"
 
-#include "image.h"
+#include "Engine/image.h"
 #include <algorithm>
 #include "vendor/lodepng/lodepng.h"
 #include <glad/glad.h>+
 #include <gl/GL.h>
+#include "stb_image.h"
+
+#include "Engine/Application.h"
 
 namespace Engine {
 	Image::Image(int width, int height)
-		: width(width), height(height)
+		: m_Width(width), m_Height(height)
 	{
 		data = new glm::vec3[width * height];
 		imgData = new unsigned char[4 * width * height];
 	}
 
+	Image::Image(const std::string& path)
+	{
+		std::vector<unsigned char> image;
+		imgData = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
+		
+	
+		std::cout << "width: " << m_Width << std::endl;
+		std::cout << "height: " << m_Height << std::endl;
+	}
+
 	Image::~Image()
 	{
+		delete [] imgData;
 		delete[] data;
-		delete[] imgData;
 	}
 
-	int Image::getWidth() const
+	unsigned int Image::getWidth() const
 	{
-		return width;
+		return m_Width;
 	}
 
-	int Image::getHeight() const
+	unsigned int Image::getHeight() const
 	{
-		return height;
+		return m_Height;
 	}
 
 	glm::vec3* Image::getPixel(int x, int y)
 	{
-		return data + (x + y * width);
+		return data + (x + y * m_Width);
 	}
 
 	void Image::setPixel(int x, int y, const glm::vec3& color)
 	{
-		data[y + x * width] = color;
-		imgData[4 * (x *width + y) + 3] =
+		data[y + x * m_Width] = color;
+		imgData[4 * ((m_Width - x-1) * m_Height + y) + 0] =
 			(unsigned char)(color.r * 255.0f);
-		imgData[4 * (x * width + y) + 2] =
+		imgData[4 * ((m_Width - x-1) * m_Height + y) + 1] =
 			(unsigned char)(color.g * 255.0f);
-		imgData[4 * (x * width + y) + 1] =
+		imgData[4 * ((m_Width - x-1) * m_Height + y) + 2] =
 			(unsigned char)(color.b * 255.0f);
-		imgData[4 * (x * width + y) + 0] = 255;
+		imgData[4 * ((m_Width - x-1) * m_Height + y) + 3] = 255;
+	}
+
+	glm::vec3 Image::GetColor(int row, int column)
+	{
+
+		return glm::vec3((float)imgData[4 * ( column + m_Width * row) + 0]/255, 
+							(float)imgData[4 * (column + m_Width * row) + 1]/255,
+							(float)imgData[4 * (column + m_Width * row) + 2]/255);
 	}
 
 	void Image::saveImage(std::string filename) const
@@ -73,15 +94,17 @@ namespace Engine {
 
 		/*glTexSubImage2D(GL_TEXTURE_2D, 0,0,0,300,300,GL_RGB, GL_FLOAT, imgData)
 		glDrawPixels(300, 300, GL_ABGR_EXT, GL_UNSIGNED_BYTE, imgData);
+
+		
 */
-		std::reverse(imgData, (unsigned char*)(imgData + 1024 * 1024 * 4));
+		//Application::Get().RTTexture->Update(imgData, width, height);
+
+		//std::reverse(imgData, (unsigned char*)(imgData + width * height * 4));
 
 		/*Encode the image*/
-		unsigned error = lodepng_encode32_file(filename.c_str(), imgData, width, height);
+		unsigned error = lodepng::encode(filename.c_str(), imgData, m_Height, m_Width);
 
 		/*if there's an error, display it*/
 		if (error) printf("error %u: %s\n", error, lodepng_error_text(error));
-
-		delete[] imgData;
 	}
 }

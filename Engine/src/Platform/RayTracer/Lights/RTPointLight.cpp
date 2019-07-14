@@ -14,7 +14,7 @@ namespace Engine {
 	}
 	glm::vec3 RTPointLight::GetDirection(ShadeRec& sr)
 	{
-		return glm::normalize(m_Location - sr.local_hit_point);
+		return glm::normalize(m_Location - sr.hit_point);
 	}
 
 	glm::vec3 RTPointLight::L(ShadeRec& sr)

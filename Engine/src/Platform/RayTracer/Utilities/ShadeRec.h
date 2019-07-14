@@ -25,6 +25,8 @@ namespace Engine {
 		int			depth;				// recursion depth
 		glm::vec3	dir;				// for area lights
 		float		t;					// ray parameter
+		float		u;					// texture coordinate
+		float		v;					// texture coordinate
 		World&		w;					// world reference for shading
 
 		ShadeRec(World& wr);				// constructor

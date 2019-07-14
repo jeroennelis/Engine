@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/Components/Component.h"
 #include "RawModel.h"
-#include "Platform/OpenGl/Material.h"
+#include "Platform/OpenGl/OpenGLMaterial.h"
 #include "Engine/Components/Transform.h"
 
 namespace Engine {
@@ -10,10 +10,11 @@ namespace Engine {
 	{
 	public:
 
-		MeshRenderer(Material* material, RawModel* rawModel, Transform* transform);
+		MeshRenderer(OpenGLMaterial* material, RawModel* rawModel, Transform* transform);
 		~MeshRenderer();
 
-		inline void SetMaterial(Material* mat) { m_Material = mat; }
+		inline void SetMaterial(OpenGLMaterial* mat) { m_Material = mat; }
+		inline RawModel* GetRawModel() { return m_RawModel; }
 
 		// Inherited via Component
 		virtual void Update() override;
@@ -25,7 +26,7 @@ namespace Engine {
 		const static unsigned int ComponentType;
 
 	private:	
-		Material*	m_Material;
+		OpenGLMaterial*	m_Material;
 		RawModel*	m_RawModel;
 		Transform*	m_Transform;
 

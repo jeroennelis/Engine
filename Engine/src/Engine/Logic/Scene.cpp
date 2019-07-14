@@ -13,13 +13,13 @@ namespace Engine {
 
 	Scene* Scene::m_Current = nullptr;
 	GameObject* Scene::m_SelectedGameObject = nullptr;
-	Material* Scene::m_SelectedMaterial = nullptr;
+	OpenGLMaterial* Scene::m_SelectedMaterial = nullptr;
 	unsigned int Scene::ObjectCount = 0;
 	Camera* Scene::m_GameCamera = nullptr;
 	Camera* Scene::m_SceneCamera = nullptr;
 
 	Scene::Scene()
-		:m_Name("New Scene"), gravity(glm::vec3(0.0, -9.81f, 0)), particleWorld(1000000000), runPhysics(false)
+		:m_Name("New Scene"), gravity(glm::vec3(0.0, -9.81f, 0)), particleWorld(1), runPhysics(false)
 	{
 		if (!m_Current)
 			m_Current = this;
@@ -53,7 +53,7 @@ namespace Engine {
 
 	GameObject* Scene::AddRawModel(RawModel * model)
 	{
-		Material* mat = Loader::Get()->GetMaterials().at(4);
+		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(4);
 
 		std::shared_ptr<GameObject> go = std::make_shared<GameObject>("model");		//TODO
 		Transform* transform = go->GetComponent<Transform>();
@@ -80,7 +80,7 @@ namespace Engine {
 	std::shared_ptr<GameObject> Scene::CreateCube(GameObject* parent)
 	{
 		RawModel* rawModel = Loader::Get()->GetModel("cube");
-		Material* mat = Loader::Get()->GetMaterials().at(3);
+		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(3);
 		std::shared_ptr<GameObject> cube = std::make_shared<GameObject>("cube", parent);
 		Transform* parentTransform = parent->GetComponent<Transform>();
 		Transform* transform = cube->GetComponent<Transform>();
@@ -92,7 +92,7 @@ namespace Engine {
 	std::shared_ptr<GameObject> Scene::CreateTarget(GameObject* parent)
 	{
 		RawModel* rawModel = Loader::Get()->GetModel("target");
-		Material* mat = Loader::Get()->GetMaterials().at(3);
+		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(3);
 		Shader* BasicShader = Loader::Get()->GetShader("basic");
 		std::shared_ptr<GameObject> cube = std::make_shared<GameObject>("target", parent);
 		Transform* parentTransform = parent->GetComponent<Transform>();
@@ -105,7 +105,7 @@ namespace Engine {
 	std::shared_ptr<GameObject> Scene::CreateSphere(GameObject* parent)
 	{
 		RawModel* rawModel = Loader::Get()->GetModel("sphere");
-		Material* mat = Loader::Get()->GetMaterials().at(3);
+		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(3);
 		Shader*  BasicShader = Loader::Get()->GetShader("basic");
 		std::shared_ptr<GameObject> sphere = std::make_shared<GameObject>("sphere", parent);
 		Transform* transform = sphere->GetComponent<Transform>();
@@ -126,7 +126,7 @@ namespace Engine {
 	void Scene::AddCube(const glm::vec3& position)
 	{
 		RawModel* rawModel = Loader::Get()->GetModel("target");
-		Material* mat = Loader::Get()->GetMaterials().at(3);
+		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(3);
 		GameObject cube = GameObject("target");
 		Transform* transform = cube.GetComponent<Transform>();
 		transform->Position = position;
@@ -138,7 +138,7 @@ namespace Engine {
 	void Scene::AddSphere()
 	{
 		RawModel* rawModel = Loader::Get()->GetModel("killhouse");
-		Material* mat = Loader::Get()->GetMaterials().at(4);
+		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(4);
 
 		GameObject sphere = GameObject("killhouse");
 		Transform* transform = sphere.GetComponent<Transform>();
@@ -152,7 +152,7 @@ namespace Engine {
 		GameObject pointcloud("statie");
 		Transform* transform = pointcloud.GetComponent<Transform>();
 		std::vector<RawModel> pcm = Loader::Get()->GetPointCloud();
-		Material* mat = new Material(Loader::Get()->GetShader("pointcloud"), "pointcloud");
+		OpenGLMaterial* mat = new OpenGLMaterial(Loader::Get()->GetShader("pointcloud"), "pointcloud");
 		transform->Position = glm::vec3(0.4, 35.2, -0.4);
 		transform->Rotation = glm::vec3(-90, 0, 0);
 

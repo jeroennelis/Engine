@@ -10,6 +10,8 @@ namespace Engine {
 		int 			vres;   					// vertical image resolution
 		float			s;							// pixel size
 
+		int				max_depth;
+
 		float			gamma;						// gamma correction factor
 		float			inv_gamma;					// the inverse of the gamma correction factor
 		bool			show_out_of_gamut;			// display red if RGBColor out of gamut

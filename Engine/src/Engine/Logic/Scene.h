@@ -11,7 +11,7 @@
 
 namespace Engine {
 
-	class Material;
+	class OpenGLMaterial;
 
 	struct RawModel;
 
@@ -29,8 +29,8 @@ namespace Engine {
 		inline static GameObject* SelectedGameObject() { return m_SelectedGameObject; }
 		inline static void SetSelectedGameObject(GameObject* gameObject) { m_SelectedMaterial = nullptr; m_SelectedGameObject = gameObject; }
 
-		inline static Material* SelectedMaterial() { return m_SelectedMaterial; }
-		inline static void SetSelectedMaterial(Material* material) { m_SelectedGameObject = nullptr; m_SelectedMaterial = material; }
+		inline static OpenGLMaterial* SelectedMaterial() { return m_SelectedMaterial; }
+		inline static void SetSelectedMaterial(OpenGLMaterial* material) { m_SelectedGameObject = nullptr; m_SelectedMaterial = material; }
 
 		inline const std::string& Name() const { return m_Name; }
 
@@ -74,7 +74,7 @@ namespace Engine {
 		static Camera* m_SceneCamera;
 		std::vector<std::shared_ptr<GameObject>> m_GameObjects;
 		
-		static Material* m_SelectedMaterial;
+		static OpenGLMaterial* m_SelectedMaterial;
 
 		//temp
 
