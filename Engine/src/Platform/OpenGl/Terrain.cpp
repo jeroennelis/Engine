@@ -4,7 +4,7 @@
 
 namespace Engine {
 
-	Terrain::Terrain(int gridX, int gridZ, OpenGLTexture* texure, Loader* loader)
+	Terrain::Terrain(int gridX, int gridZ, GLTexture* texure, Loader* loader)
 		:SIZE(800), VERTEX_COUNT(128)
 	{
 		m_Model = GenerateTerrain(loader);

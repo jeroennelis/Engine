@@ -7,6 +7,9 @@
     <Filter Include="src\Engine">
       <UniqueIdentifier>{12A1320E-FE58-745B-6760-4DB753370F4C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Engine\BRDF">
+      <UniqueIdentifier>{DF327479-4BBE-E13D-54CF-6432C0D93D3E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Engine\Components">
       <UniqueIdentifier>{E776F566-53E3-B061-1CD7-48BF8802D3C9}</UniqueIdentifier>
     </Filter>
@@ -19,11 +22,17 @@
     <Filter Include="src\Engine\Logic">
       <UniqueIdentifier>{8F04C0A8-7BFD-DEFA-A42F-C47F9087BE06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Engine\Materials">
+      <UniqueIdentifier>{63A2CBC4-4F31-558E-F84F-6989E4BD6534}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Engine\Physics">
       <UniqueIdentifier>{8496B3FD-707A-7453-D9DA-6EA6C5DD5ED5}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Engine\Renderer">
       <UniqueIdentifier>{F838018B-649A-DE98-ED07-254B59681558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Engine\Textures">
+      <UniqueIdentifier>{25C7027C-9128-E089-1A96-263C86F61649}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Engine\XMLParser">
       <UniqueIdentifier>{FFA2BB17-EB31-45E1-9450-59DC80BE5587}</UniqueIdentifier>
@@ -34,6 +43,12 @@
     <Filter Include="src\Platform\OpenGl">
       <UniqueIdentifier>{55A49437-C105-7245-4A73-B8F7B6D3A804}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\OpenGl\BRDFs">
+      <UniqueIdentifier>{B5B810E7-217B-4471-6A2B-D3FDD62C1D4F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\OpenGl\Materials">
+      <UniqueIdentifier>{66D5108E-D2ED-F7B7-9B9A-875107728C51}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform\OpenVR">
       <UniqueIdentifier>{2AA69437-9607-7245-1F75-B8F78BD5A804}</UniqueIdentifier>
     </Filter>
@@ -43,11 +58,32 @@
     <Filter Include="src\Platform\RayTracer">
       <UniqueIdentifier>{DD00B7A8-C9FA-DFFA-B267-760B9E004667}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\RayTracer\BRDFs">
+      <UniqueIdentifier>{3D5B78FC-2916-68A8-D2CD-E0F2BE67B238}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\Cameras">
+      <UniqueIdentifier>{C8B1EA6E-B4D7-B4D5-9D1D-3AA189E2D9A1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform\RayTracer\GeometricObjects">
       <UniqueIdentifier>{359BB233-A12A-741E-AA26-55361635AF2A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\RayTracer\GeometricObjects\Triangles">
+      <UniqueIdentifier>{8D922061-F958-7D7D-42B4-0BE0AEB9EBE1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\Lights">
+      <UniqueIdentifier>{374F8BA4-A367-72CE-6C14-0268D8EB0668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\Mapping">
+      <UniqueIdentifier>{583EED70-4464-B7D7-2DAA-3CA3196FDCA3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\Materials">
+      <UniqueIdentifier>{EE7B167C-DACC-01BE-0331-F07FEFE09427}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform\RayTracer\Samplers">
       <UniqueIdentifier>{730D2211-DFF0-3051-E8F3-5E8D5456F7A1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RayTracer\Textures">
+      <UniqueIdentifier>{501B434B-BCFE-518B-C501-80C7316418DC}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Platform\RayTracer\Tracers">
       <UniqueIdentifier>{60F955B2-4C1F-2019-3565-A5E4212A45E5}</UniqueIdentifier>
@@ -104,6 +140,18 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Application.h">
       <Filter>src\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\BRDF\BRDF.h">
+      <Filter>src\Engine\BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\BRDF\GlossySpecular.h">
+      <Filter>src\Engine\BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\BRDF\Lambertian.h">
+      <Filter>src\Engine\BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\BRDF\PerfectSpecular.h">
+      <Filter>src\Engine\BRDF</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Components\Camera.h">
       <Filter>src\Engine\Components</Filter>
@@ -165,6 +213,15 @@
     <ClInclude Include="src\Engine\Logic\Scene.h">
       <Filter>src\Engine\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Materials\Material.h">
+      <Filter>src\Engine\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Materials\Matte.h">
+      <Filter>src\Engine\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Materials\Phong.h">
+      <Filter>src\Engine\Materials</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\Maths.h">
       <Filter>src\Engine</Filter>
     </ClInclude>
@@ -210,6 +267,15 @@
     <ClInclude Include="src\Engine\Renderer\VertexArray.h">
       <Filter>src\Engine\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Textures\ConstantColor.h">
+      <Filter>src\Engine\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Textures\ImageTexture.h">
+      <Filter>src\Engine\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Textures\Texture.h">
+      <Filter>src\Engine\Textures</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\XMLParser\XMLNode.h">
       <Filter>src\Engine\XMLParser</Filter>
     </ClInclude>
@@ -219,8 +285,14 @@
     <ClInclude Include="src\Engine\XMLParser\XMLWriter.h">
       <Filter>src\Engine\XMLParser</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\image.h">
+      <Filter>src\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\window.h">
       <Filter>src\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\BRDFs\OpenGLLambertian.h">
+      <Filter>src\Platform\OpenGl\BRDFs</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\FrameBuffer.h">
       <Filter>src\Platform\OpenGl</Filter>
@@ -233,6 +305,9 @@
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\MaterialProperty.h">
       <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLPhong.h">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\MeshRenderer.h">
       <Filter>src\Platform\OpenGl</Filter>
@@ -279,14 +354,101 @@
     <ClInclude Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLRenderer.h">
       <Filter>src\Platform\OpenVR\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\BRDFs\RTBRDF.h">
+      <Filter>src\Platform\RayTracer\BRDFs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\BRDFs\RTGlossySpecular.h">
+      <Filter>src\Platform\RayTracer\BRDFs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\BRDFs\RTLambertian.h">
+      <Filter>src\Platform\RayTracer\BRDFs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\BRDFs\RTPerfectSpecular.h">
+      <Filter>src\Platform\RayTracer\BRDFs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTCamera.h">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTFishEye.h">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTPinhole.h">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTSpherical.h">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Cameras\RTStereoCamera.h">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Compound.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\GeometricObjects\GeometricObject.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Grid.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Instance.h">
       <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Plane.h">
       <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Rectangle.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Sphere.h">
       <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\FlatMeshTriangle.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\MeshTriangle.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothMeshTriangle.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\Triangle.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Lights\RTAmbient.h">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Lights\RTAmbientOccluder.h">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Lights\RTAreaLight.h">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Lights\RTLight.h">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Lights\RTPointLight.h">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Mapping\Mapping.h">
+      <Filter>src\Platform\RayTracer\Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Mapping\SphericalMap.h">
+      <Filter>src\Platform\RayTracer\Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Materials\RTEmissive.h">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Materials\RTMaterial.h">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Materials\RTMatte.h">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Materials\RTPhong.h">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Materials\RTReflective.h">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\Samplers\Jittered.h">
       <Filter>src\Platform\RayTracer\Samplers</Filter>
@@ -300,13 +462,37 @@
     <ClInclude Include="src\Platform\RayTracer\Samplers\Sampler.h">
       <Filter>src\Platform\RayTracer\Samplers</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Textures\RTConstantColor.h">
+      <Filter>src\Platform\RayTracer\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Textures\RTImageTexture.h">
+      <Filter>src\Platform\RayTracer\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Textures\RTTexture.h">
+      <Filter>src\Platform\RayTracer\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Tracers\AreaLighting.h">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\Tracers\MultipleObjects.h">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Tracers\RayCast.h">
       <Filter>src\Platform\RayTracer\Tracers</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\Tracers\Tracer.h">
       <Filter>src\Platform\RayTracer\Tracers</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Tracers\Whitted.h">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Utilities\BBox.h">
+      <Filter>src\Platform\RayTracer\Utilities</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\Utilities\Constants.h">
+      <Filter>src\Platform\RayTracer\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\Utilities\Mesh.h">
       <Filter>src\Platform\RayTracer\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\Utilities\Ray.h">
@@ -1434,63 +1620,33 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\RayTracer\Cameras\RTCamera.h" />
-    <ClInclude Include="src\Platform\RayTracer\Cameras\RTPinhole.h" />
-    <ClInclude Include="src\Platform\RayTracer\Cameras\RTFishEye.h" />
-    <ClInclude Include="src\Platform\RayTracer\Cameras\RTSpherical.h" />
-    <ClInclude Include="src\Platform\RayTracer\Cameras\RTStereoCamera.h" />
-    <ClInclude Include="src\Platform\RayTracer\Lights\RTLight.h" />
-    <ClInclude Include="src\Platform\RayTracer\Lights\RTAmbient.h" />
-    <ClInclude Include="src\Platform\RayTracer\Lights\RTPointLight.h" />
-    <ClInclude Include="src\Platform\RayTracer\Tracers\RayCast.h" />
-    <ClInclude Include="src\Platform\RayTracer\Materials\RTMaterial.h" />
-    <ClInclude Include="src\Platform\RayTracer\Materials\RTMatte.h" />
-    <ClInclude Include="src\Platform\RayTracer\Materials\RTPhong.h" />
-    <ClInclude Include="src\Platform\RayTracer\Lights\RTAmbientOccluder.h" />
-    <ClInclude Include="src\Platform\RayTracer\Tracers\AreaLighting.h" />
-    <ClInclude Include="src\Platform\RayTracer\Materials\RTEmissive.h" />
-    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Rectangle.h" />
-    <ClInclude Include="src\Platform\RayTracer\Lights\RTAreaLight.h" />
-    <ClInclude Include="src\Platform\RayTracer\Utilities\BBox.h" />
-    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Compound.h" />
-    <ClInclude Include="src\Platform\RayTracer\Utilities\Mesh.h" />
-    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\Triangle.h" />
-    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\MeshTriangle.h" />
-    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\FlatMeshTriangle.h" />
-    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothMeshTriangle.h" />
-    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Grid.h" />
-    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Instance.h" />
-    <ClInclude Include="src\Platform\RayTracer\Tracers\Whitted.h" />
-    <ClInclude Include="src\Platform\RayTracer\Materials\RTReflective.h" />
-    <ClInclude Include="src\Platform\RayTracer\BRDFs\RTBRDF.h" />
-    <ClInclude Include="src\Platform\RayTracer\BRDFs\RTGlossySpecular.h" />
-    <ClInclude Include="src\Platform\RayTracer\BRDFs\RTLambertian.h" />
-    <ClInclude Include="src\Platform\RayTracer\BRDFs\RTPerfectSpecular.h" />
-    <ClInclude Include="src\Engine\BRDF\BRDF.h" />
-    <ClInclude Include="src\Engine\BRDF\Lambertian.h" />
-    <ClInclude Include="src\Engine\BRDF\GlossySpecular.h" />
-    <ClInclude Include="src\Engine\BRDF\PerfectSpecular.h" />
-    <ClInclude Include="src\Platform\OpenGl\OpenGLMaterial.h">
+    <ClInclude Include="src\Platform\OpenGl\ConeRenderer.h" />
+    <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLCone.h" />
+    <ClInclude Include="src\Platform\OpenGl\BRDFs\OpenGLBRDF.h" />
+    <ClInclude Include="src\Platform\OpenGl\GLTexture.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\OpenGLTexture.h">
-      <Filter>src\Platform\OpenGl</Filter>
+    <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLMaterial.h">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Textures\Texture.h" />
-    <ClInclude Include="src\Platform\RayTracer\Textures\RTTexture.h" />
-    <ClInclude Include="src\Platform\RayTracer\Textures\RTConstantColor.h" />
-    <ClInclude Include="src\Engine\Textures\ConstantColor.h" />
-    <ClInclude Include="src\Engine\Textures\ImageTexture.h" />
-    <ClInclude Include="src\Platform\RayTracer\Textures\RTImageTexture.h" />
-    <ClInclude Include="src\Engine\image.h">
-      <Filter>src\Platform\RayTracer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\RayTracer\Mapping\Mapping.h" />
-    <ClInclude Include="src\Platform\RayTracer\Mapping\SphericalMap.h" />
+    <ClInclude Include="src\Platform\OpenGl\BRDFs\OpenGLGlossySpecular.h" />
+    <ClInclude Include="src\Engine\Renderer\OrthographicCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
       <Filter>src\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\BRDF\BRDF.cpp">
+      <Filter>src\Engine\BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\BRDF\GlossySpecular.cpp">
+      <Filter>src\Engine\BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\BRDF\Lambertian.cpp">
+      <Filter>src\Engine\BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\BRDF\PerfectSpecular.cpp">
+      <Filter>src\Engine\BRDF</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Components\Camera.cpp">
       <Filter>src\Engine\Components</Filter>
@@ -1528,6 +1684,15 @@
     <ClCompile Include="src\Engine\Logic\Scene.cpp">
       <Filter>src\Engine\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Materials\Material.cpp">
+      <Filter>src\Engine\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Materials\Matte.cpp">
+      <Filter>src\Engine\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Materials\Phong.cpp">
+      <Filter>src\Engine\Materials</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\Maths.cpp">
       <Filter>src\Engine</Filter>
     </ClCompile>
@@ -1564,6 +1729,9 @@
     <ClCompile Include="src\Engine\Renderer\VertexArray.cpp">
       <Filter>src\Engine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Textures\ConstantColor.cpp">
+      <Filter>src\Engine\Textures</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp">
       <Filter>src\Engine\XMLParser</Filter>
     </ClCompile>
@@ -1573,6 +1741,12 @@
     <ClCompile Include="src\Engine\XMLParser\XMLWriter.cpp">
       <Filter>src\Engine\XMLParser</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\image.cpp">
+      <Filter>src\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\BRDFs\OpenGLLambertian.cpp">
+      <Filter>src\Platform\OpenGl\BRDFs</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\FrameBuffer.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
@@ -1581,6 +1755,9 @@
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\MaterialProperty.cpp">
       <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLPhong.cpp">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\MeshRenderer.cpp">
       <Filter>src\Platform\OpenGl</Filter>
@@ -1627,14 +1804,98 @@
     <ClCompile Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLRenderer.cpp">
       <Filter>src\Platform\OpenVR\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\BRDFs\RTBRDF.cpp">
+      <Filter>src\Platform\RayTracer\BRDFs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\BRDFs\RTGlossySpecular.cpp">
+      <Filter>src\Platform\RayTracer\BRDFs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\BRDFs\RTLambertian.cpp">
+      <Filter>src\Platform\RayTracer\BRDFs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\BRDFs\RTPerfectSpecular.cpp">
+      <Filter>src\Platform\RayTracer\BRDFs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTCamera.cpp">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTFishEye.cpp">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTPinhole.cpp">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTSpherical.cpp">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Cameras\RTStereoCamera.cpp">
+      <Filter>src\Platform\RayTracer\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Compound.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\GeometricObjects\GeometricObject.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Grid.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Instance.cpp">
       <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Plane.cpp">
       <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Rectangle.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Sphere.cpp">
       <Filter>src\Platform\RayTracer\GeometricObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\FlatMeshTriangle.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\MeshTriangle.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothMeshTriangle.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\Triangle.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Lights\RTAmbient.cpp">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Lights\RTAmbientOccluder.cpp">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Lights\RTAreaLight.cpp">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Lights\RTLight.cpp">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Lights\RTPointLight.cpp">
+      <Filter>src\Platform\RayTracer\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Mapping\SphericalMap.cpp">
+      <Filter>src\Platform\RayTracer\Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Materials\RTEmissive.cpp">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Materials\RTMaterial.cpp">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Materials\RTMatte.cpp">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Materials\RTPhong.cpp">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Materials\RTReflective.cpp">
+      <Filter>src\Platform\RayTracer\Materials</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\Samplers\Jittered.cpp">
       <Filter>src\Platform\RayTracer\Samplers</Filter>
@@ -1648,11 +1909,35 @@
     <ClCompile Include="src\Platform\RayTracer\Samplers\Sampler.cpp">
       <Filter>src\Platform\RayTracer\Samplers</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Textures\RTConstantColor.cpp">
+      <Filter>src\Platform\RayTracer\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Textures\RTImageTexture.cpp">
+      <Filter>src\Platform\RayTracer\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Textures\RTTexture.cpp">
+      <Filter>src\Platform\RayTracer\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Tracers\AreaLighting.cpp">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\Tracers\MultipleObjects.cpp">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Tracers\RayCast.cpp">
       <Filter>src\Platform\RayTracer\Tracers</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\Tracers\Tracer.cpp">
       <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Tracers\Whitted.cpp">
+      <Filter>src\Platform\RayTracer\Tracers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Utilities\BBox.cpp">
+      <Filter>src\Platform\RayTracer\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\Utilities\Mesh.cpp">
+      <Filter>src\Platform\RayTracer\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\Utilities\Ray.cpp">
       <Filter>src\Platform\RayTracer\Utilities</Filter>
@@ -1699,53 +1984,15 @@
     <ClCompile Include="vendor\stb_image\std_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\RayTracer\Cameras\RTCamera.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Cameras\RTPinhole.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Cameras\RTFishEye.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Cameras\RTSpherical.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Cameras\RTStereoCamera.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Lights\RTLight.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Lights\RTAmbient.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Lights\RTPointLight.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Tracers\RayCast.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Materials\RTMaterial.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Materials\RTMatte.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Materials\RTPhong.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Lights\RTAmbientOccluder.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Tracers\AreaLighting.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Materials\RTEmissive.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Rectangle.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Lights\RTAreaLight.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Utilities\BBox.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Compound.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Utilities\Mesh.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\Triangle.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\MeshTriangle.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\FlatMeshTriangle.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothMeshTriangle.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Grid.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Instance.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Tracers\Whitted.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Materials\RTReflective.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\BRDFs\RTBRDF.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\BRDFs\RTGlossySpecular.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\BRDFs\RTLambertian.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\BRDFs\RTPerfectSpecular.cpp" />
-    <ClCompile Include="src\Engine\BRDF\GlossySpecular.cpp" />
-    <ClCompile Include="src\Engine\BRDF\Lambertian.cpp" />
-    <ClCompile Include="src\Engine\BRDF\PerfectSpecular.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\OpenGLMaterial.cpp">
+    <ClCompile Include="src\Platform\OpenGl\ConeRenderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLCone.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\GLTexture.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\OpenGLTexture.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
+    <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLMaterial.cpp">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\RayTracer\Textures\RTTexture.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Textures\RTConstantColor.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\Textures\RTImageTexture.cpp" />
-    <ClCompile Include="src\Engine\image.cpp">
-      <Filter>src\Platform\RayTracer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\RayTracer\Mapping\SphericalMap.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\BRDFs\OpenGLGlossySpecular.cpp" />
+    <ClCompile Include="src\Engine\Renderer\OrthographicCamera.cpp" />
   </ItemGroup>
 </Project>

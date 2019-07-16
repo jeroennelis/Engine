@@ -1,8 +1,8 @@
 #pragma once
 #include "Engine/Components/Component.h"
 #include "RawModel.h"
-#include "Platform/OpenGl/OpenGLMaterial.h"
 #include "Engine/Components/Transform.h"
+#include "Platform/OpenGl/Materials/OpenGLMaterial.h"
 
 namespace Engine {
 
@@ -14,6 +14,7 @@ namespace Engine {
 		~MeshRenderer();
 
 		inline void SetMaterial(OpenGLMaterial* mat) { m_Material = mat; }
+		inline OpenGLMaterial* GetMaterial() {return m_Material; }
 		inline RawModel* GetRawModel() { return m_RawModel; }
 
 		// Inherited via Component

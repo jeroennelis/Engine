@@ -22,7 +22,7 @@ namespace Engine {
 
 		virtual glm::vec3 ShadeAreaLight(ShadeRec& sr) override;
 
-	private:
+	protected:
 		float m_Ls;
 		glm::vec3 m_Ce;
 	};

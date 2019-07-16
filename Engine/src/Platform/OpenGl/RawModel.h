@@ -3,6 +3,8 @@
 #include "Engine/Renderer/VertexArray.h"
 #include "FrameBuffer.h"
 
+#include "Platform/RayTracer/Utilities/BBox.h"
+
 namespace Engine {
 
 	struct RawModel {
@@ -19,7 +21,7 @@ namespace Engine {
 
 		FrameBuffer* m_Preview;
 
-
+		BBox bBox;
 		
 	};
 }

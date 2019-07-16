@@ -13,15 +13,15 @@ namespace Engine {
 		: RTPhong(rm) 
 	{
 
-		if (rm.m_ReflectiveBRDF)
+		/*if (rm.m_ReflectiveBRDF)
 			m_ReflectiveBRDF = rm.m_ReflectiveBRDF->clone();
 		else
-			m_ReflectiveBRDF = NULL;
+			m_ReflectiveBRDF = NULL;*/
 	}
 
 	RTReflective& RTReflective::operator=(const RTReflective& rhs)
 	{
-		if (this == &rhs)
+		/*if (this == &rhs)
 			return (*this);
 
 		RTPhong::operator=(rhs);
@@ -32,7 +32,7 @@ namespace Engine {
 		}
 
 		if (rhs.m_ReflectiveBRDF)
-			m_ReflectiveBRDF = rhs.m_ReflectiveBRDF->clone();
+			m_ReflectiveBRDF = rhs.m_ReflectiveBRDF->clone();*/
 
 		return (*this);
 	}

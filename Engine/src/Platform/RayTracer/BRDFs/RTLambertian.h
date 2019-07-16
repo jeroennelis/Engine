@@ -6,7 +6,7 @@
 
 namespace Engine {
 
-	class RTLambertian : public RTBRDF, public Lambertian
+	class RTLambertian : public Lambertian
 	{
 	public:
 
@@ -19,6 +19,7 @@ namespace Engine {
 
 		virtual glm::vec3 Rho(const ShadeRec & sr, const glm::vec3 & wo) const override;
 
-		virtual RTBRDF* clone(void) const override;
+		// Inherited via Lambertian
+		virtual void RenderInspectorInfo() override;
 	};
 }

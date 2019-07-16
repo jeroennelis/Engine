@@ -1,33 +1,18 @@
 #include "enpch.h"
 #include "RTMatte.h"
+#include "..//Lights/RTLight.h"
+#include "..//World/World.h"
+
 
 namespace Engine {
 
 	RTMatte::RTMatte()
-		:RTMaterial(),
-		m_AmbientBRDF(new RTLambertian),
-		m_DiffuseBRDF(new RTLambertian)
+		:Matte(new RTLambertian, new RTLambertian)		
 	{
 	}
 
 	RTMatte::~RTMatte()
 	{
-	}
-
-	void RTMatte::SetKa(const float ka)
-	{
-		m_AmbientBRDF->SetKa(ka);
-	}
-
-	void RTMatte::SetKd(const float kd)
-	{
-		m_DiffuseBRDF->SetKd(kd);
-	}
-
-	void RTMatte::SetCd(Texture* c)
-	{
-		m_AmbientBRDF->SetCd(c);
-		m_DiffuseBRDF->SetCd(c);
 	}
 
 	glm::vec3 RTMatte::Shade(ShadeRec& sr)

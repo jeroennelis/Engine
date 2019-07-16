@@ -34,7 +34,7 @@ namespace Engine {
 		return (*this);
 	}
 
-	void Compound::SetMaterial(RTMaterial* material)
+	void Compound::SetMaterial(Material* material)
 	{
 		int numObjects = m_Objects.size();
 

@@ -33,9 +33,9 @@ namespace Engine {
 		void SetUniform1f(const std::string& name, float value);
 
 		void SetUniform(const std::string& name, float value);
-		void SetUniform(const std::string& name, glm::vec4* v);
-		void SetUniform(const std::string& name, glm::vec3* v);
-		void SetUniform(const std::string& name, glm::mat4* matrix);
+		void SetUniform(const std::string& name, const glm::vec4& v);
+		void SetUniform(const std::string& name, const glm::vec3& v);
+		void SetUniform(const std::string& name, const glm::mat4& matrix);
 	
 	private:
 		ShaderProgramSource ParseShader(const std::string& filepath);

@@ -7,9 +7,7 @@
 namespace Engine {
 
 	RTPhong::RTPhong()
-		:m_AmbientBRDF(new RTLambertian),
-		m_DiffuseBRDF(new RTLambertian),
-		m_SpecularBRDF(new RTGlossySpecular)
+		:Phong(new RTLambertian, new RTLambertian, new RTGlossySpecular)		
 	{
 	}
 	RTPhong::~RTPhong()
@@ -72,30 +70,6 @@ namespace Engine {
 
 		}
 		return L;
-	}
-	void RTPhong::SetKa(const float ka)
-	{
-		m_AmbientBRDF->SetKa(ka);
-	}
-	void RTPhong::SetKd(const float kd)
-	{
-		m_DiffuseBRDF->SetKd(kd);
-	}
-	void RTPhong::SetKs(const float ks)
-	{
-		m_SpecularBRDF->SetKs(ks);
-	}
-
-	void RTPhong::SetExp(const float exp)
-	{
-		m_SpecularBRDF->SetExp(exp);
-	}
-
-	void RTPhong::SetCd(Texture* c)
-	{
-		m_AmbientBRDF->SetCd(c);
-		m_DiffuseBRDF->SetCd(c);
-		m_SpecularBRDF->SetCs(c);
 	}
 }
 

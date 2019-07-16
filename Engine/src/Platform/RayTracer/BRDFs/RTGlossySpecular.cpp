@@ -4,8 +4,7 @@
 namespace Engine {
 
 	RTGlossySpecular::RTGlossySpecular()
-		:RTBRDF(),
-		GlossySpecular()
+		:GlossySpecular()
 	{
 	}
 
@@ -34,9 +33,7 @@ namespace Engine {
 	{
 		return glm::vec3();
 	}
-
-	RTBRDF* RTGlossySpecular::clone(void) const
+	void RTGlossySpecular::RenderInspectorInfo()
 	{
-		return (new RTGlossySpecular(*this));
 	}
 }

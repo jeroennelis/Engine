@@ -24,6 +24,7 @@ namespace Engine {
 	}
 
 	OpenGLVertexArray::OpenGLVertexArray()
+		:m_CurrentAttribPointer(0)
 	{
 		glGenVertexArrays(1, &m_RendererID);
 		
@@ -51,18 +52,17 @@ namespace Engine {
 
 		EN_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!")
 
-		uint32_t index = 0;
 		const auto& layout = vertexBuffer->GetLayout();
 		for (const auto& element : layout)
 		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index,
+			glEnableVertexAttribArray(m_CurrentAttribPointer);
+			glVertexAttribPointer(m_CurrentAttribPointer,
 				element.GetComponentCount(),
 				ShaderDataTypeToOpenGLBaseType(element.Type),
 				element.Normalized ? GL_TRUE : GL_FALSE,
 				layout.GetStride(),
 				(const void*)element.Offset);
-			index++;
+			m_CurrentAttribPointer++;
 		}
 
 		m_VertexBuffers.push_back(vertexBuffer);

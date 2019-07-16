@@ -6,6 +6,8 @@ namespace Engine {
 
 	class Texture {
 	public:
-		virtual glm::vec3 GetColor(const ShadeRec& sr) const = 0;
+		virtual glm::vec3 GetColor(const ShadeRec& sr = ShadeRec() ) const = 0;
+
+		virtual void RenderInspectorInfo() = 0;
 	};
 }

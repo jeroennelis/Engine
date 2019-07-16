@@ -15,7 +15,7 @@ namespace Engine {
 	{
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		EN_CORE_ASSERT(status, Failed to initialize Glad);
+		EN_CORE_ASSERT(status, "Failed to initialize Glad!");
 
 		EN_CORE_INFO("{0}", glGetString(GL_VERSION));
 	}

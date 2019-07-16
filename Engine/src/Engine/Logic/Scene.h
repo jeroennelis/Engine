@@ -4,6 +4,8 @@
 #include "Engine/Physics/ParticleWorld.h"
 #include "Engine/Physics/ParticleLinks.h"
 
+#include "Platform/OpenGl/Materials/OpenGLMaterial.h"
+
 
 
 
@@ -53,7 +55,7 @@ namespace Engine {
 
 		static void AddPointCloud();
 
-		
+		static void AddCone();
 
 		static unsigned int ObjectCount;
 

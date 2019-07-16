@@ -3,6 +3,7 @@
 #include "Loader.h"
 #include "Engine/Application.h"
 #include "imgui.h"
+#include "Engine/Renderer/OrthographicCamera.h"
 
 Engine::RawModel::RawModel()
 	:va(nullptr), m_Preview(nullptr)
@@ -29,16 +30,43 @@ void Engine::RawModel::RenderPreview()
 	Loader::Get()->GetShader("preview")->Bind();
 
 	glm::mat4 projection = glm::mat4(1.0);
-	Loader::Get()->GetShader("preview")->SetUniform("u_projectionMatrix", &projection);
+	Loader::Get()->GetShader("preview")->SetUniform("u_projectionMatrix", projection);
 
-	Camera* camera = Scene::Current()->GetGameCamera();
+	//Camera* camera = Scene::Current()->GetGameCamera();
+	
+	OrthographicCamera camera = OrthographicCamera(bBox.X0, bBox.X1, bBox.Y0, bBox.Y1,  bBox.Z0, bBox.Z1);
+
+	float dx = bBox.X1 - bBox.X0;
+	float dy = (bBox.Y1 - bBox.Y0)/2 + bBox.Y0;
+	float dz = dx / (tan(glm::radians(90.0f / 2.0f)));
+
+	float aspectRatio = 1;
+	//fov
+	float y_scale = (float)((1.0f / glm::tan(glm::radians(90.0f / 2.0f))) * aspectRatio);
+	float x_scale = y_scale / aspectRatio;
+	float frustum_length = 1000 - dz;
+
+	glm::mat4 projectionMatrix = glm::mat4();
+	projectionMatrix[0][0] = x_scale;
+	projectionMatrix[1][1] = y_scale;
+	projectionMatrix[2][2] = -((1000 + dz) / frustum_length);
+	projectionMatrix[2][3] = -1;
+	projectionMatrix[3][2] = -((2 * dz * 1000) / frustum_length);
+	projectionMatrix[3][3] = 0;
+
+
+
+
+
+
 	glm::mat4 viewTransform = glm::mat4(1.0);
 
-	Loader::Get()->GetShader("preview")->SetUniform("u_viewMatrix", &viewTransform);
+	Loader::Get()->GetShader("preview")->SetUniform("u_viewMatrix", viewTransform);
+	Loader::Get()->GetShader("preview")->SetUniform("u_projectionMatrix", projectionMatrix);
 
 	glm::mat4 transform = glm::mat4(1.0);
-	//transform = glm::translate(transform, glm::vec3(0, 0, 10));
-	Loader::Get()->GetShader("preview")->SetUniform("u_transformationMatrix", &transform);
+	transform = glm::translate(transform, glm::vec3(0, -dy, -dz -1));
+	Loader::Get()->GetShader("preview")->SetUniform("u_transformationMatrix", transform);
 
 	glDrawElements(GL_TRIANGLES, va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	m_Preview->Unbind();
@@ -47,8 +75,10 @@ void Engine::RawModel::RenderPreview()
 
 void Engine::RawModel::RenderProjectInfo()
 {
+	if (m_Preview == nullptr)
+		return;
 	ImTextureID texID = (ImTextureID)(UINT_PTR)m_Preview->GetTexture();
-	bool clicked = ImGui::ImageButton(texID, ImVec2(50, 50)); //TODO imgui pop
+	bool clicked = ImGui::ImageButton(texID, ImVec2(50, 50),ImVec2(0,1), ImVec2(1,0)); //TODO imgui pop
 
 	if (ImGui::BeginDragDropSource())
 	{

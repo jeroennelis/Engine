@@ -41,7 +41,7 @@ namespace Engine {
 		static void processVertex(std::vector<std::string> &vertex, std::vector<Vertex*> &vertices, std::vector<unsigned int> &indices);
 		static void dealWithAlreadyProcessedVertex(Vertex *previousVertex, int newTextureIndex, int newNormalIndex, std::vector<unsigned int> &indices, std::vector<Vertex*> &vertices);
 		static void removeUnusedVertices(std::vector<Vertex*> & vertices);
-		static void convertDataToVectors(std::vector<Vertex*> &vertices, std::vector<glm::vec2> &textures, std::vector<glm::vec3> &normals,
+		static BBox convertDataToVectors(std::vector<Vertex*> &vertices, std::vector<glm::vec2> &textures, std::vector<glm::vec3> &normals,
 			std::vector<float> &verticesVector, std::vector<float> &texturesVector, std::vector<float> &normalsVector);
 		static RawModel ConvertVectorsToRawModel(std::vector<float> &verticesVector, std::vector<float> &texturesVector, std::vector<float> &normalsVector, std::vector<unsigned int>& indices);
 

@@ -98,7 +98,8 @@ project "Engine"
 			"EN_PLATFORM_WINDOWS",
 			"EN_BUILD_DLL",
 			"GLFW_INCLUDE_NONE",
-			"_CRT_SECURE_NO_WARNINGS"
+			"_CRT_SECURE_NO_WARNINGS",
+			"EN_ENABLE_ASSERTS"
 		}
 
 	filter "configurations:Debug"

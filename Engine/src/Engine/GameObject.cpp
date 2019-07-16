@@ -8,6 +8,7 @@
 #include "Platform/OpenGl/MeshRenderer.h"
 #include "Platform/OpenGl/Loader.h"
 #include "Platform/OpenGl/PointCloudRenderer.h"
+#include "Platform/OpenGl/ConeRenderer.h"
 
 namespace Engine {
 	GameObject::GameObject(const std::string & name, GameObject* parent)
@@ -142,6 +143,12 @@ namespace Engine {
 		{
 			child->Render();
 		}
+		ConeRenderer* coneRenderer = GetComponent<ConeRenderer>();
+		if (coneRenderer)
+		{
+			coneRenderer->Draw();
+		}
+
 	}
 
 	void GameObject::AddChild(std::shared_ptr<GameObject> go)
@@ -208,6 +215,7 @@ namespace Engine {
 					GameObject* temp = it->get();
 					if(temp->Index() == m_Index)
 					{ 
+						
 						Scene::Current()->GameObjects().erase(it);
 
 						// temp

@@ -4,8 +4,7 @@
 
 namespace Engine{
 	RTLambertian::RTLambertian()
-		:RTBRDF(),
-		Lambertian()
+		:Lambertian()
 	{
 	}
 	RTLambertian::~RTLambertian()
@@ -25,9 +24,7 @@ namespace Engine{
 	{
 		return (m_Kd * (m_Cd)->GetColor(sr));
 	}
-
-	RTBRDF* RTLambertian::clone(void) const
+	void RTLambertian::RenderInspectorInfo()
 	{
-		return (new RTLambertian(*this));
 	}
 }

@@ -40,7 +40,7 @@ namespace Engine{
 
 		if (open)
 		{
-			m_Material->RenderInspectorInfo();
+			//m_Material->RenderInspectorInfo();
 			ImGui::TreePop();
 		}
 		ImGui::Separator();
@@ -63,7 +63,7 @@ namespace Engine{
 
 			//glm::mat4 projection = CreateProjectionMatrix();
 			glm::mat4 projection = Renderer::GetProjectionMatrix();
-			m_Material->m_Shader->SetUniform("u_projectionMatrix", &projection);
+			m_Material->m_Shader->SetUniform("u_projectionMatrix", projection);
 
 			Camera* camera = Scene::Current()->GetGameCamera();
 			glm::mat4 viewTransform = camera->GetViewMatrix();
@@ -72,9 +72,9 @@ namespace Engine{
 				viewTransform = glm::mat4(1.0f);
 			}
 
-			m_Material->m_Shader->SetUniform("u_viewMatrix", &viewTransform);
+			m_Material->m_Shader->SetUniform("u_viewMatrix", viewTransform);
 
-			m_Material->m_Shader->SetUniform("u_transformationMatrix", &m_Transform->TransformationMatrix);
+			m_Material->m_Shader->SetUniform("u_transformationMatrix", m_Transform->TransformationMatrix);
 
 			glDrawArrays(GL_POINTS, 0, m_RawModels.at(i).va->GetCount());
 		}

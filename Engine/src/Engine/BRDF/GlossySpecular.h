@@ -14,6 +14,10 @@ namespace Engine{
 		inline void SetCs(Texture* cs) { m_Cs = cs; }
 		inline void SetExp(const float exp) { m_Exp = exp; }
 
+		inline float GetKs() { return m_Ks; }
+		inline Texture* GetCs() { return m_Cs; }
+		inline float GetExp() { return m_Exp; }
+
 	protected:
 		float m_Ks;
 		Texture* m_Cs;

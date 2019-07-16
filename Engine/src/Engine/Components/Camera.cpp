@@ -90,7 +90,7 @@ namespace Engine {
 	{
 		float aspectRatio = (float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight();
 		//fov
-		float y_scale = (float)((1.0f / glm::tan(glm::radians(110 / 2.0f))) * aspectRatio);
+		float y_scale = (float)((1.0f / glm::tan(glm::radians(90 / 2.0f))) * aspectRatio);
 		float x_scale = y_scale / aspectRatio;
 		float frustum_length = 1000 - 0.1f;
 

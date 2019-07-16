@@ -1,5 +1,6 @@
 #include "enpch.h"
 #include "OBJLoader.h"
+#include "Platform/RayTracer/Utilities/Constants.h"
 
 namespace Engine {
 
@@ -102,13 +103,14 @@ namespace Engine {
 		std::vector<float> verticesVectors;
 		std::vector<float> texturesVectors;
 		std::vector<float> normalsVectors;
-		convertDataToVectors(vertices, textures, normals, verticesVectors, texturesVectors, normalsVectors);
+		BBox bBox = convertDataToVectors(vertices, textures, normals, verticesVectors, texturesVectors, normalsVectors);
 		for (Vertex *vertex : vertices)
 			delete vertex;
 		RawModel rawmodel = ConvertVectorsToRawModel(verticesVectors, texturesVectors, normalsVectors, indices);
 		rawmodel.va->Bind();
 		rawmodel.va->GetIndexBuffer()->Bind();
 		rawmodel.path = objFile;
+		rawmodel.bBox = bBox;
 		return rawmodel;
 	}
 
@@ -193,8 +195,9 @@ namespace Engine {
 		}
 	}
 
-	void OBJLoader::convertDataToVectors(std::vector<Vertex*>& vertices, std::vector<glm::vec2>& textures, std::vector<glm::vec3>& normals, std::vector<float>& verticesVector, std::vector<float>& texturesVector, std::vector<float>& normalsVector)
+	BBox OBJLoader::convertDataToVectors(std::vector<Vertex*>& vertices, std::vector<glm::vec2>& textures, std::vector<glm::vec3>& normals, std::vector<float>& verticesVector, std::vector<float>& texturesVector, std::vector<float>& normalsVector)
 	{
+		BBox boundingBox = BBox(kHugeValue, -kHugeValue, kHugeValue, -kHugeValue, kHugeValue, -kHugeValue);
 		for (Vertex * vertex : vertices)
 		{
 			glm::vec3 position = vertex->Position;
@@ -213,7 +216,23 @@ namespace Engine {
 			normalsVector.push_back(normalVector.x);
 			normalsVector.push_back(normalVector.y);
 			normalsVector.push_back(normalVector.z);
+
+			if (position.x < boundingBox.X0)
+				boundingBox.X0 = position.x;
+			if (position.y < boundingBox.Y0)
+				boundingBox.Y0 = position.y; 
+			if (position.z < boundingBox.Z0)
+				boundingBox.Z0 = position.z;
+
+			if (position.x > boundingBox.X1)
+				boundingBox.X1 = position.x;
+			if (position.y > boundingBox.Y1)
+				boundingBox.Y1 = position.y;
+			if (position.z > boundingBox.Z1)
+				boundingBox.Z1 = position.z;
+			
 		}
+		return boundingBox;
 	}
 
 	RawModel OBJLoader::ConvertVectorsToRawModel(std::vector<float>& verticesVector, std::vector<float>& texturesVector, std::vector<float>& normalsVector, std::vector<unsigned int>& indices)

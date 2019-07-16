@@ -25,6 +25,8 @@
 
 #include "Platform/RayTracer/World/World.h"
 
+#include "Platform/OpenGl/Materials/OpenGLMaterial.h"
+
 //
 //#include  imgui_internal.h 
 
@@ -339,7 +341,7 @@ namespace Engine {
 				{
 					glm::vec3 vector = PickMouse((int)windowPos.x, (int)windowPos.y, (int)size.x, (int)size.y, (int)mousePos.x, (int)mousePos.y);
 					glm::vec3 camPos = Scene::Current()->GetSceneCamera()->GetTransform()->Position;
-					glm::vec3 point = (vector * 10.0f) - camPos;
+					glm::vec3 point = camPos + (vector * 10.0f);
 					GameObject* go = Scene::Current()->AddRawModel(Loader::Get()->SelectedRawModel());
 					go->GetComponent<Transform>()->Position = point;
 				}

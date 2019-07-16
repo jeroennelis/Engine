@@ -11,10 +11,17 @@
 #include "Constants.h"
 #include "ShadeRec.h"
 
+#include "..//World/World.h"
+
 namespace Engine {
 
 
 	// ------------------------------------------------------------------ constructor
+
+	ShadeRec::ShadeRec()
+		:w(*new World)
+	{
+	}
 
 	ShadeRec::ShadeRec(World& wr)
 		: 	hit_an_object(false),

@@ -26,7 +26,7 @@ namespace Engine {
 
 		virtual glm::vec3 Shade(ShadeRec& sr) override;
 
-	private:
+	protected:
 
 		RTPerfectSpecular* m_ReflectiveBRDF;
 	};

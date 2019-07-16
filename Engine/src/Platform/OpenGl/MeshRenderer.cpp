@@ -62,17 +62,17 @@ namespace Engine {
 		m_Material->Bind();
 
 		//glm::mat4 projection = CreateProjectionMatrix();
-		glm::mat4 projection = Renderer::GetProjectionMatrix();
-		m_Material->m_Shader->SetUniform("u_projectionMatrix", &projection);
+		glm::mat4 projection = Scene::Current()->GetSceneCamera()->GetProjectionMatrix();
+		m_Material->m_Shader->SetUniform("u_projectionMatrix", projection);
 
 		Camera* camera = Scene::Current()->GetGameCamera();
 		glm::mat4 viewTransform = camera->GetViewMatrix();
 		
-		m_Material->m_Shader->SetUniform("u_viewMatrix", &viewTransform);
+		m_Material->m_Shader->SetUniform("u_viewMatrix", viewTransform);
 		
-		m_Material->m_Shader->SetUniform("u_transformationMatrix", &m_Transform->TransformationMatrix);
+		m_Material->m_Shader->SetUniform("u_transformationMatrix", m_Transform->TransformationMatrix);
 
-		glDrawElements(GL_TRIANGLES, m_RawModel->va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		GLCall(glDrawElements(GL_TRIANGLES, m_RawModel->va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
 	}
 }
 

@@ -3,6 +3,8 @@
 #include "Ray.h"
 #include "..//Materials/RTMaterial.h"
 
+#include "Engine/Materials/Material.h"
+
 namespace Engine {
 
 
@@ -16,7 +18,7 @@ namespace Engine {
 	public:
 
 		bool		hit_an_object;		// did the ray hit an object?
-		RTMaterial*	material_ptr;		// nearest object's material
+		Material*	material_ptr;		// nearest object's material
 		glm::vec3	hit_point;			// world coordinates of hit point
 		glm::vec3	local_hit_point;	// for attaching textures to objects 
 		glm::vec3	normal;				// normal at hit point
@@ -29,6 +31,7 @@ namespace Engine {
 		float		v;					// texture coordinate
 		World&		w;					// world reference for shading
 
+		ShadeRec();
 		ShadeRec(World& wr);				// constructor
 
 		ShadeRec(const ShadeRec& sr);		// copy constructor

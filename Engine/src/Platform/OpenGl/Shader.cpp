@@ -3,6 +3,8 @@
 #include "Shader.h"
 #include <fstream>
 
+#include "glm/gtc/type_ptr.hpp"
+
 namespace Engine {
 
 	Shader::Shader(const std::string & filepath)
@@ -100,7 +102,7 @@ namespace Engine {
 			char* message = (char*)alloca(length * sizeof(char));
 			glGetShaderInfoLog(id, length, &length, message);
 			EN_CORE_ERROR("Failed to compile {0} shader", (type == GL_VERTEX_SHADER) ? "vertex" : "fragment");
-			EN_CORE_ERROR({ 0 }, message);
+			std::cout << message << std::endl;
 			glDeleteShader(id);
 			return 0;
 		}
@@ -150,19 +152,19 @@ namespace Engine {
 		GLCall(glUniform1f(GetUniformLocation(name), value));
 	}
 
-	void Shader::SetUniform(const std::string & name, glm::vec4* v)
+	void Shader::SetUniform(const std::string & name, const glm::vec4& v)
 	{
-		glUniform4f(GetUniformLocation(name), v->x, v->y, v->z, v->w);
+		glUniform4f(GetUniformLocation(name), v.x, v.y, v.z, v.w);
 	}
 
-	void Shader::SetUniform(const std::string & name, glm::vec3 * v)
+	void Shader::SetUniform(const std::string & name, const glm::vec3& v)
 	{
-		glUniform3f(GetUniformLocation(name), v->x, v->y, v->z);
+		glUniform3f(GetUniformLocation(name), v.x, v.y, v.z);
 	}
 
-	void Shader::SetUniform(const std::string & name, glm::mat4 * matrix)
+	void Shader::SetUniform(const std::string & name, const glm::mat4& matrix)
 	{
-		(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, (float*)matrix));
+		(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix)));
 	}
 
 	int Shader::GetUniformLocation(const std::string & name)

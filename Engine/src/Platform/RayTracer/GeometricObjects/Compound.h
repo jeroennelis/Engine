@@ -21,7 +21,7 @@ namespace Engine {
 		Compound& operator= (const Compound& c);
 
 		// Set Material
-		virtual void SetMaterial(RTMaterial* material_ptr);
+		virtual void SetMaterial(Material* material_ptr);
 
 		// Add Object
 		virtual void AddObject(GeometricObject* object_ptr) override;

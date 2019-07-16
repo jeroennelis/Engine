@@ -11,14 +11,14 @@
 #version 330 core 
   
 layout(location = 0) in vec4 position;
-layout(location = 1) in vec4 normal;
+layout(location = 1) in vec3 normal;
 layout(location = 2) in vec2 texCoord;
 
 uniform mat4 u_transformationMatrix;
 uniform mat4 u_viewMatrix;
 uniform mat4 u_projectionMatrix;
 
-const vec3 lightPos = vec3(500000, 0, -500000);
+const vec3 lightPos = vec3(0, 100, 100);
 
 out vec3 surfaceNormal;
 out vec3 toLightVector;
@@ -30,15 +30,15 @@ void main()
 	vec4 positionRelativeToCam = u_viewMatrix * worldcoordinates;
 	gl_Position = u_projectionMatrix * positionRelativeToCam;
 
-	surfaceNormal = normalize((u_transformationMatrix * normal).xyz);
+	surfaceNormal = normalize((u_transformationMatrix * vec4(normal,0)).xyz);
 	toLightVector = worldcoordinates.xyz - lightPos;
-	toLightVector = normalize(toLightVector);
+	toLightVector = normalize(-toLightVector);
 
 	// phong
 	vec3 toCameraDir = (inverse(u_viewMatrix) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - worldcoordinates.xyz;
-	vec3 reflectedLightDir = reflect(toLightVector, surfaceNormal);
+	vec3 reflectedLightDir = reflect(-toLightVector, surfaceNormal);
 	phongFactor = dot(reflectedLightDir, toCameraDir);
-	phongFactor = max(phongFactor, 0.1);
+	phongFactor = phongFactor, 0.1;
 };
 
 
@@ -71,9 +71,9 @@ const float ambientIntensity = 1.0;
 void main()  
 {  
 	// diffuse shading
-	float cosFactor = dot(surfaceNormal, toLightVector);
+	float nDotWi = dot(surfaceNormal, toLightVector);
 	float reflectivity = u_Kd / PI;
-	vec3 diffuse = reflectivity * u_Cd.xyz * lightIntensity * lightColor * cosFactor;
+	vec3 diffuse = reflectivity * u_Cd.xyz * lightIntensity * lightColor * nDotWi;
 	
 	// ambient shading
 	vec3 ambient = u_Ka * u_Cd.xyz * ambientIntensity * ambientColor;
@@ -83,6 +83,6 @@ void main()
 	vec3 phong = u_Ks * cosToCam *  lightIntensity * lightColor;
 
 	// total color
-	color = vec4(diffuse + ambient + phong, 1.0);
+	color = vec4(diffuse + ambient /*+ phong*/, 1.0);
 	/*color = clamp(color, 0.0, 1.0);*/
 };

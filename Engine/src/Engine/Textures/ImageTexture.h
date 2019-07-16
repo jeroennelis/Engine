@@ -8,7 +8,7 @@ namespace Engine {
 	{
 
 	public:
-
+		virtual void RenderInspectorInfo() {}
 	protected:/*
 		int m_Witdh;
 		int m_Height;*/

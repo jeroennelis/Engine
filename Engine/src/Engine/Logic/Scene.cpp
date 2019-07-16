@@ -6,8 +6,11 @@
 #include "Platform/OpenGl/Loader.h"
 #include "Engine/Application.h"
 #include "Platform/OpenGl/PointCloudRenderer.h"
+#include "Platform/OpenGl/ConeRenderer.h"
 
 #include "Platform/OpenGl/RawModel.h"
+#include "Platform/OpenGl/Materials/OpenGLPhong.h"
+#include "Platform/OpenGl/Materials/OpenGLCone.h"
 
 namespace Engine {
 
@@ -53,7 +56,7 @@ namespace Engine {
 
 	GameObject* Scene::AddRawModel(RawModel * model)
 	{
-		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(4);
+		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(5);
 
 		std::shared_ptr<GameObject> go = std::make_shared<GameObject>("model");		//TODO
 		Transform* transform = go->GetComponent<Transform>();
@@ -152,7 +155,7 @@ namespace Engine {
 		GameObject pointcloud("statie");
 		Transform* transform = pointcloud.GetComponent<Transform>();
 		std::vector<RawModel> pcm = Loader::Get()->GetPointCloud();
-		OpenGLMaterial* mat = new OpenGLMaterial(Loader::Get()->GetShader("pointcloud"), "pointcloud");
+		OpenGLPhong* mat = new OpenGLPhong(Loader::Get()->GetShader("pointcloud"), "pointcloud");
 		transform->Position = glm::vec3(0.4, 35.2, -0.4);
 		transform->Rotation = glm::vec3(-90, 0, 0);
 
@@ -161,5 +164,18 @@ namespace Engine {
 		pointcloud.AddComponent(pcr);
 
 		Current()->AddGameObject(std::make_shared<GameObject>(pointcloud));
+	}
+
+	void Scene::AddCone()
+	{
+		GameObject coneOBJ("cone");
+		Transform* transform = coneOBJ.GetComponent<Transform>();
+		RawModel cone = Loader::Get()->GetCone();
+		OpenGLMaterial* mat = new OpenGLCone(Loader::Get()->GetShader("cone"), "cone");
+
+		std::shared_ptr<ConeRenderer> pcr = std::make_shared<ConeRenderer>(mat, cone, transform);
+		coneOBJ.AddComponent(pcr);
+
+		Current()->AddGameObject(std::make_shared<GameObject>(coneOBJ));
 	}
 }

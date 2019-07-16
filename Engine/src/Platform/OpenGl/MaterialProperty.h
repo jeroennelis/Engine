@@ -100,14 +100,14 @@ namespace Engine {
 	class Mat4Property : public MaterialProperty
 	{
 	public:
-		Mat4Property(const std::string& name, glm::mat4* data);
+		Mat4Property(const std::string& name, const glm::mat4& data);
 
 		virtual void SetProperty(Shader * shader) override;
 		virtual void SetData(void* data)override;
 		virtual void RenderInspectorInfo() override;
 
 	private:
-		glm::mat4* m_Data;
+		glm::mat4 m_Data;
 	};
 
 }

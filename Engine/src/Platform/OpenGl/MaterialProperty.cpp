@@ -64,7 +64,7 @@ namespace Engine {
 
 	void Vec3Property::SetProperty(Shader * shader)
 	{
-		shader->SetUniform(m_Name, &m_Data);
+		shader->SetUniform(m_Name, m_Data);
 	}
 
 	void Vec3Property::RenderInspectorInfo()
@@ -80,7 +80,7 @@ namespace Engine {
 
 	void Vec4Property::SetProperty(Shader * shader)
 	{
-		shader->SetUniform(m_Name, &m_Data);
+		shader->SetUniform(m_Name, m_Data);
 	}
 
 	void Vec4Property::SetData(void *)
@@ -101,7 +101,7 @@ namespace Engine {
 
 	void ColorProperty::SetProperty(Shader * shader)
 	{
-		shader->SetUniform(m_Name, &m_Data);
+		shader->SetUniform(m_Name, m_Data);
 	}
 
 	void ColorProperty::SetData(void * data)
@@ -117,7 +117,7 @@ namespace Engine {
 
 	//-------------Mat4 Property---------------------------------
 
-	Mat4Property::Mat4Property(const std::string & name, glm::mat4 * data)
+	Mat4Property::Mat4Property(const std::string & name, const glm::mat4& data)
 		:MaterialProperty(name), m_Data(data)
 	{
 	}

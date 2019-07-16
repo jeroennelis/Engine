@@ -10,7 +10,7 @@
 
 #include "Engine/ImGui/ImGuiLayer.h" 
 
-#include "Platform/OpenGl/OpenGLTexture.h"
+#include "Platform/OpenGl/GLTexture.h"
 
 
 namespace Engine {
@@ -34,7 +34,7 @@ namespace Engine {
 		inline Window& GetWindow() { return *m_Window; }
 		inline LayerStack& GetLayerStack() { return m_LayerStack; }
 
-		OpenGLTexture* RTTexture;
+		GLTexture* RTTexture;
 
 	private:
 		bool OnWindowClosed(WindowCloseEvent& e);

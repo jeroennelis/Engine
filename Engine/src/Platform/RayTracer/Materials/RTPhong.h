@@ -1,12 +1,12 @@
 #pragma once
 
-#include "RTMaterial.h"
+#include "Engine/Materials/Phong.h"
 #include "../BRDFs/RTLambertian.h"
 #include "../BRDFs/RTGlossySpecular.h"
 
 namespace Engine {
 
-	class RTPhong : public RTMaterial 
+	class RTPhong : public Phong 
 	{
 	public : 
 		RTPhong();
@@ -15,20 +15,5 @@ namespace Engine {
 		virtual glm::vec3 Shade(ShadeRec& sr);
 
 		virtual glm::vec3 ShadeAreaLight(ShadeRec& sr) override;
-
-		void SetKa(const float ka);
-
-		void SetKd(const float kd);
-
-		void SetKs(const float ks);
-
-		void SetExp(const float exp);
-
-		void SetCd(Texture* c);
-
-	private:
-		RTLambertian* m_AmbientBRDF;
-		RTLambertian* m_DiffuseBRDF;
-		RTGlossySpecular* m_SpecularBRDF;
 	};
 }

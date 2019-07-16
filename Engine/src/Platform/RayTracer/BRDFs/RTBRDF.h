@@ -6,7 +6,7 @@
 
 namespace Engine {
 
-	class RTBRDF
+	class RTBRDF : virtual BRDF
 	{
 	public:
 		RTBRDF();

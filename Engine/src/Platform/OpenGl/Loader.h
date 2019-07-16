@@ -3,7 +3,9 @@
 #include "RawModel.h"
 #include "OBJLoader.h"
 #include "XYZLoader.h"
-#include "OpenGLMaterial.h"
+#include "Platform/OpenGl/Materials/OpenGLMaterial.h"
+#include "Platform/RayTracer/Utilities/Constants.h"
+
 
 namespace Engine {
 
@@ -19,6 +21,8 @@ namespace Engine {
 		inline const std::vector<OpenGLMaterial*>& GetMaterials() const  { return m_Materials; };
 		inline const std::unordered_map<std::string, RawModel*>& GetRawModels() const { return m_Models; }
 		inline const std::vector<RawModel>& GetPointCloud() const { return m_PointCloud; }
+
+		inline const RawModel& GetCone() const { return m_Cone; }
 
 		OpenGLMaterial* DraggedMaterial();
 		void SetDraggedMaterial(OpenGLMaterial* material);
@@ -42,6 +46,8 @@ namespace Engine {
 		void LoadModels();
 		void LoadMaterials();
 
+		void LoadCone();
+
 	private:
 		static Loader* s_Instance;
 	
@@ -49,14 +55,17 @@ namespace Engine {
 		std::unordered_map<std::string, RawModel*> m_Models;
 		std::vector<RawModel> m_PointCloud;
 
+		RawModel m_Cone;
+
 		const std::unordered_map<std::string, std::string> m_ShaderPaths =
 		{
 			{"basic",	"../Engine/res/shaders/basic.shader" },
-			{"diffuse",	"../Engine/res/shaders/diffuse.shader" },
+			{"phong",	"../Engine/res/shaders/phong.shader" },
 			{"texture",	"../Engine/res/shaders/texture.shader"},
 			{"preview",	"../Engine/res/shaders/preview.shader"},
 			{"terrain", "../Engine/res/shaders/terrain.shader"},
 			{"pointcloud", "../Engine/res/shaders/pointcloud.shader" },
+			{"cone", "../Engine/res/shaders/cone.shader" }
 		};
 
 		const std::unordered_map<std::string, std::string> m_ModelPaths =
@@ -75,8 +84,8 @@ namespace Engine {
 		};
 
 		std::vector<OpenGLMaterial*> m_Materials;
-		OpenGLMaterial * m_DraggedMaterial;
-		OpenGLMaterial * m_SelectedMaterial;
+		OpenGLMaterial* m_DraggedMaterial;
+		OpenGLMaterial* m_SelectedMaterial;
 		RawModel * m_SelectedRawModel;
 	};
 }

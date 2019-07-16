@@ -10,6 +10,8 @@
 
 #include "..//Utilities/BBox.h"
 
+#include "Engine/Materials/Material.h"
+
 namespace Engine {
 	class GeometricObject {
 
@@ -34,8 +36,8 @@ namespace Engine {
 
 
 
-		inline RTMaterial* GetMaterial() { return m_Material; }
-		inline void SetMaterial(RTMaterial* material) { m_Material = material; }
+		inline Material* GetMaterial() { return m_Material; }
+		inline void SetMaterial(Material* material) { m_Material = material; }
 
 		virtual void AddObject(GeometricObject* object);		// used for compounds
 
@@ -49,7 +51,7 @@ namespace Engine {
 
 	protected:
 
-		mutable RTMaterial* m_Material;
+		mutable Material* m_Material;
 
 		GeometricObject&						// assignment operator
 			operator= (const GeometricObject& rhs);

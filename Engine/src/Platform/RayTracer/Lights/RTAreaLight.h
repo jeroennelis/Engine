@@ -28,7 +28,7 @@ namespace Engine {
 	private:
 		
 		GeometricObject* m_Object;
-		RTMaterial* m_Material;
+		Material* m_Material;
 		glm::vec3 m_SamplePoint;
 		glm::vec3 m_LightNormal;
 		glm::vec3 m_Wi;

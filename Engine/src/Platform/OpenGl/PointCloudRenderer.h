@@ -3,8 +3,8 @@
 #include "Engine/Components/Component.h"
 
 #include "RawModel.h"
-#include "Platform/OpenGl/OpenGLMaterial.h"
 #include "Engine/Components/Transform.h"
+#include "Platform/OpenGl/Materials/OpenGLMaterial.h"
 
 namespace Engine {
 

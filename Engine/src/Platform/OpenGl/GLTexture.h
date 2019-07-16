@@ -4,7 +4,7 @@
 
 namespace Engine {
 
-	class OpenGLTexture
+	class GLTexture
 	{
 	private: 
 		unsigned int m_RendererID;
@@ -13,9 +13,9 @@ namespace Engine {
 		int m_Width, m_Height, m_BPP;
 
 	public:
-		OpenGLTexture();
-		OpenGLTexture(const std::string& path);
-		~OpenGLTexture();
+		GLTexture();
+		GLTexture(const std::string& path);
+		~GLTexture();
 
 		void Bind(unsigned int slot = 0) const;
 		void UnBind() const;

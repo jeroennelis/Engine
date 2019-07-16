@@ -40,6 +40,10 @@
 
 #include "..//Mapping/SphericalMap.h"
 
+#include "Engine/Materials/Material.h"
+
+#include "Platform/OpenGl/Materials/OpenGLPhong.h"
+
 namespace Engine {
 	World::World()
 		:camera_ptr(NULL),
@@ -178,7 +182,7 @@ namespace Engine {
 		}
 	}
 
-	Instance* CreateMesh(const std::string& path, RTMaterial* mat)
+	Instance* CreateMesh(const std::string& path, Material* mat)
 	{
 		Grid* grid = new Grid;
 
@@ -318,7 +322,7 @@ namespace Engine {
 		SetCamera(pinhole_ptr);
 
 		RTPointLight* light_ptr2 = new RTPointLight;
-		light_ptr2->SetLocation(glm::vec3(200, 100, 1));
+		light_ptr2->SetLocation(glm::vec3(0, 100, 100));
 		//light_ptr2->SetColor(glm::vec3(1.0, 0, 0));
 		light_ptr2->SetLs(3.0);
 		AddLight(light_ptr2);
@@ -337,14 +341,14 @@ namespace Engine {
 		texture1->SetColor({ 0.1, 0.1, 0.5 });
 		matte_ptr1->SetCd(texture1);	  				// yellow
 
-		RTPhong* phong = new RTPhong;
-		phong->SetKa(0.1);
-		phong->SetKd(0.75);
-		phong->SetKs(0.25);
-		phong->SetExp(50);
-		ConstantColor* texture2 = new RTConstantColor;
-		texture2->SetColor({ 0.75, 0.75, 0 });
-		phong->SetCd(texture2);
+		//RTPhong* phong = new RTPhong;
+		//phong->SetKa(0.1);
+		//phong->SetKd(0.75);
+		//phong->SetKs(0.25);
+		//phong->SetExp(50);
+		//ConstantColor* texture2 = new RTConstantColor;
+		//texture2->SetColor({ 0.75, 0.75, 0 });
+		//phong->SetCd(texture2);
 
 		RTPhong* phong2 = new RTPhong;
 		phong2->SetKa(0.1);
@@ -355,18 +359,18 @@ namespace Engine {
 		texture3->SetColor({ 0.90, 0.1, 0.1 });
 		phong2->SetCd(texture3);
 
-		RTReflective* reflective = new RTReflective;
-		reflective->SetKa(0.25);
-		reflective->SetKd(0.5);
-		ConstantColor* texture4 = new RTConstantColor;
-		texture4->SetColor({ 0.75, 0.75, 0 });
-		reflective->SetCd(texture4);
-		reflective->SetKs(0.15);
-		reflective->SetExp(100);
-		reflective->SetKr(0.75);
-		ConstantColor* whiteTexture = new RTConstantColor;
-		whiteTexture->SetColor(white);
-		reflective->SetCr(whiteTexture);
+		//RTReflective* reflective = new RTReflective;
+		//reflective->SetKa(0.25);
+		//reflective->SetKd(0.5);
+		//ConstantColor* texture4 = new RTConstantColor;
+		//texture4->SetColor({ 0.75, 0.75, 0 });
+		//reflective->SetCd(texture4);
+		//reflective->SetKs(0.15);
+		//reflective->SetExp(100);
+		//reflective->SetKr(0.75);
+		//ConstantColor* whiteTexture = new RTConstantColor;
+		//whiteTexture->SetColor(white);
+		//reflective->SetCr(whiteTexture);
 
 		Image* imageptr = new Image("../Engine/res/textures/EarthHighRes.jpg");
 
@@ -381,33 +385,41 @@ namespace Engine {
 		matteTex->SetKd(0.65);
 		matteTex->SetCd(imageTexture);
 
-		RTReflective* reflective2 = new RTReflective;
-		reflective2->SetKa(0.25);
-		reflective2->SetKd(0.5);
-		ConstantColor* texture5 = new RTConstantColor;
-		texture5->SetColor({ 0.75, 0.1, 0.1 });
-		reflective2->SetCd(imageTexture);
-		reflective2->SetKs(0.15);
-		reflective2->SetExp(100);
-		reflective2->SetKr(0.75);
-		reflective2->SetCr(whiteTexture);
+		//RTReflective* reflective2 = new RTReflective;
+		//reflective2->SetKa(0.25);
+		//reflective2->SetKd(0.5);
+		//ConstantColor* texture5 = new RTConstantColor;
+		//texture5->SetColor({ 0.75, 0.1, 0.1 });
+		//reflective2->SetCd(imageTexture);
+		//reflective2->SetKs(0.15);
+		//reflective2->SetExp(100);
+		//reflective2->SetKr(0.75);
+		//reflective2->SetCr(whiteTexture);
 
 		
 		
-		Instance* sphereInstance = CreateMesh("../Engine/res/models/sphere.obj", reflective);
-		sphereInstance->SetMaterial(reflective2);
+		/*Instance* sphereInstance = CreateMesh("../Engine/res/models/sphere.obj", phong2);
+		sphereInstance->SetMaterial(matteTex);
 		sphereInstance->SetTransform({ 2,2,-10 }, {0,0,0}, {1,1,1});
-		add_object(sphereInstance);
+		add_object(sphereInstance);*/
 
 		for (auto obj : scene.GameObjects())
 		{
 			if (obj->GetComponent<MeshRenderer>())
 			{
 				std::cout << obj->GetComponent<MeshRenderer>()->GetRawModel()->path.c_str() << std::endl;
-				Instance* instance = CreateMesh(obj->GetComponent<MeshRenderer>()->GetRawModel()->path, reflective);
+				RTPhong* phong = new RTPhong;
+				auto* mat = (OpenGLPhong*)obj->GetComponent<MeshRenderer>()->GetMaterial();
+				phong->SetKa(mat->GetKa());
+				phong->SetKd(mat->GetKd());
+				phong->SetKs(mat->GetKs());
+				phong->SetExp(mat->GetExp());
+				Texture* texture3 = mat->GetCd();
+				phong->SetCd(texture3);
+				Instance* instance = CreateMesh(obj->GetComponent<MeshRenderer>()->GetRawModel()->path, phong);
 				Transform* transform = obj->GetComponent<Transform>();
 				instance->SetTransform(transform->Position, transform->Rotation, transform->Scale);
-				instance->SetMaterial(reflective2);
+				
 				add_object(instance);
 			}
 			
