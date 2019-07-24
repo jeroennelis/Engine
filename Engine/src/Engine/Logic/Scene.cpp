@@ -56,7 +56,7 @@ namespace Engine {
 
 	GameObject* Scene::AddRawModel(RawModel * model)
 	{
-		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(5);
+		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(4);
 
 		std::shared_ptr<GameObject> go = std::make_shared<GameObject>("model");		//TODO
 		Transform* transform = go->GetComponent<Transform>();
@@ -152,7 +152,7 @@ namespace Engine {
 
 	void Scene::AddPointCloud()
 	{
-		GameObject pointcloud("statie");
+		GameObject pointcloud("pelt");
 		Transform* transform = pointcloud.GetComponent<Transform>();
 		std::vector<RawModel> pcm = Loader::Get()->GetPointCloud();
 		OpenGLPhong* mat = new OpenGLPhong(Loader::Get()->GetShader("pointcloud"), "pointcloud");

@@ -50,6 +50,8 @@ namespace Engine {
 		(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TextureID, 0));
 	}
 
+
+
 	void FrameBuffer::CreateRenderBuffer(int width, int height)
 	{
 		glGenRenderbuffers(1, &m_RenderBufferID);
@@ -60,6 +62,10 @@ namespace Engine {
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 			EN_CORE_ERROR("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void FrameBuffer::CreateStencilBuffer(int width, int height)
+	{
 	}
 
 

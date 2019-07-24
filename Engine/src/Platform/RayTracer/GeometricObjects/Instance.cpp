@@ -72,25 +72,26 @@ namespace Engine {
 
 	void Instance::SetTransform(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale)
 	{
-		glm::mat4 posMatrix = glm::inverse(glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, pos.y, pos.z)));
+		glm::mat4 posMatrix = /*glm::inverse*/(glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, pos.y, pos.z)));
 
 		glm::mat4 rotXMatrix = (glm::rotate(glm::radians(rot.x), glm::vec3(1, 0, 0)));
 		glm::mat4 rotYMatrix = (glm::rotate(glm::radians(rot.y), glm::vec3(0, 1, 0)));
 		glm::mat4 rotZMatrix = (glm::rotate(glm::radians(rot.z), glm::vec3(0, 0, 1)));
-		glm::mat4 rotMatrix = glm::inverse(rotXMatrix * rotYMatrix * rotZMatrix);
+		glm::mat4 rotMatrix = /*glm::inverse*/(rotXMatrix * rotYMatrix * rotZMatrix);
 
 		
 
-		glm::mat4 scaleMatrix = glm::inverse(glm::scale(glm::vec3(scale.x, scale.y, scale.z)));
+		glm::mat4 scaleMatrix = /*glm::inverse*/(glm::scale(glm::vec3(scale.x, scale.y, scale.z)));
 
-		m_InvMatrix =  scaleMatrix * rotMatrix * posMatrix;
+		m_InvMatrix = glm::inverse(scaleMatrix * rotMatrix * posMatrix);
+
 	}
 
 	bool Instance::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 	{
 		Ray inverseRay(ray);
 		inverseRay.o = m_InvMatrix * glm::vec4(inverseRay.o, 1.0);
-		inverseRay.d = glm::normalize(m_InvMatrix * glm::vec4(inverseRay.d, 0.0));
+		inverseRay.d = /*glm::normalize*/((m_InvMatrix) * glm::vec4(inverseRay.d.x, inverseRay.d.y, inverseRay.d.z,0.0));
 
 		if (m_Object->hit(inverseRay, tmin, sr))
 		{

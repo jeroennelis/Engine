@@ -37,7 +37,7 @@ namespace Engine {
 		void RenderConsoleWindow();
 		void RenderProjectWindow();
 
-		void RT();
+		void RT(int nrOfSamples);
 
 	private:
 		void ToggleStatistics();

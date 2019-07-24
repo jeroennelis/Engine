@@ -24,6 +24,8 @@ namespace Engine {
 
 		void Draw();
 
+		void DrawOutline();
+
 		const static unsigned int ComponentType;
 
 	private:	

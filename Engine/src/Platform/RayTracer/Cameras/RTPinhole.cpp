@@ -80,9 +80,23 @@ namespace Engine {
 
 	glm::vec3 RTPinhole::ray_direction(const glm::vec2 & p) const
 	{
-		glm::vec3 dir = p.x * m_U + p.y * m_V - m_Distance * m_W;
-		dir = glm::normalize(dir);
+		float fov = 90;
+		float distance = 0.1f;
 
-		return dir;
+
+		float horizontal = distance * tan(glm::radians(fov / 2));
+		float vertical = horizontal * (720.0f/1280.0f);
+
+		float x = horizontal * (p.x / 640.0f);
+		float y = vertical * (p.y / 360.0f);
+
+		glm::vec3 testdir = x * m_U + y * m_V - 0.1f * m_W;
+		testdir = glm::normalize(testdir);
+		return testdir;
+
+		/*glm::vec3 dir = p.x * m_U + p.y * m_V - m_Distance * m_W;
+		dir = glm::normalize(dir);
+		return dir;*/
+
 	}
 }

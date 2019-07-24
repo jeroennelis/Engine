@@ -60,6 +60,7 @@ namespace Engine {
 		m_RawModel->va->Bind();
 		//m_RawModel->ib->Bind();
 		m_Material->Bind();
+		//Loader::Get()->GetShader("outline")->Bind();
 
 		//glm::mat4 projection = CreateProjectionMatrix();
 		glm::mat4 projection = Scene::Current()->GetSceneCamera()->GetProjectionMatrix();
@@ -71,6 +72,29 @@ namespace Engine {
 		m_Material->m_Shader->SetUniform("u_viewMatrix", viewTransform);
 		
 		m_Material->m_Shader->SetUniform("u_transformationMatrix", m_Transform->TransformationMatrix);
+
+		GLCall(glDrawElements(GL_TRIANGLES, m_RawModel->va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
+	}
+	void MeshRenderer::DrawOutline()
+	{
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_BACK);
+		m_RawModel->va->Bind();
+		//m_RawModel->ib->Bind();
+		Shader* shader = Loader::Get()->GetShader("outline");
+		shader->Bind();
+
+		//glm::mat4 projection = CreateProjectionMatrix();
+		glm::mat4 projection = Scene::Current()->GetSceneCamera()->GetProjectionMatrix();
+		shader->SetUniform("u_projectionMatrix", projection);
+
+		Camera* camera = Scene::Current()->GetGameCamera();
+		glm::mat4 viewTransform = camera->GetViewMatrix();
+		
+		shader->SetUniform("u_viewMatrix", viewTransform);
+		
+
+		shader->SetUniform("u_transformationMatrix", m_Transform->TransformationMatrix * glm::scale(glm::vec3(1.1f,1.1f,1.1f)));
 
 		GLCall(glDrawElements(GL_TRIANGLES, m_RawModel->va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
 	}

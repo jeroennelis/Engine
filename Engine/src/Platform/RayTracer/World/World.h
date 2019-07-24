@@ -38,7 +38,7 @@ namespace Engine{
 		World(void);
 		~World(void);
 
-		void build(Scene& scene);
+		void build(Scene& scene, int nrOfSamples);
 
 		void add_object(GeometricObject* object_ptr);
 

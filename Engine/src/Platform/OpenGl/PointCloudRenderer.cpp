@@ -59,7 +59,7 @@ namespace Engine{
 		{
 			m_RawModels.at(i).va->Bind();
 			//m_RawModel->ib->Bind();
-			m_Material->Bind();
+			m_Material->m_Shader->Bind();
 
 			//glm::mat4 projection = CreateProjectionMatrix();
 			glm::mat4 projection = Renderer::GetProjectionMatrix();

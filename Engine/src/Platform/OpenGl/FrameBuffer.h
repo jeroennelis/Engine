@@ -19,6 +19,7 @@ namespace Engine {
 		void CreateFrameBuffer();
 		void CreateTextureAttachment(int width, int height);
 		void CreateRenderBuffer(int width, int height);
+		void CreateStencilBuffer(int width, int height);
 
 
 	private:

@@ -4,6 +4,8 @@
 #include "Engine/Application.h"
 #include "Loader.h"
 
+#include "MeshRenderer.h"
+
 namespace Engine {
 
 	OpenGLRenderer::OpenGLRenderer()
@@ -68,7 +70,9 @@ namespace Engine {
 	void OpenGLRenderer::RenderScene()
 	{
 		m_SceneFrameBuffer->Bind();
+
 		RenderFrame();
+
 		m_SceneFrameBuffer->Unbind();
 	}
 
@@ -85,13 +89,49 @@ namespace Engine {
 		RenderCommand::SetClearColor({ 0.0, 0, 0.0, 1 });
 		RenderCommand::Clear();
 
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+
 		Renderer::BeginScene();
+		
+		
+
+
+		
+
+		if (Scene::Current()->SelectedGameObject() != nullptr && Scene::Current()->SelectedGameObject()->GetComponent<MeshRenderer>() != nullptr)
 		{
-			for (Layer* layer : Application::Get().GetLayerStack())
-				layer->OnRender();
+			//render selected obj
+
+			//glEnable(GL_STENCIL_TEST);
+			//glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
+			//glStencilMask(0xFF); // enable writing to the stencil buffer
+			//glClear(GL_STENCIL_BUFFER_BIT); 
+
+			//glStencilFunc(GL_ALWAYS, 1, 0xFF); // all fragments should update the stencil buffer
+
+
+
+			Scene::Current()->SelectedGameObject()->GetComponent<MeshRenderer>()->Draw();
+
+			/*glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+			glStencilMask(0x00);*/
+
+			Scene::Current()->SelectedGameObject()->GetComponent<MeshRenderer>()->DrawOutline();
+			/*glStencilMask(0xFF);
+			glEnable(GL_DEPTH_TEST);*/
 
 
 		}
+
+		glDisable(GL_STENCIL_TEST);
+
+		{
+			for (Layer* layer : Application::Get().GetLayerStack())
+				layer->OnRender();
+		}
+
 		Renderer::EndScene();
 	}
 

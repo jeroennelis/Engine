@@ -279,18 +279,16 @@ namespace Engine {
 		return new Instance(grid);
 	}
 
-	void World::build(Scene& scene)
+	void World::build(Scene& scene, int nrOfSamples)
 	{
 		printf("building the world\n");
 
-		int num_samples = 1;
+		Sampler* sampler = new MultiJittered(nrOfSamples);
 
-		Sampler* sampler = new MultiJittered(num_samples);
-
-		vp.set_hres(3840);
-		vp.set_vres(2160);
+		vp.set_hres(1280);
+		vp.set_vres(720);
 		vp.sampler_ptr = sampler;
-		vp.num_samples = num_samples;
+		vp.num_samples = nrOfSamples;
 		vp.max_depth = 10;
 
 		background_color = black;
@@ -305,7 +303,7 @@ namespace Engine {
 
 		RTPinhole* pinhole_ptr = new RTPinhole;
 		glm::vec3 pos = scene.GetSceneCamera()->GetTransform()->Position;
-		pinhole_ptr->SetEye(pos/9.0f);
+		pinhole_ptr->SetEye(-pos);
 
 		glm::vec3 rotation = scene.GetSceneCamera()->GetTransform()->Rotation;
 		glm::vec3 direction;
@@ -317,7 +315,7 @@ namespace Engine {
 
 		pinhole_ptr->SetLookat(direction);
 		pinhole_ptr->SetViewDistance(910);
-		pinhole_ptr->SetZoom(3);
+		pinhole_ptr->SetZoom(1);
 		pinhole_ptr->compute_uvw();
 		SetCamera(pinhole_ptr);
 

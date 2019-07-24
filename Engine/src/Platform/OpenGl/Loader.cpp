@@ -135,7 +135,7 @@ namespace Engine {
 		mat5->SetKs(0.06f);
 		mat5->SetExp(100);
 
-		OpenGLPhong* mat6 = new OpenGLPhong(GetShader("phong"), "temp");
+		OpenGLPhong* mat6 = new OpenGLPhong(GetShader("outline"), "temp");
 		ConstantColor* texture6 = new ConstantColor();
 		texture6->SetColor({ 0.90, 0.1, 0.1 });
 		mat6->SetCd(texture6);
@@ -150,6 +150,7 @@ namespace Engine {
 		m_Materials.push_back(mat4);
 		m_Materials.push_back(mat5);
 		m_Materials.push_back(mat6);
+
 	}
 
 	void Loader::LoadCone()

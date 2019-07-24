@@ -59,13 +59,14 @@ namespace Engine {
 
 		const std::unordered_map<std::string, std::string> m_ShaderPaths =
 		{
-			{"basic",	"../Engine/res/shaders/basic.shader" },
-			{"phong",	"../Engine/res/shaders/phong.shader" },
-			{"texture",	"../Engine/res/shaders/texture.shader"},
-			{"preview",	"../Engine/res/shaders/preview.shader"},
-			{"terrain", "../Engine/res/shaders/terrain.shader"},
-			{"pointcloud", "../Engine/res/shaders/pointcloud.shader" },
-			{"cone", "../Engine/res/shaders/cone.shader" }
+			{"basic",		"../Engine/res/shaders/basic.shader" },
+			{"phong",		"../Engine/res/shaders/phong.shader" },
+			{"texture",		"../Engine/res/shaders/texture.shader"},
+			{"preview",		"../Engine/res/shaders/preview.shader"},
+			{"terrain",		"../Engine/res/shaders/terrain.shader"},
+			{"pointcloud",	"../Engine/res/shaders/pointcloud.shader" },
+			{"cone",		"../Engine/res/shaders/cone.shader" },
+			{"outline",		"../Engine/res/shaders/outline.shader" }
 		};
 
 		const std::unordered_map<std::string, std::string> m_ModelPaths =
@@ -80,7 +81,7 @@ namespace Engine {
 
 		const std::unordered_map<std::string, std::string> m_PointCloudPaths =
 		{
-			{"statie", "../Engine/res/models/oude statie.xyz"}
+			{"pelt", "../Engine/res/models/pelt.xyz"}
 		};
 
 		std::vector<OpenGLMaterial*> m_Materials;

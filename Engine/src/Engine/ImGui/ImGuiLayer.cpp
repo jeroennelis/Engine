@@ -164,11 +164,11 @@ namespace Engine {
 		}
 	}
 
-	void ImGuiLayer::RT()
+	void ImGuiLayer::RT(int nrOfSamples)
 	{
 		EN_CORE_INFO("tracing scene!");
 		World w;
-		w.build(*Scene::Current());
+		w.build(*Scene::Current(), nrOfSamples);
 		//w.render_scene(std::string("test"));
 		//w.render_perspective(std::string("test"));
 		w.camera_ptr->render_scene(&w);
@@ -180,6 +180,7 @@ namespace Engine {
 
 	void ImGuiLayer::RenderMenuBar()
 	{
+		static bool test = false;
 		if (ImGui::BeginMainMenuBar())
 		{
 			if (ImGui::BeginMenu( "File" ))
@@ -193,9 +194,11 @@ namespace Engine {
 				if (ImGui::MenuItem( "New Project" , ""  , false, false)) {}
 				if (ImGui::MenuItem( "Open Project" , ""  , false, false)) {}
 				if (ImGui::MenuItem( "Save Project" , ""  , false, false)) {}
-				if (ImGui::MenuItem( "trace scene", "", false, true)) 
+				if (ImGui::MenuItem( "trace scene"/*, "", false, true*/)) 
 				{
-					RT();
+					//RT();
+					test = true;
+					ImGui::OpenPopup("Delete?");
 				}
 				ImGui::EndMenu();
 			}
@@ -262,6 +265,19 @@ namespace Engine {
 			}
 
 			ImGui::EndMainMenuBar();
+		}
+
+		if (test)
+			ImGui::OpenPopup("Ray Tracer");
+		if (ImGui::BeginPopupModal("Ray Tracer", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			static int nrOfSamples = 1;
+			ImGui::DragInt("# samples", &nrOfSamples,1,1,1024);
+			if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); test = false; RT(nrOfSamples); }
+			ImGui::SetItemDefaultFocus();
+			ImGui::SameLine();
+			if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); test = false; }
+			ImGui::EndPopup();
 		}
 	}
 
@@ -341,7 +357,7 @@ namespace Engine {
 				{
 					glm::vec3 vector = PickMouse((int)windowPos.x, (int)windowPos.y, (int)size.x, (int)size.y, (int)mousePos.x, (int)mousePos.y);
 					glm::vec3 camPos = Scene::Current()->GetSceneCamera()->GetTransform()->Position;
-					glm::vec3 point = camPos + (vector * 10.0f);
+					glm::vec3 point = -camPos + (vector * 10.0f);
 					GameObject* go = Scene::Current()->AddRawModel(Loader::Get()->SelectedRawModel());
 					go->GetComponent<Transform>()->Position = point;
 				}

@@ -7,7 +7,7 @@ namespace Engine {
 	class RTPinhole : public RTCamera
 	{
 	public:
-		RTPinhole() :RTCamera(), m_Zoom(1.0) {}
+		RTPinhole() :RTCamera(), m_Zoom(1.0), m_Distance(0.1f) {}
 
 		virtual ~RTPinhole() {}
 
