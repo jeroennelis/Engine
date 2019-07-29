@@ -19,7 +19,7 @@ namespace Engine {
 	
 	void RTCamera::compute_uvw(void)
 	{
-		m_W = glm::normalize(/*m_Eye*/ - m_Lookat);
+		m_W = glm::normalize(- m_Lookat);
 		m_U= glm::normalize(glm::cross(m_Up, m_W));
 		m_V = glm::cross(m_W, m_U);
 	}

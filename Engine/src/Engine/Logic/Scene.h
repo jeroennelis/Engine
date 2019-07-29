@@ -43,8 +43,6 @@ namespace Engine {
 
 		void OnUpdate();
 
-		void Render();
-
 		static std::shared_ptr<GameObject> CreateCube(GameObject* parent = nullptr);
 		static std::shared_ptr<GameObject> CreateSphere(GameObject* parent = nullptr);
 		static std::shared_ptr<GameObject> CreateTarget(GameObject* parent = nullptr);
@@ -87,6 +85,9 @@ namespace Engine {
 		physics::ParticleGravity gravity;
 		
 		bool runPhysics;
+
+		//hack
+		std::pair<float, float> oldMousePosition;
 	};
 
 }

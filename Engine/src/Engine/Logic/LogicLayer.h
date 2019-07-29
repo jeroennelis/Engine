@@ -13,7 +13,6 @@ namespace Engine
 
 		void OnAttach() override;
 		void OnUpdate() override;
-		void OnRender() override;
 		void OnEvent(Event& event) override;
 
 	private:

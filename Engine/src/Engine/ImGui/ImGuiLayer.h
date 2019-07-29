@@ -10,6 +10,8 @@
 #include  "Engine/Components/TestComponent.h" 
 
 #include  "Engine/XMLParser/XMLWriter.h" 
+#include <imgui.h>
+#include "..//imguizmo/ImGuizmo.h"
 
 
 
@@ -36,6 +38,7 @@ namespace Engine {
 		void RenderHierarchyWindow();
 		void RenderConsoleWindow();
 		void RenderProjectWindow();
+		void RenderToolBar();
 
 		void RT(int nrOfSamples);
 
@@ -46,6 +49,8 @@ namespace Engine {
 		void AddCube();
 		void AddSphere();
 
+		void EditTransform(const float* cameraView, float* cameraProjection, float* matrix, ImVec2 origin, ImVec2 size);
+
 
 		std::thread test;
 
@@ -54,5 +59,36 @@ namespace Engine {
 		float m_time = 0;
 
 		static bool m_ShowStatistics;
+
+
+
+		ImGuizmo::OPERATION mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+
+		float cameraProjection[16];
+		float objectMatrix[16] =
+		{ 1.f, 0.f, 0.f, 0.f,
+		  0.f, 1.f, 0.f, 0.f,
+		  0.f, 0.f, 1.f, 0.f,
+		  0.f, 0.f, 0.f, 1.f };
+
+		const float identityMatrix[16] =
+		{ 1.f, 0.f, 0.f, 0.f,
+			0.f, 1.f, 0.f, 0.f,
+			0.f, 0.f, 1.f, 0.f,
+			0.f, 0.f, 0.f, 1.f };
+
+		float cameraView[16] =
+		{ 1.f, 0.f, 0.f, 0.f,
+		  0.f, 1.f, 0.f, 0.f,
+		  0.f, 0.f, 1.f, 0.f,
+		  0.f, 0.f, 0.f, 1.f };
+
+		bool isPerspective = false;
+		float fov = 27.f;
+		float viewWidth = 10.f; // for orthographic
+		float camYAngle = 165.f / 180.f * 3.14159f;
+		float camXAngle = 52.f / 180.f * 3.14159f;
+		float camDistance = 8.f;
+		
 	};
 }

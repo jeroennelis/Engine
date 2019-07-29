@@ -19,11 +19,11 @@ namespace Engine {
 	// ------------------------------------------------------------------ constructor
 
 	ShadeRec::ShadeRec()
-		:w(*new World)
+		:w(nullptr)
 	{
 	}
 
-	ShadeRec::ShadeRec(World& wr)
+	ShadeRec::ShadeRec(World* wr)
 		: 	hit_an_object(false),
 			material_ptr(nullptr),
 			hit_point(0.0), local_hit_point(0.0), normal(0.0),

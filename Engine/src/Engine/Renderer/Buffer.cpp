@@ -3,7 +3,7 @@
 #include "Buffer.h"
 #include "Renderer.h"
 
-#include "Platform/OpenGl/OpenGLBuffer.h"
+#include "Platform/OpenGl/Renderer/OpenGLBuffer.h"
 #include "Platform/Vulkan/VulkanBuffer.h"
 
 namespace Engine {

@@ -24,11 +24,6 @@ namespace Engine
 		Scene::Current()->OnUpdate();
 	}
 
-	void LogicLayer::OnRender()
-	{
-		Scene::Current()->Render();
-	}
-
 	void LogicLayer::OnEvent(Event & event)
 	{
 		Scene::Current()->GetSceneCamera()->OnEvent(event);

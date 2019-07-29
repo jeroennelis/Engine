@@ -44,6 +44,9 @@
 
 #include "Platform/OpenGl/Materials/OpenGLPhong.h"
 
+#include "Engine/Application.h"
+#include "..//GeometricObjects/Triangles/SmoothUVMeshTriangle.h"
+
 namespace Engine {
 	World::World()
 		:camera_ptr(NULL),
@@ -253,17 +256,18 @@ namespace Engine {
 			delete vertex;
 
 		Mesh* mesh = new Mesh();
-		for (int i = 0; i < verticesVectors.size(); )
+		for (int i = 0; i < verticesVectors.size()/3; i ++)
 		{
-			mesh->Vertices.push_back(glm::vec3(verticesVectors[i], verticesVectors[i + 1], verticesVectors[i + 2]));
-			mesh->Normals.push_back(glm::vec3(normalsVectors[i], normalsVectors[i + 1], normalsVectors[i + 2]));
-			i += 3;
+			mesh->Vertices.push_back(glm::vec3(verticesVectors[i * 3], verticesVectors[i * 3 + 1], verticesVectors[i * 3 + 2]));
+			mesh->Normals.push_back(glm::vec3(normalsVectors[i * 3], normalsVectors[i * 3 + 1], normalsVectors[i * 3 + 2]));
+			mesh->U.push_back(texturesVectors[i * 2]);
+			mesh->V.push_back(texturesVectors[i * 2 + 1]);
 		}
 		mesh->Indices = indices;
 
 		for (int i = 0; i < indices.size();)
 		{
-			SmoothMeshTriangle* triangle_ptr = new SmoothMeshTriangle(mesh, indices[i], indices[i + 1], indices[i + 2]);
+			SmoothUVMeshTriangle* triangle_ptr = new SmoothUVMeshTriangle(mesh, indices[i], indices[i + 1], indices[i + 2]);
 
 			//FlatMeshTriangle* triangle_ptr = new FlatMeshTriangle(mesh, indices[i], indices[i+1], indices[i+2]);
 			//triangle_ptr->ComputeNormal(false);
@@ -282,11 +286,11 @@ namespace Engine {
 	void World::build(Scene& scene, int nrOfSamples)
 	{
 		printf("building the world\n");
-
+		Window* window = &Application::Get().GetWindow();
 		Sampler* sampler = new MultiJittered(nrOfSamples);
 
-		vp.set_hres(1280);
-		vp.set_vres(720);
+		vp.set_hres(window->GetWidth());
+		vp.set_vres(window->GetHeight());
 		vp.sampler_ptr = sampler;
 		vp.num_samples = nrOfSamples;
 		vp.max_depth = 10;
@@ -301,21 +305,23 @@ namespace Engine {
 
 		SetAmbientLight(occluder_ptr);
 
+		Camera* cam = scene.GetGameCamera();
+
 		RTPinhole* pinhole_ptr = new RTPinhole;
-		glm::vec3 pos = scene.GetSceneCamera()->GetTransform()->Position;
+		glm::vec3 pos = cam->GetTransform()->Position;
 		pinhole_ptr->SetEye(-pos);
 
-		glm::vec3 rotation = scene.GetSceneCamera()->GetTransform()->Rotation;
+		glm::vec3 rotation = cam->GetTransform()->Rotation;
 		glm::vec3 direction;
 		direction.x = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y)); 
 		direction.y = -sin(glm::radians(rotation.x));
 		direction.z = -cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
 		std::cout << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
 
-
 		pinhole_ptr->SetLookat(direction);
-		pinhole_ptr->SetViewDistance(910);
-		pinhole_ptr->SetZoom(1);
+		pinhole_ptr->SetViewDistance(cam->GetNearPlane());
+		pinhole_ptr->SetFOV(cam->GetFOV());
+		//pinhole_ptr->SetZoom(1);
 		pinhole_ptr->compute_uvw();
 		SetCamera(pinhole_ptr);
 
@@ -325,12 +331,12 @@ namespace Engine {
 		light_ptr2->SetLs(3.0);
 		AddLight(light_ptr2);
 
-		RTPointLight* light_ptr3 = new RTPointLight;
-		light_ptr3->SetLocation(glm::vec3(100, 100, -100));
-		//light_ptr2->SetColor(glm::vec3(1.0, 0, 0));
-		light_ptr3->SetLs(3.0);
-		light_ptr3->EnableShadows(false);
-		AddLight(light_ptr3);
+		//RTPointLight* light_ptr3 = new RTPointLight;
+		//light_ptr3->SetLocation(glm::vec3(100, 100, -100));
+		////light_ptr2->SetColor(glm::vec3(1.0, 0, 0));
+		//light_ptr3->SetLs(3.0);
+		//light_ptr3->EnableShadows(false);
+		//AddLight(light_ptr3);
 
 		RTMatte* matte_ptr1 = new RTMatte;
 		matte_ptr1->SetKa(0.25);
@@ -370,13 +376,12 @@ namespace Engine {
 		//whiteTexture->SetColor(white);
 		//reflective->SetCr(whiteTexture);
 
-		Image* imageptr = new Image("../Engine/res/textures/EarthHighRes.jpg");
+		Image* imageptr = new Image("../Engine/res/textures/huis.png");
 
-		SphericalMap* mapping = new SphericalMap;
 
 		RTImageTexture* imageTexture = new RTImageTexture;
 		imageTexture->SetImage(imageptr);
-		imageTexture->SetMapping(mapping);
+		imageTexture->SetMapping(nullptr);
 
 		RTMatte* matteTex = new RTMatte;
 		matteTex->SetKa(0.45);
@@ -409,6 +414,7 @@ namespace Engine {
 				RTPhong* phong = new RTPhong;
 				auto* mat = (OpenGLPhong*)obj->GetComponent<MeshRenderer>()->GetMaterial();
 				phong->SetKa(mat->GetKa());
+				phong->SetCd(imageTexture);
 				phong->SetKd(mat->GetKd());
 				phong->SetKs(mat->GetKs());
 				phong->SetExp(mat->GetExp());
@@ -431,7 +437,7 @@ namespace Engine {
 
 	ShadeRec World::hit_objects(const Ray& ray)
 	{
-		ShadeRec sr(*this);
+		ShadeRec sr(this);
 		double t;
 		glm::vec3 normal;
 		glm::vec3 local_hit_point;
@@ -499,7 +505,6 @@ namespace Engine {
 				pixel_color /= vp.num_samples;
 				set_pixel(r, c, pixel_color);
 				image->setPixel(r, c, pixel_color);
-
 			}
 		}
 

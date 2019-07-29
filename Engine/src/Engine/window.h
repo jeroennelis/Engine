@@ -16,11 +16,14 @@ namespace Engine {
 		std::string Title;
 		unsigned int Width;
 		unsigned int Height;
+		float Near;
+		float Far;
+		float Fov;
 
 		WindowProperties(const std::string& title =  "Engine" ,
 			unsigned int width = 1280,
 			unsigned int height = 720)
-			:Title(title), Width(width), Height(height) {}
+			:Title(title), Width(width), Height(height){}
 	};
 
 	class ENGINE_API Window

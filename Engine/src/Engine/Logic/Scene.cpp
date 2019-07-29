@@ -12,6 +12,9 @@
 #include "Platform/OpenGl/Materials/OpenGLPhong.h"
 #include "Platform/OpenGl/Materials/OpenGLCone.h"
 
+#include "Engine/Input.h"
+#include "Engine/MouseButtonCodes.h"
+
 namespace Engine {
 
 	Scene* Scene::m_Current = nullptr;
@@ -27,14 +30,22 @@ namespace Engine {
 		if (!m_Current)
 			m_Current = this;
 		std::shared_ptr<GameObject> camera = std::make_shared<GameObject>("Camera");
-		std::shared_ptr<Camera> cam_comp = std::make_shared<Camera>(camera->GetComponent<Transform>());
+		std::shared_ptr<Camera> cam_comp = std::make_shared<Camera>(camera->GetComponent<Transform>(), CameraProperties());
 		camera->AddComponent(cam_comp);
 		AddGameObject(camera);
 		SetGameCamera(cam_comp.get());
 		camera->GetComponent<Transform>()->Position = glm::vec3(0, 0, 0);
 		camera->GetComponent<Transform>()->Rotation = glm::vec3(0, 0, 0);
-		m_SceneCamera = cam_comp.get();
 
+
+
+		std::shared_ptr<GameObject> camera1 = std::make_shared<GameObject>("SceneCamera");
+		std::shared_ptr<Camera> cam_comp1 = std::make_shared<Camera>(camera1->GetComponent<Transform>(), CameraProperties());
+		camera1->AddComponent(cam_comp1);
+		AddGameObject(camera1);
+		camera1->GetComponent<Transform>()->Position = glm::vec3(0, 0, 0);
+		camera1->GetComponent<Transform>()->Rotation = glm::vec3(0, 0, 0);
+		m_SceneCamera = cam_comp1.get();
 		
 	}
 
@@ -47,6 +58,7 @@ namespace Engine {
 
 	Scene::~Scene()
 	{
+		new Material();
 	}
 
 	void Scene::AddGameObject(std::shared_ptr<GameObject> go)
@@ -70,20 +82,32 @@ namespace Engine {
 	{
 		for (auto go : m_GameObjects)
 			go->OnUpdate();
-	}
 
-	void Scene::Render()
-	{
-		for (auto& go : m_GameObjects)
+
+		std::pair<float, float> newMousePosition = Input::GetMousePosition();
+		if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_2))
 		{
-			go->Render();
+			float dx = oldMousePosition.first - newMousePosition.first;
+			float dy = oldMousePosition.second - newMousePosition.second;
+			m_SceneCamera->GetTransform()->Rotation.x += dy/*temp*/ / 10;/*temp*/
+			m_SceneCamera->GetTransform()->Rotation.y += dx/*temp*/ / 10;/*temp*/
 		}
+
+		if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_3))
+		{
+			float dx = oldMousePosition.first - newMousePosition.first;
+			float dy = oldMousePosition.second - newMousePosition.second;
+			m_SceneCamera->GetTransform()->Position.x -= dx/*temp*/ / 100/*temp*/;
+			m_SceneCamera->GetTransform()->Position.y += dy/*temp*/ / 100/*temp*/;
+		}
+
+		oldMousePosition = newMousePosition;
 	}
 
 	std::shared_ptr<GameObject> Scene::CreateCube(GameObject* parent)
 	{
 		RawModel* rawModel = Loader::Get()->GetModel("cube");
-		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(3);
+		OpenGLMaterial* mat = Loader::Get()->GetMaterials().at(1);
 		std::shared_ptr<GameObject> cube = std::make_shared<GameObject>("cube", parent);
 		Transform* parentTransform = parent->GetComponent<Transform>();
 		Transform* transform = cube->GetComponent<Transform>();

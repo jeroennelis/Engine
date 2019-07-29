@@ -17,8 +17,6 @@ namespace Engine {
 		void OnHierarchyRender(GameObject* currentGameObject, int& node_clicked, unsigned int& index, int& selection_mask);
 		void OnInspectorRender();
 
-		void Render();
-
 		void AddChild(std::shared_ptr<GameObject> go);
 		void AddComponent(std::shared_ptr<Component> comp);
 
@@ -27,6 +25,8 @@ namespace Engine {
 		inline const std::vector<std::shared_ptr<Component>>& Components()const { return m_Components; }
 		inline const std::vector<std::shared_ptr<GameObject>>& Children()const { return m_Children; }
 		inline const glm::mat4& TransformMatrix() { return m_TransformMatrix; }
+
+		inline bool IsRenderable() { return m_Renderable; }
 
 		template <class component_type>
 		component_type* GetComponent()
@@ -41,6 +41,8 @@ namespace Engine {
 		std::string									m_Name;
 		std::vector<std::shared_ptr<GameObject>>	m_Children;
 		std::vector<std::shared_ptr<Component>>		m_Components;
+
+		bool m_Renderable = false;
 
 		GameObject* m_Parent;
 

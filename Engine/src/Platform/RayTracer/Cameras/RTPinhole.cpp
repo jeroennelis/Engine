@@ -3,6 +3,9 @@
 
 #include "../World/World.h"
 
+
+#include "Engine/Application.h"
+
 namespace Engine {
 
 	void RTPinhole::render_scene(World * world)
@@ -29,7 +32,7 @@ namespace Engine {
 					pp.x = vp.s * (c - 0.5 * vp.hres + sp.x);
 					pp.y = vp.s * (r - 0.5 * vp.vres + sp.y);
 
-					ray.d = ray_direction(pp);
+					ray.d = ray_direction(pp, vp);
 					L += world->tracer_ptr->trace_ray(ray, 0);
 				}
 
@@ -66,7 +69,7 @@ namespace Engine {
 					pp.x = vp.s * (c - 0.5 * vp.hres + sp.x) + x;
 					pp.y = vp.s * (r - 0.5 * vp.vres + sp.y);
 
-					ray.d = ray_direction(pp);
+					ray.d = ray_direction(pp, vp);
 					L += world->tracer_ptr->trace_ray(ray, 0);
 				}
 
@@ -77,26 +80,17 @@ namespace Engine {
 			}
 		}
 	}
-
-	glm::vec3 RTPinhole::ray_direction(const glm::vec2 & p) const
+	glm::vec3 RTPinhole::ray_direction(const glm::vec2& p, const ViewPlane& vp) const
 	{
-		float fov = 90;
-		float distance = 0.1f;
+		//TODO clean up
 
+		float horizontal = m_Distance * tan(glm::radians(m_FOV / 2));
+		float vertical = horizontal * ((float)vp.vres/(float)vp.hres);
 
-		float horizontal = distance * tan(glm::radians(fov / 2));
-		float vertical = horizontal * (720.0f/1280.0f);
+		float x = horizontal * (2 * p.x / (float)vp.hres);
+		float y = vertical * (2 * p.y / (float)vp.vres);
 
-		float x = horizontal * (p.x / 640.0f);
-		float y = vertical * (p.y / 360.0f);
-
-		glm::vec3 testdir = x * m_U + y * m_V - 0.1f * m_W;
-		testdir = glm::normalize(testdir);
-		return testdir;
-
-		/*glm::vec3 dir = p.x * m_U + p.y * m_V - m_Distance * m_W;
-		dir = glm::normalize(dir);
-		return dir;*/
-
+		glm::vec3 dir = x * m_U + y * m_V - 0.1f * m_W;
+		return glm::normalize(dir);
 	}
 }

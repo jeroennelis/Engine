@@ -25,11 +25,11 @@ namespace Engine {
 	bool RTPointLight::InShadow(const Ray & ray, const ShadeRec & sr) const
 	{
 		float t;
-		int num_objects = sr.w.objects.size();
+		int num_objects = sr.w->objects.size();
 		float d = glm::distance(m_Location, ray.o);
 
 		for (int j = 0; j < num_objects; j++)
-			if (sr.w.objects[j]->ShadowHit(ray, t) && t < d)
+			if (sr.w->objects[j]->ShadowHit(ray, t) && t < d)
 				return true;
 
 		return false;

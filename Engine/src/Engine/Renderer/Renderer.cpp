@@ -2,7 +2,7 @@
 
 #include "Renderer.h"
 
-#include "Platform/OpenGl/OpenGLRenderer.h"
+#include "Platform/OpenGl/Renderer/OpenGLRenderer.h"
 #include "Platform/Vulkan/VulkanRenderer.h"
 #include "Platform/OpenVR/OpenGL/OpenVR_OpenGLRenderer.h"
 
@@ -11,8 +11,8 @@ namespace Engine {
 	//Hard coded at the moment
 	
 	Renderer* Renderer::s_Renderer = nullptr;
-
-	glm::mat4 Renderer::s_ProjectionMatrix = glm::mat4();
+	glm::mat4 Renderer::s_ProjectionMatrix(1.0);
+	glm::mat4 Renderer::s_ViewMatrix(1.0);
 
 	void Renderer::Create()
 	{
@@ -44,32 +44,15 @@ namespace Engine {
 			}
 			break;
 		}
-	}
-
-	glm::mat4 Renderer::CreateProjectionMatrix()
-	{
-		float aspectRatio = (float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight();
-		//fov
-		float y_scale = (float)((1.0f / glm::tan(glm::radians(70 / 2.0f))) * aspectRatio);
-		float x_scale = y_scale / aspectRatio;
-		float frustum_length = 1000 - 0.1f;
-
-		glm::mat4 projectionMatrix = glm::mat4();
-		projectionMatrix[0][0] = x_scale;
-		projectionMatrix[1][1] = y_scale;
-		projectionMatrix[2][2] = -((1000 + 0.1f) / frustum_length);
-		projectionMatrix[2][3] = -1;
-		projectionMatrix[3][2] = -((2 * 0.1f * 1000) / frustum_length);
-		projectionMatrix[3][3] = 0;
-
-		return projectionMatrix;
+	
 	}
 
 
 
-	void Renderer::BeginScene()
+	void Renderer::BeginScene(Camera* cam)
 	{
-		//ToDo in Future
+		s_ProjectionMatrix = cam->GetProjectionMatrix();
+		s_ViewMatrix = cam->GetViewMatrix();
 	}
 
 	void Renderer::EndScene()

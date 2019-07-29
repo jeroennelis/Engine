@@ -4,7 +4,7 @@
 
 #include <GLFW/glfw3.h>
 #include "Engine/Renderer/GraphicsContext.h"
-#include "Platform/OpenGl/OpenGLContext.h"
+#include "Platform/OpenGl/Renderer/OpenGLContext.h"
 
 namespace Engine {
 
@@ -49,5 +49,6 @@ namespace Engine {
 
 		double previousTime;
 		double frameDelta;
+
 	};
 }

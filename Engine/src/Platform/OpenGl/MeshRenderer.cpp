@@ -12,21 +12,16 @@
 #include "Platform/OpenGl/Loader.h"
 
 namespace Engine {
-	const unsigned int MeshRenderer::ComponentType = COMP_MESHRENDERER;
 	
 	MeshRenderer::MeshRenderer(OpenGLMaterial* material, RawModel* rawModel, Transform* transform)
-		:Component("MeshRenderer", ComponentType), m_Material(material), m_RawModel(rawModel), m_Transform(transform)
+		:RenderComponent("MeshRenderer"), m_Material(material), m_RawModel(rawModel), m_Transform(transform)
 	{
 	}
 
 	MeshRenderer::~MeshRenderer()
 	{
 	}
-
-	void MeshRenderer::Update()
-	{
-	}
-
+	
 	void MeshRenderer::RenderInspectorInfo()
 	{
 		bool open = ImGui::TreeNode(m_Name.c_str());
@@ -53,28 +48,6 @@ namespace Engine {
 		return m_ComponentID;
 	}
 
-	void MeshRenderer::Draw()
-	{
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_BACK);
-		m_RawModel->va->Bind();
-		//m_RawModel->ib->Bind();
-		m_Material->Bind();
-		//Loader::Get()->GetShader("outline")->Bind();
-
-		//glm::mat4 projection = CreateProjectionMatrix();
-		glm::mat4 projection = Scene::Current()->GetSceneCamera()->GetProjectionMatrix();
-		m_Material->m_Shader->SetUniform("u_projectionMatrix", projection);
-
-		Camera* camera = Scene::Current()->GetGameCamera();
-		glm::mat4 viewTransform = camera->GetViewMatrix();
-		
-		m_Material->m_Shader->SetUniform("u_viewMatrix", viewTransform);
-		
-		m_Material->m_Shader->SetUniform("u_transformationMatrix", m_Transform->TransformationMatrix);
-
-		GLCall(glDrawElements(GL_TRIANGLES, m_RawModel->va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
-	}
 	void MeshRenderer::DrawOutline()
 	{
 		glEnable(GL_CULL_FACE);
@@ -95,6 +68,25 @@ namespace Engine {
 		
 
 		shader->SetUniform("u_transformationMatrix", m_Transform->TransformationMatrix * glm::scale(glm::vec3(1.1f,1.1f,1.1f)));
+
+		GLCall(glDrawElements(GL_TRIANGLES, m_RawModel->va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
+	}
+
+	void MeshRenderer::Render()
+	{
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_BACK);
+		m_RawModel->va->Bind();
+		m_Material->Bind();
+
+		glm::mat4 projection = Renderer::GetProjectionMatrix();
+		m_Material->m_Shader->SetUniform("u_projectionMatrix", projection);
+
+		glm::mat4 viewTransform = Renderer::GetViewMatrix();
+
+		m_Material->m_Shader->SetUniform("u_viewMatrix", viewTransform);
+
+		m_Material->m_Shader->SetUniform("u_transformationMatrix", m_Transform->TransformationMatrix);
 
 		GLCall(glDrawElements(GL_TRIANGLES, m_RawModel->va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
 	}

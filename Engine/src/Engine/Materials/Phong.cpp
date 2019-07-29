@@ -3,10 +3,11 @@
 
 namespace Engine {
 
-	Phong::Phong(Lambertian* ambient, Lambertian* diffuse, GlossySpecular* specular)
+	Phong::Phong(Lambertian* ambient, Lambertian* diffuse, GlossySpecular* specular, ImageTexture* texture)
 		:m_AmbientBRDF(ambient),
 		m_DiffuseBRDF(diffuse),
-		m_SpecularBRDF(specular)
+		m_SpecularBRDF(specular),
+		m_Texture(texture)
 	{
 	}
 	void Phong::SetKa(const float ka)
@@ -32,6 +33,11 @@ namespace Engine {
 		m_AmbientBRDF->SetCd(c);
 		m_DiffuseBRDF->SetCd(c);
 		m_SpecularBRDF->SetCs(c);
+	}
+
+	void Phong::SetTexture(ImageTexture* t)
+	{
+		m_Texture = t;
 	}
 
 	float Phong::GetKa()

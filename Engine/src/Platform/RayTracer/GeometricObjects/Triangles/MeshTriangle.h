@@ -35,5 +35,13 @@ namespace Engine {
 		virtual glm::vec3 GetNormal() const;
 
 		virtual BBox GetBoundingBox() override;
+
+	protected:
+
+		float
+			InterpolateU(const float beta, const float gamma) const;
+
+		float
+			InterpolateV(const float beta, const float gamma) const;
 	};
 }

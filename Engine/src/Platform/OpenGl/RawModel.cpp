@@ -87,7 +87,6 @@ void Engine::RawModel::RenderProjectInfo()
 	{
 		ImGui::SetDragDropPayload("Model", "test", 5);
 		Loader::Get()->SetDraggedRawModel(const_cast<RawModel*>(this));
-		EN_CORE_INFO("dragging");
 		ImGui::EndDragDropSource();
 	}
 }

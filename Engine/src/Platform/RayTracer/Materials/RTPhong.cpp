@@ -7,7 +7,7 @@
 namespace Engine {
 
 	RTPhong::RTPhong()
-		:Phong(new RTLambertian, new RTLambertian, new RTGlossySpecular)		
+		:Phong(new RTLambertian, new RTLambertian, new RTGlossySpecular, nullptr)		
 	{
 	}
 	RTPhong::~RTPhong()
@@ -17,12 +17,12 @@ namespace Engine {
 	glm::vec3 RTPhong::Shade(ShadeRec & sr)
 	{
 		glm::vec3 wo = -sr.ray.d;
-		glm::vec3 L = m_AmbientBRDF->Rho(sr, wo) * sr.w.ambient_ptr->L(sr);
-		int num_lights = sr.w.lights.size();
+		glm::vec3 L = m_AmbientBRDF->Rho(sr, wo) * sr.w->ambient_ptr->L(sr);
+		int num_lights = sr.w->lights.size();
 
 		for (int j = 0; j < num_lights; j++)
 		{
-			RTLight* lightPtr = sr.w.lights[j];
+			RTLight* lightPtr = sr.w->lights[j];
 			glm::vec3 wi = lightPtr->GetDirection(sr);
 			wi = glm::normalize(wi);
 			float nDotWi = glm::dot(sr.normal, wi);
@@ -47,25 +47,25 @@ namespace Engine {
 	glm::vec3 RTPhong::ShadeAreaLight(ShadeRec& sr)
 	{
 		glm::vec3 wo = -sr.ray.d;
-		glm::vec3 L = m_AmbientBRDF->Rho(sr, wo) * sr.w.ambient_ptr->L(sr);
-		int num_lights = sr.w.lights.size();
+		glm::vec3 L = m_AmbientBRDF->Rho(sr, wo) * sr.w->ambient_ptr->L(sr);
+		int num_lights = sr.w->lights.size();
 
 		for (int j = 0; j < num_lights; j++)
 		{
-			glm::vec3 wi = sr.w.lights[j]->GetDirection(sr);
+			glm::vec3 wi = sr.w->lights[j]->GetDirection(sr);
 			float nDotWi = glm::dot(sr.normal, wi);
 
 			if (nDotWi > 0.0)
 			{
 				bool inShadow = false;
 
-				if (sr.w.lights[j]->CastsShadows())
+				if (sr.w->lights[j]->CastsShadows())
 				{
 					Ray shadowRay(sr.local_hit_point, wi);
-					inShadow = sr.w.lights[j]->InShadow(shadowRay, sr);
+					inShadow = sr.w->lights[j]->InShadow(shadowRay, sr);
 				}
 				if (!inShadow)
-					L += (m_DiffuseBRDF->f(sr, wo, wi) + m_SpecularBRDF->f(sr, wo, wi)) * sr.w.lights[j]->L(sr) * sr.w.lights[j]->G(sr) * nDotWi / sr.w.lights[j]->Pdf(sr);
+					L += (m_DiffuseBRDF->f(sr, wo, wi) + m_SpecularBRDF->f(sr, wo, wi)) * sr.w->lights[j]->L(sr) * sr.w->lights[j]->G(sr) * nDotWi / sr.w->lights[j]->Pdf(sr);
 			}
 
 		}

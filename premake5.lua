@@ -57,20 +57,13 @@ project "Engine"
 		"%{IncludeDir.glm}",
 		"%{prj.name}/vendor/openvr/include",
 		"%{IncludeDir.stb_image}",
-		"%{prj.name}/vendor/zed/include",
-		"%{prj.name}/vendor/opencv_3.1.0/include",
-		"%{prj.name}/vendor/CUDA/include"
 		
 	}
 
 	libdirs
 	{
 		"%{prj.name}/vendor/openvr/lib/win64",
-		"%{prj.name}/vendor/Vulkan/lib",
-		"%{prj.name}/vendor/CUDA/lib/x64",
-		"%{prj.name}/vendor/zed/lib",
-		"%{prj.name}/vendor/opencv_3.1.0/x64/vc14/lib"
-
+		"%{prj.name}/vendor/Vulkan/lib"
 	}
 
 	links
@@ -80,14 +73,7 @@ project "Engine"
 		"ImGui",
 		"opengl32.lib",
 		"openvr_api.lib",
-		"vulkan-1.lib",
-		"sl_core64.lib",
-		"sl_input64.lib",
-		"sl_zed64.lib",
-		"opencv_world310.lib",
-		"opencv_world310d.lib",
-		"cuda.lib",
-		"cudart.lib"
+		"vulkan-1.lib"
 	}
 
 	filter "system:windows"
@@ -103,7 +89,10 @@ project "Engine"
 		}
 
 	filter "configurations:Debug"
-		defines "EN_DEBUG"
+		defines
+		{
+			"EN_DEBUG",
+		}
 		runtime "Debug"
 		symbols "on"
 
@@ -146,9 +135,7 @@ project "Sandbox"
 		"Engine/vendor/openvr/include",
 		"Engine/vendor/Glad/include",
 		"%{IncludeDir.glm}",
-		"Engine/vendor/zed/include",
-		"Engine/vendor/opencv_3.1.0/include",
-		"Engine/vendor/CUDA/include"
+		"%{IncludeDir.ImGui}"
 	}
 
 	links

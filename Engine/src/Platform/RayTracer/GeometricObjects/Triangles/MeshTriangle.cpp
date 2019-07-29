@@ -107,7 +107,7 @@ namespace Engine {
 
 	BBox MeshTriangle::GetBoundingBox()
 	{
-		double delta = 0.0001;  // to avoid degenerate bounding boxes
+		double delta = 0.01;  // to avoid degenerate bounding boxes
 
 		glm::vec3 v0(mesh->Vertices[Index0]);
 		glm::vec3 v1(mesh->Vertices[Index1]);
@@ -116,6 +116,20 @@ namespace Engine {
 		return(BBox(min(min(v0.x, v1.x), v2.x) - delta, max(max(v0.x, v1.x), v2.x) + delta,
 			min(min(v0.y, v1.y), v2.y) - delta, max(max(v0.y, v1.y), v2.y) + delta,
 			min(min(v0.z, v1.z), v2.z) - delta, max(max(v0.z, v1.z), v2.z) + delta));
+	}
+
+	float MeshTriangle::InterpolateU(const float beta, const float gamma) const
+	{
+		return((1 - beta - gamma) * mesh->U[Index0]
+			+ beta * mesh->U[Index1]
+			+ gamma * mesh->U[Index2]);
+	}
+
+	float MeshTriangle::InterpolateV(const float beta, const float gamma) const
+	{
+		return((1 - beta - gamma) * mesh->V[Index0]
+			+ beta * mesh->V[Index1]
+			+ gamma * mesh->V[Index2]);
 	}
 }
 

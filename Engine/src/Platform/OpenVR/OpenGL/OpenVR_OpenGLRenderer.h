@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Engine/Renderer/Renderer.h"
-#include "Platform/OpenGl/OpenGLRenderer.h"
+#include "Platform/OpenGl/Renderer/OpenGLRenderer.h"
 
 #include "Engine/Maths.h"
 #include "openvr.h"
-#include "Platform/ZED/ZedTest.h"
 
 namespace Engine {
 
@@ -86,8 +85,6 @@ namespace Engine {
 
 		VRFramebuffer m_LeftEyeFrameBuffer;
 		VRFramebuffer m_RightEyeFrameBuffer;
-
-		ZedTest zedTest;
 	};
 
 

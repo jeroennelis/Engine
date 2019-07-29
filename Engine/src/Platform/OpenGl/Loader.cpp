@@ -1,8 +1,11 @@
 #include "enpch.h"
 
+#include "vendor/dirent.h"
+
 #include "Loader.h"
 #include "Materials/OpenGLPhong.h"
 #include "Engine/Textures/ConstantColor.h"
+#include "Platform/OpenGl/GLTexture.h"
 
 namespace Engine {
 
@@ -14,6 +17,7 @@ namespace Engine {
 		LoadMaterials();
 		LoadCone();
 		LoadModels();
+		LoadTextures();
 	}
 
 	Loader::~Loader()
@@ -150,6 +154,31 @@ namespace Engine {
 		m_Materials.push_back(mat4);
 		m_Materials.push_back(mat5);
 		m_Materials.push_back(mat6);
+
+	}
+
+	void Loader::LoadTextures()
+	{
+		
+		DIR* dir = opendir(m_TexturesPath.c_str());
+		if (!dir)
+		{
+			EN_CORE_ERROR("Directory '{0}' was not found", m_TexturesPath);
+			return;
+		}
+
+		EN_CORE_INFO("Directory '{0}' was found", m_TexturesPath);
+		struct dirent* sd;
+
+		while ((sd = readdir(dir)) != nullptr)
+		{
+			std::stringstream filePath;
+			filePath << m_TexturesPath.c_str()<< "/" << sd->d_name;
+			m_Textures.insert({ sd->d_name, new GLTexture(filePath.str()) });
+			
+
+		}
+
 
 	}
 

@@ -5,7 +5,7 @@
 #include  "Engine/Events/MouseEvent.h" 
 #include  "Engine/Events/KeyEvent.h" 
 
-#include "Platform/OpenGl/OpenGLContext.h"
+#include "Platform/OpenGl/Renderer/OpenGLContext.h"
 #include "Platform/Vulkan/VulkanContext.h"
 #include "Platform/OpenVR/OpenGL/OpenVR_OpenGLContext.h"
 #include "Engine/Renderer/Renderer.h"
@@ -175,11 +175,6 @@ namespace Engine {
 		glfwDestroyWindow(m_Window);
 	}
 
-	double WindowsWindow::GetFPS()
-	{
-		return 0;
-	}
-
 	double WindowsWindow::GetFrameRate()
 	{
 		return frameDelta;
@@ -208,6 +203,11 @@ namespace Engine {
 	bool WindowsWindow::IsVSync() const
 	{
 		return m_Data.VSync;
+	}
+
+	double WindowsWindow::GetFPS()
+	{
+		return 0.0;
 	}
 
 }

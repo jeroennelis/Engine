@@ -11,13 +11,14 @@ namespace Engine {
 #define COMP_POINTCLOUDRENDERER 5
 #define COMP_CONECLOUDRENDERER 6
 #define COMP_TEST			100
+#define COMP_RENDERER		99;
 
 	class ENGINE_API Component
 	{
 	public:
 		inline virtual ~Component() {}
-		virtual void Update() = 0;
-		virtual void RenderInspectorInfo() = 0;
+		virtual void Update() {}
+		virtual void RenderInspectorInfo() {}
 		virtual const unsigned int Type() const = 0;
 
 		inline const std::string& Name() const { return m_Name; }

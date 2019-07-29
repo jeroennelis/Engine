@@ -2,7 +2,10 @@
 
 #include "RenderCommand.h"
 
+#include "Engine/Components/Camera.h"
+
 namespace Engine {
+
 
 	class Renderer
 	{
@@ -22,9 +25,12 @@ namespace Engine {
 		inline static void SetProjectionMatrix(const glm::mat4& projectionMatrix) { s_ProjectionMatrix = projectionMatrix; }
 		inline static const glm::mat4& GetProjectionMatrix() { return s_ProjectionMatrix; }
 
+		inline static void SetViewMatrix(const glm::mat4& viewMatrix) { s_ViewMatrix = viewMatrix; }
+		inline static const glm::mat4& GetViewMatrix() { return s_ViewMatrix; }
 
+		inline static void SetTransforms(Camera* cam) { s_ProjectionMatrix = cam->GetProjectionMatrix(); s_ViewMatrix = cam->GetViewMatrix(); }
 
-		static void BeginScene();
+		static void BeginScene(Camera* cam);
 		static void EndScene();
 
 		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
@@ -35,9 +41,7 @@ namespace Engine {
 		static Renderer* s_Renderer;
 
 		static glm::mat4 s_ProjectionMatrix;
-
-	protected:
-		glm::mat4 CreateProjectionMatrix();
+		static glm::mat4 s_ViewMatrix;
 
 	};
 }

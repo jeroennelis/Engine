@@ -1,19 +1,24 @@
 #pragma once
 
-#include "Shader.h"
-#include "Loader.h"
+#include "Engine/Components/Transform.h"
+#include "Engine/Components/RenderCompont.h"
+#include "Materials/OpenGLMaterial.h"
+#include "RawModel.h"
 
-namespace Engine {
-	
-	class TerrainRenderer
+namespace Engine
+{
+	class TerrainRenderer : public RenderComponent
 	{
-	private:
-		Shader * m_Shader;
-
 	public:
-		TerrainRenderer();
+		TerrainRenderer(OpenGLMaterial* material, RawModel* rawModel, Transform* transform);
 		~TerrainRenderer();
 
-		void Render();
+		virtual void Render() override;
+		virtual void RenderInspectorInfo() override;
+
+	private:
+		OpenGLMaterial* m_Material;
+		RawModel* m_RawModel;
+		Transform* m_Transform;
 	};
 }

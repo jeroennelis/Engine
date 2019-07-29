@@ -1,11 +1,3 @@
-#properties
-{
-	Color{"u_texColor"} = ();
-	float{"u_shineDamper"};
-	float{"u_reflectivity"};
-	float{"test"};
-}
-
 #shader vertex
 #version 330 core 
   
@@ -44,6 +36,12 @@ void main()
 
 layout(location = 0) out vec4 color;  
 
+uniform sampler2D backgroundTexture;
+uniform sampler2D RTexture;
+uniform sampler2D GTexture;
+uniform sampler2D BTexture;
+uniform sampler2D BlendMap;
+
 uniform vec4 u_texColor;
 uniform float u_shineDamper;
 uniform float u_reflectivity;
@@ -56,24 +54,19 @@ in vec3 toCamVector;
 
 void main()  
 {  
-	vec3 unitNormal = normalize(surfaceNormal);
-	vec3 unitLightVector = normalize(toLightVector);
 
-	float nDot = dot(unitNormal, unitLightVector);
-	float brightness = max(nDot, 0.2); // 0.2 ambient lighting, future uniform
-	vec3 diffuse = brightness * vec3(0.8, 0.8, 0.8); //lightcolor
+	vec4 blendMapColour = texture(BlendMap, v_TexCoord);
 
-	vec3 unitVectorToCam = normalize(toCamVector);
-	vec3 lightDirection = -unitLightVector;
-	vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
+	float backTextureAmount = 1 - (blendMapColour.r + blendMapColour.g + blendMapColour.b);
+	vec2 tiledCoords = v_TexCoord * 40.0;
+	vec4 backgroundTextureColour = texture(backgroundTexture, tiledCoords) * backTextureAmount;
+	vec4 rTextureColour = texture(RTexture, tiledCoords) * blendMapColour.r;
+	vec4 gTextureColour = texture(GTexture, tiledCoords) * blendMapColour.g;
+	vec4 bTextureColour = texture(BTexture, tiledCoords) * blendMapColour.b;
 
-	float specularFactor = dot(reflectedLightDirection, unitVectorToCam);
-	specularFactor = max(specularFactor, 0.0);
-	float dampedFactor = pow(specularFactor, u_shineDamper);
-	vec3 finalSpecular = dampedFactor * u_reflectivity * vec3(0.8, 0.8, 0.8);
+	vec4 totalColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
 
-	//vec4 textureColour = texture(textureSampler, pass_textureCoords);
-	vec4 textureColour = u_texColor;
+	color = totalColour;
 
-	color = vec4(diffuse, 1.0) * textureColour + vec4(finalSpecular, 1.0);
+	//color = vec4(1.0, 1.0, 1.0, 1.0);
 };

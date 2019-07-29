@@ -29,7 +29,6 @@ namespace Engine {
 		{
 			ImGui::SetDragDropPayload("Material", "test", 5);
 			Loader::Get()->SetDraggedMaterial(const_cast<OpenGLMaterial*>(this));
-			EN_CORE_INFO("dragging");
 			ImGui::EndDragDropSource();
 		}
 		else if (clicked)

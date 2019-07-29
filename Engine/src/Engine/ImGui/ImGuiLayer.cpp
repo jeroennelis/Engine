@@ -27,10 +27,173 @@
 
 #include "Platform/OpenGl/Materials/OpenGLMaterial.h"
 
+#include "glm/gtc/type_ptr.hpp"
+
+#include "..//imguizmo/ImGuizmo.h"
+
+#include "imgui_internal.h"
+
 //
 //#include  imgui_internal.h 
 
 namespace Engine {
+
+	static inline ImVec2 operator-(const ImVec2& lhs, const ImVec2& rhs) { return ImVec2(lhs.x - rhs.x, lhs.y - rhs.y); }
+
+	void Frustum(float left, float right, float bottom, float top, float znear, float zfar, float* m16)
+	{
+		float temp, temp2, temp3, temp4;
+		temp = 2.0f * znear;
+		temp2 = right - left;
+		temp3 = top - bottom;
+		temp4 = zfar - znear;
+		m16[0] = temp / temp2;
+		m16[1] = 0.0;
+		m16[2] = 0.0;
+		m16[3] = 0.0;
+		m16[4] = 0.0;
+		m16[5] = temp / temp3;
+		m16[6] = 0.0;
+		m16[7] = 0.0;
+		m16[8] = (right + left) / temp2;
+		m16[9] = (top + bottom) / temp3;
+		m16[10] = (-zfar - znear) / temp4;
+		m16[11] = -1.0f;
+		m16[12] = 0.0;
+		m16[13] = 0.0;
+		m16[14] = (-temp * zfar) / temp4;
+		m16[15] = 0.0;
+	}
+
+	void Perspective(float fovyInDegrees, float aspectRatio, float znear, float zfar, float* m16)
+	{
+		float ymax, xmax;
+		ymax = znear * tanf(fovyInDegrees * 3.141592f / 180.0f);
+		xmax = ymax * aspectRatio;
+		Frustum(-xmax, xmax, -ymax, ymax, znear, zfar, m16);
+	}
+
+	void Cross(const float* a, const float* b, float* r)
+	{
+		r[0] = a[1] * b[2] - a[2] * b[1];
+		r[1] = a[2] * b[0] - a[0] * b[2];
+		r[2] = a[0] * b[1] - a[1] * b[0];
+	}
+
+	float Dot(const float* a, const float* b)
+	{
+		return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+	}
+
+	void Normalize(const float* a, float* r)
+	{
+		float il = 1.f / (sqrtf(Dot(a, a)) + FLT_EPSILON);
+		r[0] = a[0] * il;
+		r[1] = a[1] * il;
+		r[2] = a[2] * il;
+	}
+
+	void LookAt(const float* eye, const float* at, const float* up, float* m16)
+	{
+		float X[3], Y[3], Z[3], tmp[3];
+
+		tmp[0] = eye[0] - at[0];
+		tmp[1] = eye[1] - at[1];
+		tmp[2] = eye[2] - at[2];
+		//Z.normalize(eye - at);
+		Normalize(tmp, Z);
+		Normalize(up, Y);
+		//Y.normalize(up);
+
+		Cross(Y, Z, tmp);
+		//tmp.cross(Y, Z);
+		Normalize(tmp, X);
+		//X.normalize(tmp);
+
+		Cross(Z, X, tmp);
+		//tmp.cross(Z, X);
+		Normalize(tmp, Y);
+		//Y.normalize(tmp);
+
+		m16[0] = X[0];
+		m16[1] = Y[0];
+		m16[2] = Z[0];
+		m16[3] = 0.0f;
+		m16[4] = X[1];
+		m16[5] = Y[1];
+		m16[6] = Z[1];
+		m16[7] = 0.0f;
+		m16[8] = X[2];
+		m16[9] = Y[2];
+		m16[10] = Z[2];
+		m16[11] = 0.0f;
+		m16[12] = -Dot(X, eye);
+		m16[13] = -Dot(Y, eye);
+		m16[14] = -Dot(Z, eye);
+		m16[15] = 1.0f;
+	}
+
+	void OrthoGraphic(const float l, float r, float b, const float t, float zn, const float zf, float* m16)
+	{
+		m16[0] = 2 / (r - l);
+		m16[1] = 0.0f;
+		m16[2] = 0.0f;
+		m16[3] = 0.0f;
+		m16[4] = 0.0f;
+		m16[5] = 2 / (t - b);
+		m16[6] = 0.0f;
+		m16[7] = 0.0f;
+		m16[8] = 0.0f;
+		m16[9] = 0.0f;
+		m16[10] = 1.0f / (zf - zn);
+		m16[11] = 0.0f;
+		m16[12] = (l + r) / (l - r);
+		m16[13] = (t + b) / (b - t);
+		m16[14] = zn / (zn - zf);
+		m16[15] = 1.0f;
+	}
+
+	void ImGuiLayer::EditTransform(const float* cameraView, float* cameraProjection, float* matrix, ImVec2 origin, ImVec2 size)
+	{
+		static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::LOCAL);
+		static bool useSnap = false;
+		static float snap[3] = { 1.f, 1.f, 1.f };
+		static float bounds[] = { -0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f };
+		static float boundsSnap[] = { 0.1f, 0.1f, 0.1f };
+		static bool boundSizing = false;
+		static bool boundSizingSnap = false;
+
+		
+
+		ImGuizmo::SetRect(origin.x, origin.y, size.x, size.y);
+
+		
+
+		ImGuizmo::Manipulate(cameraView, cameraProjection,mCurrentGizmoOperation, mCurrentGizmoMode, matrix, NULL, useSnap ? &snap[0] : NULL, boundSizing ? bounds : NULL, boundSizingSnap ? boundsSnap : NULL);
+	}
+
+	inline void rotationY(const float angle, float* m16)
+	{
+		float c = cosf(angle);
+		float s = sinf(angle);
+
+		m16[0] = c;
+		m16[1] = 0.0f;
+		m16[2] = -s;
+		m16[3] = 0.0f;
+		m16[4] = 0.0f;
+		m16[5] = 1.f;
+		m16[6] = 0.0f;
+		m16[7] = 0.0f;
+		m16[8] = s;
+		m16[9] = 0.0f;
+		m16[10] = c;
+		m16[11] = 0.0f;
+		m16[12] = 0.f;
+		m16[13] = 0.f;
+		m16[14] = 0.f;
+		m16[15] = 1.0f;
+	}
 
 	
 	glm::vec3 ImGuiLayer::PickMouse(int windowPosX, int windowPosY, int imGuiWindowWidth, int imGuiWindowHeigth, int mouseX, int mouseY)
@@ -82,6 +245,7 @@ namespace Engine {
 		{
 			style.WindowRounding = 0.0f;
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+
 		}
 
 		Application& app = Application::Get();
@@ -100,6 +264,13 @@ namespace Engine {
 			model.second->RenderPreview();
 		}
 		EN_CORE_INFO( "attached imGui layer" );
+
+
+
+
+		rotationY(0.f, objectMatrix);
+
+		
 	}
 	void ImGuiLayer::OnDetach()
 	{
@@ -127,8 +298,9 @@ namespace Engine {
 		ImGui::NewFrame();
 
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-
+		// TODO  clean up toolbar offset 
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImVec2 pos(viewport->Pos.x, viewport->Pos.y + 20.0f);
 		ImGui::SetNextWindowPos(viewport->Pos);
 		ImGui::SetNextWindowSize(viewport->Size);
 		ImGui::SetNextWindowViewport(viewport->ID);
@@ -263,9 +435,30 @@ namespace Engine {
 
 				
 			}
+			ImGui::Dummy(ImVec2(50.0f,0.0f));
+			if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
+				mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+			ImGui::SameLine();
+			if (ImGui::RadioButton("Rotate", mCurrentGizmoOperation == ImGuizmo::ROTATE))
+				mCurrentGizmoOperation = ImGuizmo::ROTATE;
+			ImGui::SameLine();
+			if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
+				mCurrentGizmoOperation = ImGuizmo::SCALE;
 
 			ImGui::EndMainMenuBar();
 		}
+		
+		
+		
+		
+		
+		//g.NextWindowData.MenuBarOffsetMinVal = ImVec2(0.0f, 0.0f);
+
+		
+
+		//ImGui::Begin("tab bar");
+
+
 
 		if (test)
 			ImGui::OpenPopup("Ray Tracer");
@@ -326,10 +519,15 @@ namespace Engine {
 
 	void ImGuiLayer::RenderSceneWindow()
 	{
-		ImGui::Begin( "Scene" );
+		static bool open = nullptr;
+
+		ImGui::Begin( "Scene" ,&open);
 
 		ImGui::BeginChild("scenewindow");
 		
+
+		
+
 
 
 		ImVec2 startPos = ImGui::GetCursorScreenPos();
@@ -338,11 +536,59 @@ namespace Engine {
 		ImVec2 mousePos = ImGui::GetMousePos();
 
 		
+		float WHRatio = (float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight();
+		float WHRatioImGui = size.x / size.y;
+
+		if (WHRatio >= WHRatioImGui)
+		{
+			float newY = size.x / WHRatio;
+			float empty = size.y - newY;
+			startPos.y = startPos.y + empty / 2;
+			size.y = newY;
+		}
+		else if (WHRatio < WHRatioImGui)
+		{
+			float newX = size.y * WHRatio;
+			float empty = size.x - newX;
+			startPos.x = startPos.x + empty / 2;
+			size.x = newX;
+		}
+
 
 		ImVec2 endPos = ImVec2(startPos.x + size.x, startPos.y + size.y);
 		ImTextureID texID = (ImTextureID)(Renderer::Get()->GetSceneFrameBufferTexture());
 		//ImTextureID texID = (ImTextureID)14;
 		ImGui::GetWindowDrawList()->AddImage(texID, startPos, ImVec2(startPos.x + size.x, startPos.y + size.y), ImVec2(0, 1), ImVec2(1, 0));
+
+
+		///////////////////////////////////////////////////////////
+
+		ImGuiIO& io = ImGui::GetIO();
+
+		auto origin = ImGui::GetItemRectMin();
+		auto sz = ImGui::GetItemRectSize();
+		ImGuizmo::SetRect(origin.x, origin.y, size.x, size.y);
+
+		ImGui::SetWindowPos(windowPos);
+
+		ImGui::SetNextWindowSize(io.DisplaySize);
+
+		ImGuizmo::BeginFrame();
+
+		Camera* cam = Scene::Current()->GetSceneCamera();
+				
+		if (Scene::Current()->SelectedGameObject() && Scene::Current()->SelectedGameObject()->GetComponent<MeshRenderer>())
+		{
+			EditTransform(glm::value_ptr(cam->GetViewMatrix()), const_cast<float*>(glm::value_ptr(cam->GetProjectionMatrix())), glm::value_ptr(Scene::Current()->SelectedGameObject()->GetComponent<Transform>()->TransformationMatrix), origin, size);
+			Scene::Current()->SelectedGameObject()->GetComponent<Transform>()->CalculateComponents();
+		}
+			
+
+
+		
+
+		////////////////////////////////////////////////////////
+
 
 
 		ImGui::EndChild();
@@ -360,11 +606,18 @@ namespace Engine {
 					glm::vec3 point = -camPos + (vector * 10.0f);
 					GameObject* go = Scene::Current()->AddRawModel(Loader::Get()->SelectedRawModel());
 					go->GetComponent<Transform>()->Position = point;
+					go->GetComponent<Transform>()->CalculateMatrix();
 				}
 			}
 			ImGui::EndDragDropTarget();
 		}
+
+		
+
 		ImGui::End();
+
+
+
 	}
 
 	void ImGuiLayer::RenderGameWindow()
@@ -376,6 +629,25 @@ namespace Engine {
 		
 		ImVec2 startPos = ImGui::GetCursorScreenPos();
 		ImVec2 size = ImGui::GetWindowSize();
+
+		float WHRatio = (float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight();
+		float WHRatioImGui = size.x / size.y;
+
+		if (WHRatio >= WHRatioImGui)
+		{
+			float newY = size.x / WHRatio;
+			float empty = size.y - newY;
+			startPos.y = startPos.y + empty / 2;
+			size.y = newY;
+		}
+		else if (WHRatio < WHRatioImGui)
+		{
+			float newX = size.y * WHRatio;
+			float empty = size.x - newX;
+			startPos.x = startPos.x + empty / 2;
+			size.x = newX;
+		}
+
 		ImVec2 endPos = ImVec2(startPos.x + size.x, startPos.y + size.y);
 		ImTextureID texID = (ImTextureID)(Renderer::Get()->GetGameFrameBufferTexture());
 		ImGui::GetWindowDrawList()->AddImage(texID, startPos, ImVec2(startPos.x + size.x, startPos.y + size.y), ImVec2(0, 1), ImVec2(1, 0));
@@ -465,6 +737,35 @@ namespace Engine {
 
 	void ImGuiLayer::RenderConsoleWindow()
 	{
+		ImGui::Begin("textures");
+		int ypos = 25;
+		int xpos = 25;
+		int index = 0;
+
+		for (std::pair<std::string, ImageTexture*>texture : Loader::Get()->GetTextures())
+		{
+			xpos = 25 + (index % 10) * 75;
+			ypos = 25 + (index / 10) * 75;
+			ImGui::SetCursorPos(ImVec2((float)xpos, (float)ypos));
+			
+			ImTextureID texID = (ImTextureID)(UINT_PTR)dynamic_cast<GLTexture*>(texture.second)->GetID();
+			//ImTextureID texID = (ImTextureID)(UINT_PTR)21;
+
+			bool clicked = ImGui::ImageButton(texID, { 50, 50 }, { 0, 0 }, { 1,1 }); //TODO imgui pop
+			
+			if (ImGui::BeginDragDropSource())
+			{
+				ImGui::SetDragDropPayload("texture", "test", 5);
+
+				Loader::Get()->SetDraggedTexture(const_cast<ImageTexture*>(texture.second));
+				ImGui::EndDragDropSource();
+			}
+
+			index++;
+		}
+		ImGui::End();
+
+
 		ImGui::Begin( "Console" );
 		ImGui::BulletText( "Drag and drop to re-order" );
 		ImGui::Indent();
@@ -570,7 +871,8 @@ namespace Engine {
 		//	
 		//}
 		ImGui::End();
-	}	
+	}
+
 
 	void ImGuiLayer::ToggleStatistics()
 	{

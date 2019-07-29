@@ -65,7 +65,7 @@ namespace Engine {
 		glm::vec3 fr = m_ReflectiveBRDF->SampleF(sr, wo, wi);
 		Ray reflectedRay(sr.local_hit_point, wi);
 
-		L += fr * sr.w.tracer_ptr->trace_ray(reflectedRay, sr.depth + 1) * glm::dot(sr.normal, wi);
+		L += fr * sr.w->tracer_ptr->trace_ray(reflectedRay, sr.depth + 1) * glm::dot(sr.normal, wi);
 
 		return L;
 	}

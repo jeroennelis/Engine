@@ -27,11 +27,11 @@ namespace Engine {
 	bool RTAreaLight::InShadow(const Ray& ray, const ShadeRec& sr) const
 	{
 		float t;
-		int numObjects = sr.w.objects.size();
+		int numObjects = sr.w->objects.size();
 		float ts = glm::dot((m_SamplePoint - ray.o) , ray.d);
 
 		for (int j = 0; j < numObjects; j++)
-			if (sr.w.objects[j]->ShadowHit(ray, t) && t < ts)
+			if (sr.w->objects[j]->ShadowHit(ray, t) && t < ts)
 				return true;
 		return false;
 	}

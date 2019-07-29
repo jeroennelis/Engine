@@ -123,34 +123,6 @@ namespace Engine {
 
 	}
 
-	void GameObject::Render()
-	{
-		MeshRenderer* renderer = GetComponent<MeshRenderer>();
-		if (renderer)
-		{
-			renderer->Draw();
-		}
-		for (auto child : m_Children)
-		{
-			child->Render();
-		}
-		PointCloudRenderer* pcrenderer = GetComponent<PointCloudRenderer>();
-		if (pcrenderer)
-		{
-			pcrenderer->Draw();
-		}
-		for (auto child : m_Children)
-		{
-			child->Render();
-		}
-		ConeRenderer* coneRenderer = GetComponent<ConeRenderer>();
-		if (coneRenderer)
-		{
-			coneRenderer->Draw();
-		}
-
-	}
-
 	void GameObject::AddChild(std::shared_ptr<GameObject> go)
 	{
 		m_Children.push_back(go);

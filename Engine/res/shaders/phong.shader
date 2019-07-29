@@ -23,6 +23,8 @@ const vec3 lightPos = vec3(0, 100, 100);
 out vec3 surfaceNormal;
 out vec3 toLightVector;
 out float phongFactor;
+
+out vec2 passTexCoord;
   
 void main()  
 {  
@@ -39,6 +41,8 @@ void main()
 	vec3 reflectedLightDir = reflect(-toLightVector, surfaceNormal);
 	phongFactor = dot(reflectedLightDir, toCameraDir);
 	phongFactor = phongFactor, 0.1;
+
+	passTexCoord = texCoord;
 };
 
 
@@ -47,6 +51,8 @@ void main()
 #define PI 3.1415926535897932384626433832795
 
 layout(location = 0) out vec4 color;
+
+uniform sampler2D textureSampler;
 
 uniform float u_Kd;			//reflectivity of surface
 uniform vec4 u_Cd;			//color of surface
@@ -59,6 +65,8 @@ uniform float u_epsilon;
 in vec3 surfaceNormal;
 in vec3 toLightVector;
 in float phongFactor;
+
+in vec2 passTexCoord;
 
 const vec3 lightColor = vec3(0.9, 0.9, 0.9);
 const float lightIntensity = 1.0;
@@ -85,4 +93,7 @@ void main()
 	// total color
 	color = vec4(diffuse + ambient /*+ phong*/, 1.0);
 	/*color = clamp(color, 0.0, 1.0);*/
+
+	color = texture(textureSampler, passTexCoord) * color;
+	
 };

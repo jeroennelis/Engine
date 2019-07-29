@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Engine\vendor\spdlog\include;..\Engine\vendor\Vulkan\include;..\Engine\vendor\tiny_obj;..\Engine\src;..\Engine\vendor\openvr\include;..\Engine\vendor\Glad\include;..\Engine\vendor\glm;..\Engine\vendor\zed\include;..\Engine\vendor\opencv_3.1.0\include;..\Engine\vendor\CUDA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Engine\vendor\spdlog\include;..\Engine\vendor\Vulkan\include;..\Engine\vendor\tiny_obj;..\Engine\src;..\Engine\vendor\openvr\include;..\Engine\vendor\Glad\include;..\Engine\vendor\glm;..\Engine\vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -95,7 +95,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Engine\vendor\spdlog\include;..\Engine\vendor\Vulkan\include;..\Engine\vendor\tiny_obj;..\Engine\src;..\Engine\vendor\openvr\include;..\Engine\vendor\Glad\include;..\Engine\vendor\glm;..\Engine\vendor\zed\include;..\Engine\vendor\opencv_3.1.0\include;..\Engine\vendor\CUDA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Engine\vendor\spdlog\include;..\Engine\vendor\Vulkan\include;..\Engine\vendor\tiny_obj;..\Engine\src;..\Engine\vendor\openvr\include;..\Engine\vendor\Glad\include;..\Engine\vendor\glm;..\Engine\vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Engine\vendor\spdlog\include;..\Engine\vendor\Vulkan\include;..\Engine\vendor\tiny_obj;..\Engine\src;..\Engine\vendor\openvr\include;..\Engine\vendor\Glad\include;..\Engine\vendor\glm;..\Engine\vendor\zed\include;..\Engine\vendor\opencv_3.1.0\include;..\Engine\vendor\CUDA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Engine\vendor\spdlog\include;..\Engine\vendor\Vulkan\include;..\Engine\vendor\tiny_obj;..\Engine\src;..\Engine\vendor\openvr\include;..\Engine\vendor\Glad\include;..\Engine\vendor\glm;..\Engine\vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

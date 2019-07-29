@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Material.h"
-#include "Engine/Textures/Texture.h"
+#include "Engine/Textures/ImageTexture.h"
 #include "Engine/BRDF/Lambertian.h"
 #include "Engine/BRDF/GlossySpecular.h"
 
@@ -11,7 +11,7 @@ namespace Engine
 	{
 
 	public:
-		Phong(Lambertian* ambient, Lambertian* diffuse, GlossySpecular* glossySpecular);
+		Phong(Lambertian* ambient, Lambertian* diffuse, GlossySpecular* glossySpecular, ImageTexture* texture);
 
 		void SetKa(const float ka);
 
@@ -22,6 +22,10 @@ namespace Engine
 		void SetExp(const float exp);
 
 		void SetCd(Texture* c);
+		
+		void SetTexture(ImageTexture* t);
+
+		void BindTexture(unsigned int slot = 0) { m_Texture->Bind(slot); }
 
 		virtual float GetKa();
 
@@ -37,6 +41,7 @@ namespace Engine
 		Lambertian* m_AmbientBRDF;
 		Lambertian* m_DiffuseBRDF;
 		GlossySpecular* m_SpecularBRDF;
+		ImageTexture* m_Texture;
 	};
 	
 

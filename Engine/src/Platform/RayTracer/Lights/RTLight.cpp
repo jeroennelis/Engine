@@ -6,7 +6,7 @@ namespace Engine {
 	RTLight::RTLight()
 		:m_Shadows(true),
 		m_Ls(1.0),
-		m_Color(1.0)
+		m_Color(0.9)
 	{
 	}
 

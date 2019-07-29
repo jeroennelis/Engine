@@ -22,6 +22,7 @@ namespace Engine {
 		std::vector<unsigned char> image;
 		imgData = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 		
+
 	
 		std::cout << "width: " << m_Width << std::endl;
 		std::cout << "height: " << m_Height << std::endl;
@@ -62,7 +63,6 @@ namespace Engine {
 
 	glm::vec3 Image::GetColor(int row, int column)
 	{
-
 		return glm::vec3((float)imgData[4 * ( column + m_Width * row) + 0]/255, 
 							(float)imgData[4 * (column + m_Width * row) + 1]/255,
 							(float)imgData[4 * (column + m_Width * row) + 2]/255);

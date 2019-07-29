@@ -15,9 +15,11 @@ namespace Engine {
 
 	const unsigned int Camera::ComponentType = COMP_CAMERA;
 
-
-	Camera::Camera(Transform* transform)
-		:Component("Camera", ComponentType), m_Transform(transform), m_ViewMatrix(glm::mat4(1.0))
+	Camera::Camera(Transform* transform, const CameraProperties& props)
+		: Component("Camera", ComponentType), 
+		m_Transform(transform), 
+		m_ViewMatrix(glm::mat4(1.0)), 
+		m_Properties(props)
 	{
 	}
 	Camera::~Camera()
@@ -33,24 +35,24 @@ namespace Engine {
 		CalculateViewMatrix();
 		CalculateProjectionMatrix();
 
-		std::pair<float, float> newMousePosition = Input::GetMousePosition();
-		if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_2))
-		{
-			float dx = oldMousePosition.first - newMousePosition.first;
-			float dy = oldMousePosition.second - newMousePosition.second;
-			m_Transform->Rotation.x += dy/*temp*//10;/*temp*/
-			m_Transform->Rotation.y += dx/*temp*//10;/*temp*/
-		}
+		//std::pair<float, float> newMousePosition = Input::GetMousePosition();
+		//if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_2))
+		//{
+		//	float dx = oldMousePosition.first - newMousePosition.first;
+		//	float dy = oldMousePosition.second - newMousePosition.second;
+		//	m_Transform->Rotation.x += dy/*temp*//10;/*temp*/
+		//	m_Transform->Rotation.y += dx/*temp*//10;/*temp*/
+		//}
 
-		if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_3))
-		{
-			float dx = oldMousePosition.first - newMousePosition.first;
-			float dy = oldMousePosition.second - newMousePosition.second;
-			m_Transform->Position.x -= dx/*temp*/ /100/*temp*/;
-			m_Transform->Position.y += dy/*temp*/ /100/*temp*/;
-		}
+		//if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_3))
+		//{
+		//	float dx = oldMousePosition.first - newMousePosition.first;
+		//	float dy = oldMousePosition.second - newMousePosition.second;
+		//	m_Transform->Position.x -= dx/*temp*/ /100/*temp*/;
+		//	m_Transform->Position.y += dy/*temp*/ /100/*temp*/;
+		//}
 
-		oldMousePosition = newMousePosition;
+		//oldMousePosition = newMousePosition;
 
 	}
 	void Camera::RenderInspectorInfo()

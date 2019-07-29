@@ -29,10 +29,10 @@ namespace Engine {
 		float		t;					// ray parameter
 		float		u;					// texture coordinate
 		float		v;					// texture coordinate
-		World&		w;					// world reference for shading
+		World*		w;					// world reference for shading
 
 		ShadeRec();
-		ShadeRec(World& wr);				// constructor
+		ShadeRec(World* wr);				// constructor
 
 		ShadeRec(const ShadeRec& sr);		// copy constructor
 	};

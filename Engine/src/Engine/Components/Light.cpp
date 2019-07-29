@@ -20,6 +20,6 @@ namespace Engine {
 	}
 	const unsigned int Light::Type() const
 	{
-		return 0;
+		return ComponentType;
 	}
 }
