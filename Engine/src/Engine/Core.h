@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #ifdef EN_PLATFORM_WINDOWS
 #if EN_DYNAMIC_LINK
 	#ifdef EN_BUILD_DLL
@@ -29,3 +31,12 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
+namespace Engine {
+
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+
+}

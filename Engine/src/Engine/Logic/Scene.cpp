@@ -15,6 +15,15 @@
 #include "Engine/Input.h"
 #include "Engine/MouseButtonCodes.h"
 
+#include "Platform/OpenGl/TerrainRenderer.h"
+#include "Platform/OpenGl/Terrain.h"
+#include "Platform/OpenGl/Materials/OpenGLTerrainMaterial.h"
+
+#include "Platform/OpenGl/Materials/OpenGLIconMaterial.h"
+#include "Platform/OpenGl/IconRenderer.h"
+
+
+
 namespace Engine {
 
 	Scene* Scene::m_Current = nullptr;
@@ -36,7 +45,10 @@ namespace Engine {
 		SetGameCamera(cam_comp.get());
 		camera->GetComponent<Transform>()->Position = glm::vec3(0, 0, 0);
 		camera->GetComponent<Transform>()->Rotation = glm::vec3(0, 0, 0);
-
+		OpenGLIconMaterial* cameraIconMat = new OpenGLIconMaterial((OpenGLShader*)Loader::Get()->GetShader("icon"), "iconmaterial");
+		cameraIconMat->SetTexture(new GLTexture("../Engine/res/textures/camera.png"));
+		std::shared_ptr<IconRenderer> cameraIconRenderer = std::make_shared<IconRenderer>(cameraIconMat, camera->GetComponent<Transform>());
+		camera->AddComponent(cameraIconRenderer);
 
 
 		std::shared_ptr<GameObject> camera1 = std::make_shared<GameObject>("SceneCamera");
@@ -46,7 +58,10 @@ namespace Engine {
 		camera1->GetComponent<Transform>()->Position = glm::vec3(0, 0, 0);
 		camera1->GetComponent<Transform>()->Rotation = glm::vec3(0, 0, 0);
 		m_SceneCamera = cam_comp1.get();
-		
+
+
+		OpenGLMaterial* skyboxMaterial = new OpenGLSkyboxMaterial((OpenGLShader*)Loader::Get()->GetShader("skybox"), "skybox material");
+		m_Skybox = new SkyboxRenderer(skyboxMaterial);
 	}
 
 	Scene::Scene(const std::string & name = "New Scene")
@@ -82,26 +97,6 @@ namespace Engine {
 	{
 		for (auto go : m_GameObjects)
 			go->OnUpdate();
-
-
-		std::pair<float, float> newMousePosition = Input::GetMousePosition();
-		if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_2))
-		{
-			float dx = oldMousePosition.first - newMousePosition.first;
-			float dy = oldMousePosition.second - newMousePosition.second;
-			m_SceneCamera->GetTransform()->Rotation.x += dy/*temp*/ / 10;/*temp*/
-			m_SceneCamera->GetTransform()->Rotation.y += dx/*temp*/ / 10;/*temp*/
-		}
-
-		if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_3))
-		{
-			float dx = oldMousePosition.first - newMousePosition.first;
-			float dy = oldMousePosition.second - newMousePosition.second;
-			m_SceneCamera->GetTransform()->Position.x -= dx/*temp*/ / 100/*temp*/;
-			m_SceneCamera->GetTransform()->Position.y += dy/*temp*/ / 100/*temp*/;
-		}
-
-		oldMousePosition = newMousePosition;
 	}
 
 	std::shared_ptr<GameObject> Scene::CreateCube(GameObject* parent)
@@ -179,7 +174,7 @@ namespace Engine {
 		GameObject pointcloud("pelt");
 		Transform* transform = pointcloud.GetComponent<Transform>();
 		std::vector<RawModel> pcm = Loader::Get()->GetPointCloud();
-		OpenGLPhong* mat = new OpenGLPhong(Loader::Get()->GetShader("pointcloud"), "pointcloud");
+		OpenGLPhong* mat = new OpenGLPhong((OpenGLShader*)Loader::Get()->GetShader("pointcloud"), "pointcloud");
 		transform->Position = glm::vec3(0.4, 35.2, -0.4);
 		transform->Rotation = glm::vec3(-90, 0, 0);
 
@@ -195,11 +190,78 @@ namespace Engine {
 		GameObject coneOBJ("cone");
 		Transform* transform = coneOBJ.GetComponent<Transform>();
 		RawModel cone = Loader::Get()->GetCone();
-		OpenGLMaterial* mat = new OpenGLCone(Loader::Get()->GetShader("cone"), "cone");
+		OpenGLMaterial* mat = new OpenGLCone((OpenGLShader*)Loader::Get()->GetShader("cone"), "cone");
 
 		std::shared_ptr<ConeRenderer> pcr = std::make_shared<ConeRenderer>(mat, cone, transform);
 		coneOBJ.AddComponent(pcr);
 
 		Current()->AddGameObject(std::make_shared<GameObject>(coneOBJ));
+	}
+
+#define BIND_EVENT_FN2(x) std::bind(&Scene::x, this, std::placeholders::_1)
+
+	void Scene::OnEvent(Event& event)
+	{
+		m_SceneCamera->OnEvent(event);
+		
+	}
+
+	bool Scene::Scroll(MouseScrolledEvent event)
+	{
+		Transform* transform = m_SceneCamera->GetTransform();
+
+		glm::vec3 direction;
+		direction.x = cos(glm::radians(transform->Rotation.x)) * sin(glm::radians(transform->Rotation.y));
+		direction.y = -sin(glm::radians(transform->Rotation.x));
+		direction.z = -cos(glm::radians(transform->Rotation.x)) * cos(glm::radians(transform->Rotation.y));
+
+		glm::vec3 Up(0, 1, 0);
+		glm::vec3 W = glm::normalize(-direction);
+		glm::vec3 U = glm::normalize(glm::cross(Up, W));
+		glm::vec3 V = glm::cross(W, U);
+
+		transform->Position = transform->Position + W * event.GetYOffset();
+
+		EN_CORE_INFO("{0}", event.ToString());
+		return true;
+	}
+	void Scene::AddLight()
+	{
+		std::shared_ptr<GameObject> lightObj = std::make_shared<GameObject>("light");
+		
+		Transform* transform = lightObj->GetComponent<Transform>();
+		std::shared_ptr<Light> lightComp = std::make_shared<Light>(transform);
+		m_Lights.push_back((Light*)lightComp.get());
+		lightObj->AddComponent(lightComp);
+
+		OpenGLIconMaterial* cameraIconMat = new OpenGLIconMaterial((OpenGLShader*)Loader::Get()->GetShader("icon"), "iconmaterial");
+		cameraIconMat->SetTexture(new GLTexture("../Engine/res/textures/sun.png"));
+		std::shared_ptr<IconRenderer> cameraIconRenderer = std::make_shared<IconRenderer>(cameraIconMat, transform);
+		lightObj->AddComponent(cameraIconRenderer);
+		cameraIconMat->SetColor(lightComp->GetColor());
+
+		m_GameObjects.push_back(lightObj);
+
+	}
+	void Scene::AddTerrain()
+	{
+		std::shared_ptr<GameObject> go = std::make_shared<GameObject>("terrain");		//TODO
+		Transform* transform = go->GetComponent<Transform>();
+		transform->Position = glm::vec3(0, 0.0, -100.0);
+		Terrain* terrain = new Terrain(0, 0, "../Engine/res/textures/heightMap.png");
+
+		GLTexture* BGTexture = new GLTexture("../Engine/res/textures/grass.png");
+		GLTexture* rTexture = new GLTexture("../Engine/res/textures/mud.png");
+		GLTexture* gTexture = new GLTexture("../Engine/res/textures/grassFlowers.png");
+		GLTexture* bTexture = new GLTexture("../Engine/res/textures/path.png");
+		GLTexture* blendMap = new GLTexture("../Engine/res/textures/blendMap.png");
+
+		OpenGLTerrainMaterial* mat = new OpenGLTerrainMaterial((OpenGLShader*)Loader::Get()->GetShader("terrain"), "terrainmaterial");
+
+		mat->SetTextures(BGTexture, rTexture, gTexture, bTexture, blendMap);
+		std::shared_ptr<TerrainRenderer> terrainRenderer = std::make_shared<TerrainRenderer>(mat, terrain->GetModel(), transform);  //TODO: mem leak
+		go->AddComponent(terrainRenderer);
+
+		m_GameObjects.push_back(go);
 	}
 }

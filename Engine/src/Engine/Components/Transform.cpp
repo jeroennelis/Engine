@@ -27,35 +27,24 @@ namespace Engine {
 
 	void Transform::RenderInspectorInfo()
 	{
-		bool open = ImGui::TreeNode(m_Name.c_str());
-		bool dropsource = ImGui::BeginDragDropSource();
-		if (dropsource)
-		{
-			std::string testpayload = "testpayload";
-			ImGui::EndDragDropSource();
-		}
-		bool droptarget = ImGui::BeginDragDropTarget();
-		if (droptarget)
-		{
-
-			if (const ImGuiPayload * pl = ImGui::AcceptDragDropPayload("transform"))
-			{
-				EN_CORE_TRACE("droppped");
-			}
-			ImGui::EndDragDropTarget();
-		}
-
-		if (open)
+		static bool open = true;
+		ImGui::SetNextTreeNodeOpen(open);
+		if (ImGui::TreeNode(m_Name.c_str()))
 		{
 			ImGui::DragFloat3("Translate", (float*)& Position, 0.1f, -1000, 1000);
 			ImGui::DragFloat3("Rotate", (float*)& Rotation, 0.1f, -1000, 1000);
 			ImGui::DragFloat3("Scale", (float*)& Scale, 0.1f, -1000, 1000);
 			ImGui::TreePop();
+			open = true;
+		}
+		else
+		{
+			open = false;
 		}
 
-		CalculateMatrix();
-
 		ImGui::Separator();
+
+		CalculateMatrix();
 	}
 	void Transform::CalculateMatrix()
 	{
@@ -64,7 +53,7 @@ namespace Engine {
 		glm::mat4 rotXMatrix = glm::rotate(glm::radians(Rotation.x), glm::vec3(1, 0, 0));
 		glm::mat4 rotYMatrix = glm::rotate(glm::radians(Rotation.y), glm::vec3(0, 1, 0));
 		glm::mat4 rotZMatrix = glm::rotate(glm::radians(Rotation.z), glm::vec3(0, 0, 1));
-		glm::mat4 rotMatrix = rotXMatrix * rotYMatrix * rotZMatrix;
+		glm::mat4 rotMatrix = rotZMatrix * rotYMatrix * rotXMatrix;
 
 		glm::mat4 scaleMatrix = glm::scale(glm::vec3(Scale.x, Scale.y, Scale.z));
 		glm::mat4 test = posMatrix * rotMatrix * scaleMatrix;
@@ -82,7 +71,7 @@ namespace Engine {
 		glm::vec4 perspective;
 		glm::quat rot;
 		glm::decompose(TransformationMatrix, Scale, rot, Position, skew, perspective);
-		//Rotation = glm::degrees(glm::eulerAngles( rot));
+		Rotation = glm::degrees(glm::eulerAngles( rot));
 
 
 		/*Rotation[0] = glm::degrees(atan2f(TransformationMatrix[1][2], TransformationMatrix[2][2]));

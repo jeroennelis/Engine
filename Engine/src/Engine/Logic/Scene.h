@@ -5,8 +5,10 @@
 #include "Engine/Physics/ParticleLinks.h"
 
 #include "Platform/OpenGl/Materials/OpenGLMaterial.h"
+#include "Engine/Events/MouseEvent.h"
+#include "Engine/Components/Light.h"
 
-
+#include "Platform/OpenGl/SkyboxRenderer.h"
 
 
 
@@ -38,6 +40,8 @@ namespace Engine {
 
 		inline std::vector<std::shared_ptr<GameObject>>& GameObjects() { return m_GameObjects; }
 
+		inline void RenderSkybox() { m_Skybox->Render(); }
+
 		void AddGameObject(std::shared_ptr<GameObject> go);
 		GameObject* AddRawModel(RawModel* model);
 
@@ -61,8 +65,16 @@ namespace Engine {
 		inline static Camera* GetGameCamera() { return m_GameCamera; }
 		inline static Camera* GetSceneCamera() { return m_SceneCamera; }
 
+		inline std::vector<Light*> GetLights() { return m_Lights; }
 
-		//
+		void OnEvent(Event& event);
+		bool Scroll(MouseScrolledEvent event);
+
+
+		void AddLight();
+
+		void AddTerrain();
+
 		inline void RunPhysics() { runPhysics = true; }
 
 	private:
@@ -73,6 +85,8 @@ namespace Engine {
 		static Camera* m_GameCamera;
 		static Camera* m_SceneCamera;
 		std::vector<std::shared_ptr<GameObject>> m_GameObjects;
+
+		SkyboxRenderer* m_Skybox;
 		
 		static OpenGLMaterial* m_SelectedMaterial;
 
@@ -86,8 +100,7 @@ namespace Engine {
 		
 		bool runPhysics;
 
-		//hack
-		std::pair<float, float> oldMousePosition;
+		std::vector<Light*> m_Lights;
 	};
 
 }

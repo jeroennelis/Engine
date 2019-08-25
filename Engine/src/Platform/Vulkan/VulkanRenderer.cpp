@@ -46,7 +46,7 @@ namespace Engine{
 	{
 	}
 
-	bool Engine::VulkanRenderer::Init()
+	bool Engine::VulkanRenderer::Initialize()
 	{
 		EN_CORE_INFO("Initializing Vulkan Renderer");
 		InitVulkan();

@@ -27,22 +27,18 @@ namespace Engine{
 
 	void PointCloudRenderer::RenderInspectorInfo()
 	{
-		bool open = ImGui::TreeNode(m_Name.c_str());
-		/*if (ImGui::BeginDragDropTarget())
+		static bool open = true;
+		ImGui::SetNextTreeNodeOpen(open);
+		if (ImGui::TreeNode(m_Name.c_str()))
 		{
-			if (const ImGuiPayload * pl = ImGui::AcceptDragDropPayload("Material"))
-			{
-				m_Material = Loader::Get()->DraggedMaterial();
-				Loader::Get()->SetDraggedMaterial(nullptr);
-			}
-			ImGui::EndDragDropTarget();
-		}*/
-
-		if (open)
-		{
-			//m_Material->RenderInspectorInfo();
 			ImGui::TreePop();
+			open = true;
 		}
+		else
+		{
+			open = false;
+		}
+
 		ImGui::Separator();
 	}
 

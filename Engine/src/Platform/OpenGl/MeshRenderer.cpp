@@ -24,10 +24,9 @@ namespace Engine {
 	
 	void MeshRenderer::RenderInspectorInfo()
 	{
-		bool open = ImGui::TreeNode(m_Name.c_str());
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* pl = ImGui::AcceptDragDropPayload("Material"))
+			if (const ImGuiPayload * pl = ImGui::AcceptDragDropPayload("Material"))
 			{
 				m_Material = Loader::Get()->DraggedMaterial();
 				Loader::Get()->SetDraggedMaterial(nullptr);
@@ -35,11 +34,19 @@ namespace Engine {
 			ImGui::EndDragDropTarget();
 		}
 
-		if (open)
+		static bool open = true;
+		ImGui::SetNextTreeNodeOpen(open);
+		if (ImGui::TreeNode(m_Name.c_str()))
 		{
 			m_Material->RenderInspectorInfo();
 			ImGui::TreePop();
+			open = true;
 		}
+		else
+		{
+			open = false;
+		}
+
 		ImGui::Separator();
 	}
 
@@ -54,7 +61,7 @@ namespace Engine {
 		glEnable(GL_BACK);
 		m_RawModel->va->Bind();
 		//m_RawModel->ib->Bind();
-		Shader* shader = Loader::Get()->GetShader("outline");
+		OpenGLShader* shader = (OpenGLShader*)Loader::Get()->GetShader("outline");
 		shader->Bind();
 
 		//glm::mat4 projection = CreateProjectionMatrix();

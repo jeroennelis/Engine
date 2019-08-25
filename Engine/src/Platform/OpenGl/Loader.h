@@ -1,5 +1,5 @@
 #pragma once
-#include "Shader.h"
+#include "Renderer/OpenGLShader.h"
 #include "RawModel.h"
 #include "OBJLoader.h"
 #include "XYZLoader.h"
@@ -75,7 +75,9 @@ namespace Engine {
 			{"terrain",		"../Engine/res/shaders/terrain.shader"},
 			{"pointcloud",	"../Engine/res/shaders/pointcloud.shader" },
 			{"cone",		"../Engine/res/shaders/cone.shader" },
-			{"outline",		"../Engine/res/shaders/outline.shader" }
+			{"outline",		"../Engine/res/shaders/outline.shader" },
+			{"icon",		"../Engine/res/shaders/icon.shader" },
+			{"skybox",		"../Engine/res/shaders/skybox.shader"}
 		};
 
 		const std::unordered_map<std::string, std::string> m_ModelPaths =

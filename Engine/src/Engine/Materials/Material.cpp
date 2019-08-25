@@ -52,7 +52,7 @@ namespace Engine {
 		return 0.0f;
 	}
 
-	Texture* Material::GetCd()
+	Texture_temp* Material::GetCd()
 	{
 		EN_CORE_ASSERT(false, "not implemented");
 		return new ConstantColor();

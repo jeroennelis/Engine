@@ -4,9 +4,25 @@
 
 #include <glad/glad.h>
 
+#include "../Loader.h"
+
+#include "Engine/Application.h"
+
 namespace Engine {
 
 
+
+	void OpenGLRendererAPI::Init()
+	{
+		EN_CORE_INFO("Initializing OpenGL Renderer");
+
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glEnable(GL_DEPTH_TEST));
+		SetClearColor({ 0.0, 0.0, 0.0, 1 });
+
+		Loader::Create();
+	}
 
 	void OpenGLRendererAPI::SetClearColor(const glm::vec4& color)
 	{

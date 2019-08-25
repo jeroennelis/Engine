@@ -418,7 +418,7 @@ namespace Engine {
 				phong->SetKd(mat->GetKd());
 				phong->SetKs(mat->GetKs());
 				phong->SetExp(mat->GetExp());
-				Texture* texture3 = mat->GetCd();
+				Texture_temp* texture3 = mat->GetCd();
 				phong->SetCd(texture3);
 				Instance* instance = CreateMesh(obj->GetComponent<MeshRenderer>()->GetRawModel()->path, phong);
 				Transform* transform = obj->GetComponent<Transform>();

@@ -76,7 +76,7 @@ namespace Engine {
 	void Loader::LoadShaders()
 	{
 		for (const auto& s : m_ShaderPaths)
-			m_Shaders.insert({ s.first, new Shader(s.second)});
+			m_Shaders.insert({ s.first, Shader::Create(s.second)});
 	}
 
 	void Loader::LoadModels()
@@ -94,7 +94,7 @@ namespace Engine {
 	void Loader::LoadMaterials()
 	{
 		//TEST
-		OpenGLPhong* mat1 = new OpenGLPhong(GetShader("phong"), "Red");
+		OpenGLPhong* mat1 = new OpenGLPhong((OpenGLShader*)GetShader("phong"), "Red");
 		ConstantColor* texture1 = new ConstantColor();
 		texture1->SetColor({ 0.968f, 0.032f, 0.032f });
 		mat1->SetCd(texture1);
@@ -103,7 +103,7 @@ namespace Engine {
 		mat1->SetKs(0.06f);
 		mat1->SetExp(100);
 		
-		OpenGLPhong* mat2 = new OpenGLPhong(GetShader("phong"), "Green");
+		OpenGLPhong* mat2 = new OpenGLPhong((OpenGLShader*)GetShader("phong"), "Green");
 		ConstantColor* texture2 = new ConstantColor();
 		texture2->SetColor({ 0.032f, 0.968f, 0.032f });
 		mat2->SetCd(texture2);
@@ -112,7 +112,7 @@ namespace Engine {
 		mat2->SetKs(0.06f);
 		mat2->SetExp(100);
 
-		OpenGLPhong* mat3 = new OpenGLPhong(GetShader("phong"), "Blue");
+		OpenGLPhong* mat3 = new OpenGLPhong((OpenGLShader*)GetShader("phong"), "Blue");
 		ConstantColor* texture3 = new ConstantColor();
 		texture3->SetColor({ 0.032f, 0.032f, 0.968f });
 		mat3->SetCd(texture3);
@@ -121,7 +121,7 @@ namespace Engine {
 		mat3->SetKs(0.06f);
 		mat3->SetExp(100);
 
-		OpenGLPhong* mat4 = new OpenGLPhong(GetShader("phong"), "Black");
+		OpenGLPhong* mat4 = new OpenGLPhong((OpenGLShader*)GetShader("phong"), "Black");
 		ConstantColor* texture4 = new ConstantColor();
 		texture4->SetColor({ 0.032f, 0.032f, 0.032f });
 		mat4->SetCd(texture4);
@@ -130,7 +130,7 @@ namespace Engine {
 		mat4->SetKs(0.06f);
 		mat4->SetExp(100);
 
-		OpenGLPhong* mat5 = new OpenGLPhong(GetShader("phong"), "White");
+		OpenGLPhong* mat5 = new OpenGLPhong((OpenGLShader*)GetShader("phong"), "White");
 		ConstantColor* texture5 = new ConstantColor();
 		texture5->SetColor({ 0.968f, 0.968f, 0.968f });
 		mat5->SetCd(texture5);
@@ -139,7 +139,7 @@ namespace Engine {
 		mat5->SetKs(0.06f);
 		mat5->SetExp(100);
 
-		OpenGLPhong* mat6 = new OpenGLPhong(GetShader("outline"), "temp");
+		OpenGLPhong* mat6 = new OpenGLPhong((OpenGLShader*)GetShader("outline"), "temp");
 		ConstantColor* texture6 = new ConstantColor();
 		texture6->SetColor({ 0.90, 0.1, 0.1 });
 		mat6->SetCd(texture6);

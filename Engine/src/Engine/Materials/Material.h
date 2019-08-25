@@ -6,7 +6,7 @@
 
 namespace Engine
 {
-	class Texture;
+	class Texture_temp;
 
 	class ShadeRec;
 
@@ -31,7 +31,7 @@ namespace Engine
 					  
 		virtual float GetExp();
 
-		virtual Texture* GetCd();
+		virtual Texture_temp* GetCd();
 
 	};
 }

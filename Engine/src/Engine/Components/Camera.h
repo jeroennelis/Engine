@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "Transform.h"
 #include "Engine/Events/Event.h"
+#include "Engine/Events/MouseEvent.h"
+
 
 
 namespace Engine {
@@ -49,11 +51,24 @@ namespace Engine {
 
 		CameraProperties m_Properties;
 
+		glm::vec3 m_LookAt;
+		glm::vec3 m_Up = glm::vec3(0, 1, 0);
+
+		glm::vec3 m_U;
+		glm::vec3 m_V;
+		glm::vec3 m_W;
+
 	private:
 		void CalculateViewMatrix();
 		void CalculateProjectionMatrix();
+		void CalculateUVW();
+
+		bool Scroll(MouseScrolledEvent& event);
+		bool TranslateCamera(MouseMovedEvent& event);
+		bool RotateCamera(MouseMovedEvent& event);
 
 		//hack
-		std::pair<float, float> oldMousePosition;
+		std::pair<float, float> m_NewMousePosition;
+		std::pair<float, float> m_OldMousePosition;
 	};
 }

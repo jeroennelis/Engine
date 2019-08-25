@@ -20,7 +20,7 @@ namespace Engine {
 	{
 	}
 
-	void IntProperty::SetProperty(Shader * shader)
+	void IntProperty::SetProperty(OpenGLShader * shader)
 	{
 		shader->SetUniform1i(m_Name, m_Data);
 	}
@@ -40,7 +40,7 @@ namespace Engine {
 	{
 	}
 
-	void FloatProperty::SetProperty(Shader * shader)
+	void FloatProperty::SetProperty(OpenGLShader* shader)
 	{
 		shader->SetUniform(m_Name, m_Data);
 	}
@@ -62,7 +62,7 @@ namespace Engine {
 	{
 	}
 
-	void Vec3Property::SetProperty(Shader * shader)
+	void Vec3Property::SetProperty(OpenGLShader* shader)
 	{
 		shader->SetUniform(m_Name, m_Data);
 	}
@@ -78,7 +78,7 @@ namespace Engine {
 	{
 	}
 
-	void Vec4Property::SetProperty(Shader * shader)
+	void Vec4Property::SetProperty(OpenGLShader* shader)
 	{
 		shader->SetUniform(m_Name, m_Data);
 	}
@@ -99,7 +99,7 @@ namespace Engine {
 	{
 	}
 
-	void ColorProperty::SetProperty(Shader * shader)
+	void ColorProperty::SetProperty(OpenGLShader* shader)
 	{
 		shader->SetUniform(m_Name, m_Data);
 	}
@@ -122,7 +122,7 @@ namespace Engine {
 	{
 	}
 
-	void Mat4Property::SetProperty(Shader * shader)
+	void Mat4Property::SetProperty(OpenGLShader* shader)
 	{
 		shader->SetUniform(m_Name, m_Data);
 	}

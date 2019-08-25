@@ -6,7 +6,7 @@
 
 namespace Engine {
 
-	OpenGLTerrainMaterial::OpenGLTerrainMaterial(Shader* shader, const std::string& name)
+	OpenGLTerrainMaterial::OpenGLTerrainMaterial(OpenGLShader* shader, const std::string& name)
 		:OpenGLMaterial(shader, name), m_BackgroundTexture(new GLTexture())
 	{
 	}

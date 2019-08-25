@@ -15,7 +15,7 @@ namespace Engine {
 		OpenGLRenderer();
 		virtual ~OpenGLRenderer();
 
-		virtual bool Init() override;
+		bool Initialize() override;
 		virtual void Render() override;
 		virtual void CleanUp() override;
 

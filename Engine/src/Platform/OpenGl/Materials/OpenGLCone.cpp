@@ -1,7 +1,7 @@
 #include "enpch.h"
 #include "OpenGLCone.h"
 
-Engine::OpenGLCone::OpenGLCone(Shader* shader, const std::string& name)
+Engine::OpenGLCone::OpenGLCone(OpenGLShader* shader, const std::string& name)
 	:OpenGLMaterial(shader, name)
 {
 }

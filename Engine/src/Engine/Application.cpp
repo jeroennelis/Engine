@@ -12,6 +12,75 @@
 #include "Platform/OpenGl/TerrainRenderer.h"
 #include "Platform/OpenGl/Terrain.h"
 
+#include "PxPhysicsAPI.h"
+#include "extensions/PxDefaultAllocator.h"
+
+class physxErrorCallback : public physx::PxErrorCallback
+{
+public:
+	physxErrorCallback() {}
+	~physxErrorCallback() {}
+
+	virtual void reportError(physx::PxErrorCode::Enum e, const char* message, const char* file, int line)
+	{
+		const char* errorCode = NULL;
+
+		switch (e)
+		{
+		case physx::PxErrorCode::eNO_ERROR:
+			errorCode = "no error";
+			break;
+		case physx::PxErrorCode::eINVALID_PARAMETER:
+			errorCode = "invalid parameter";
+			break;
+		case physx::PxErrorCode::eINVALID_OPERATION:
+			errorCode = "invalid operation";
+			break;
+		case physx::PxErrorCode::eOUT_OF_MEMORY:
+			errorCode = "out of memory";
+			break;
+		case physx::PxErrorCode::eDEBUG_INFO:
+			errorCode = "info";
+			break;
+		case physx::PxErrorCode::eDEBUG_WARNING:
+			errorCode = "warning";
+			break;
+		case physx::PxErrorCode::ePERF_WARNING:
+			errorCode = "performance warning";
+			break;
+		case physx::PxErrorCode::eABORT:
+			errorCode = "abort";
+			break;
+		case physx::PxErrorCode::eINTERNAL_ERROR:
+			errorCode = "internal error";
+			break;
+		case physx::PxErrorCode::eMASK_ALL:
+			errorCode = "unknown error";
+			break;
+		}
+
+		PX_ASSERT(errorCode);
+		if (errorCode)
+		{
+			char buffer[1024];
+			sprintf(buffer, "%s (%d) : %s : %s\n", file, line, errorCode, message);
+			std::cout << buffer << std::endl;
+			/*physx::shdfnd::printString(buffer);*/
+
+			// in debug builds halt execution for abort codes
+			PX_ASSERT(e != PxErrorCode::eABORT);
+
+			// in release builds we also want to halt execution 
+			// and make sure that the error message is flushed  
+			while (e == physx::PxErrorCode::eABORT)
+			{
+				std::cout << buffer << std::endl;
+				/*physx::shdfnd::printString(buffer);
+				physx::shdfnd::Thread::sleep(1000);*/
+			}
+		}
+	}
+};
 
 namespace Engine {
 
@@ -27,34 +96,23 @@ namespace Engine {
 
 		m_Window = std::unique_ptr<Window>(Window::Create(Renderer::GetAPI()));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
-		m_Window->SetVSync(false );
+		m_Window->SetVSync(true);
 
-		
-		Renderer::Create();
-		
+		Renderer::Init();
 
-		//RTTexture = new GLTexture();
-				
-		PushLayer(new LogicLayer());
 
-		OpenGLTerrainMaterial* mat = new OpenGLTerrainMaterial(Loader::Get()->GetShader("terrain"), "terrainmaterial");
+		//--physex test--------------------
+		static physxErrorCallback gphysicsErrorCallback;
+		static physx::PxDefaultAllocator gDefaultAllocatorCallback;
 
-		std::shared_ptr<GameObject> go = std::make_shared<GameObject>("terrain");		//TODO
-		Transform* transform = go->GetComponent<Transform>();
-		transform->Position = glm::vec3(0, 0.0, -100.0);
-		Terrain* terrain = new Terrain(0, 0, "../Engine/res/textures/heightMap.png");
+		physx::PxFoundation* m_Foundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback, gphysicsErrorCallback);
+		if (!m_Foundation)
+			EN_CORE_FATAL("PxCreateFoundation failed!");
+		else
+			EN_CORE_INFO("physx initialized");
 
-		GLTexture* BGTexture = new GLTexture("../Engine/res/textures/grass.png");
-		GLTexture* rTexture = new GLTexture("../Engine/res/textures/mud.png");
-		GLTexture* gTexture = new GLTexture("../Engine/res/textures/grassFlowers.png");
-		GLTexture* bTexture = new GLTexture("../Engine/res/textures/path.png");
-		GLTexture* blendMap = new GLTexture("../Engine/res/textures/blendMap.png");
+		m_Foundation->release();
 
-		mat->SetTextures(BGTexture, rTexture, gTexture, bTexture, blendMap);
-		std::shared_ptr<TerrainRenderer> meshRenderer = std::make_shared<TerrainRenderer>(mat, terrain->GetModel(), transform);  //TODO: mem leak
-		go->AddComponent(meshRenderer);
-		Scene::Current()->AddGameObject(go);
-		Scene::Current()->AddCube();
 	}
 
 	Application::~Application()

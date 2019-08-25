@@ -8,7 +8,7 @@ namespace Engine {
 	class OpenGLPhong : public Phong, public OpenGLMaterial
 	{
 	public:
-		OpenGLPhong(Shader* shader, const std::string& name);
+		OpenGLPhong(OpenGLShader* shader, const std::string& name);
 
 		virtual void Bind() override;
 

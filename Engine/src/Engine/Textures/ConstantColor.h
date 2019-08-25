@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Texture.h"
+#include "Texture_temp.h"
 
 namespace Engine {
 
 	class ShadeRec;
 
-	class ConstantColor : public Texture
+	class ConstantColor : public Texture_temp
 	{
 	public:
 

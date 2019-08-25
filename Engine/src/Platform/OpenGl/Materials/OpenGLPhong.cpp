@@ -6,9 +6,10 @@
 #include "Platform/OpenGl/BRDFs/OpenGLGlossySpecular.h"
 #include "Platform/OpenGl/GLTexture.h"
 #include "Platform/OpenGl/Loader.h"
+#include "Engine/Logic/Scene.h"
 
 namespace Engine {
-	OpenGLPhong::OpenGLPhong(Shader* shader, const std::string& name)
+	OpenGLPhong::OpenGLPhong(OpenGLShader* shader, const std::string& name)
 		:OpenGLMaterial(shader, name),
 		Phong(new OpenGLLambertian, new OpenGLLambertian, new OpenGLGlossySpecular, new GLTexture)
 	{
@@ -18,14 +19,18 @@ namespace Engine {
 	{
 		OpenGLMaterial::Bind();
 
-		Texture* tex = m_AmbientBRDF->GetCd();
+		Texture_temp* tex = m_AmbientBRDF->GetCd();
 		glm::vec4 vec = glm::vec4 (tex->GetColor(), 1.0 );
 		m_Shader->SetUniform("u_Cd", vec);
 		m_Shader->SetUniform("u_Ka", m_AmbientBRDF->GetKd());
 		m_Shader->SetUniform("u_Kd", m_DiffuseBRDF->GetKd());
 		m_Shader->SetUniform("u_Ks", m_SpecularBRDF->GetKs());
-		m_Shader->SetUniform("u_epsilon", m_SpecularBRDF->GetKs());
+		m_Shader->SetUniform("u_epsilon", m_SpecularBRDF->GetExp());
+		
 		m_Texture->Bind(0);
+		
+		if(Scene::Current())
+			m_Shader->SetLights("test", Scene::Current()->GetLights());
 
 	}
 

@@ -26,34 +26,35 @@ namespace Engine {
 	{
 	}
 
+
+	#define BIND_EVENT_FN2(x) std::bind(&Camera::x, this, std::placeholders::_1)
 	void Camera::OnEvent(Event & event)
 	{
+		
+		m_NewMousePosition = Input::GetMousePosition();
+		EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN2(Scroll));
+
+		//Rotate Camera by mouse movement
+		if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_2))
+		{
+			dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_FN2(RotateCamera));
+		}
+
+		//Translate Camera by mouse movement
+		if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_3))
+		{
+			dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_FN2(TranslateCamera));
+		}
+
+		m_OldMousePosition = m_NewMousePosition;
 	}
 	
 	void Camera::Update()
 	{
 		CalculateViewMatrix();
 		CalculateProjectionMatrix();
-
-		//std::pair<float, float> newMousePosition = Input::GetMousePosition();
-		//if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_2))
-		//{
-		//	float dx = oldMousePosition.first - newMousePosition.first;
-		//	float dy = oldMousePosition.second - newMousePosition.second;
-		//	m_Transform->Rotation.x += dy/*temp*//10;/*temp*/
-		//	m_Transform->Rotation.y += dx/*temp*//10;/*temp*/
-		//}
-
-		//if (Input::IsMouseButtonPressed(EN_MOUSE_BUTTON_3))
-		//{
-		//	float dx = oldMousePosition.first - newMousePosition.first;
-		//	float dy = oldMousePosition.second - newMousePosition.second;
-		//	m_Transform->Position.x -= dx/*temp*/ /100/*temp*/;
-		//	m_Transform->Position.y += dy/*temp*/ /100/*temp*/;
-		//}
-
-		//oldMousePosition = newMousePosition;
-
+		CalculateUVW();
 	}
 	void Camera::RenderInspectorInfo()
 	{
@@ -106,4 +107,44 @@ namespace Engine {
 
 		
 	}
+
+	void Camera::CalculateUVW()
+	{
+		glm::vec3 m_LookAt;
+		m_LookAt.x = cos(glm::radians(m_Transform->Rotation.x)) * sin(glm::radians(m_Transform->Rotation.y));
+		m_LookAt.y = -sin(glm::radians(m_Transform->Rotation.x));
+		m_LookAt.z = -cos(glm::radians(m_Transform->Rotation.x)) * cos(glm::radians(m_Transform->Rotation.y));
+
+		m_W = glm::normalize(-m_LookAt);
+		m_U = glm::normalize(glm::cross(m_Up, m_W));
+		m_V = glm::cross(m_W, m_U);
+	}
+
+	bool Camera::Scroll(MouseScrolledEvent& event)
+	{
+		m_Transform->Position = m_Transform->Position + m_W * event.GetYOffset();
+
+		EN_CORE_INFO("{0}", event.ToString());
+		return true;
+	}
+
+	bool Camera::TranslateCamera(MouseMovedEvent& event)
+	{
+		float dx = (m_OldMousePosition.first - m_NewMousePosition.first)/100;
+		float dy = (m_OldMousePosition.second - m_NewMousePosition.second)/100;
+
+		m_Transform->Position += (-m_U * dx)  + m_V * dy;
+		return true;
+	}
+
+	bool Camera::RotateCamera(MouseMovedEvent& event)
+	{
+		float dx = m_OldMousePosition.first - m_NewMousePosition.first;
+		float dy = m_OldMousePosition.second - m_NewMousePosition.second;
+		m_Transform->Rotation.x += dy/*temp*/ / 10;/*temp*/
+		m_Transform->Rotation.y += dx/*temp*/ / 10;/*temp*/
+		return true;
+	}
+
+
 }

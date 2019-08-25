@@ -8,7 +8,7 @@ namespace Engine {
 	class OpenGLTerrainMaterial : public OpenGLMaterial
 	{
 	public: 
-		OpenGLTerrainMaterial(Shader* shader, const std::string& name);
+		OpenGLTerrainMaterial(OpenGLShader* shader, const std::string& name);
 
 		virtual void RenderInspectorInfo() override;
 

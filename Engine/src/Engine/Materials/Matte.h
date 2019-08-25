@@ -18,7 +18,7 @@ namespace Engine {
 
 		void SetKd(const float kd);
 
-		void SetCd(Texture* c);
+		void SetCd(Texture_temp* c);
 
 	protected:
 		Lambertian* m_AmbientBRDF;

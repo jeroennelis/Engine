@@ -6,7 +6,7 @@
 namespace Engine {
 
 	Terrain::Terrain(int gridX, int gridZ, const std::string& heightMap)
-		:SIZE(800), VERTEX_COUNT(128), MAX_HEIGHT(20), MAX_PIXEL_COLOUR(255)
+		:SIZE(400), VERTEX_COUNT(128), MAX_HEIGHT(50), MAX_PIXEL_COLOUR(255)
 	{
 		m_X = gridX * SIZE;
 		m_Z = gridZ * SIZE;

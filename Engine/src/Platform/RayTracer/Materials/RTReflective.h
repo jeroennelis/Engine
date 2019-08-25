@@ -22,7 +22,7 @@ namespace Engine {
 
 		void SetKr(const float kr);
 
-		void SetCr(Texture* cr);
+		void SetCr(Texture_temp* cr);
 
 		virtual glm::vec3 Shade(ShadeRec& sr) override;
 

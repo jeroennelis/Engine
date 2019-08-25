@@ -14,7 +14,16 @@
 #include  "Engine/Logic/LogicLayer.h" 
 
 
+// --Renderer------------------
+#include "Engine/Renderer/Renderer.h"
+#include "Engine/Renderer/RenderCommand.h"
 
+#include "Engine/Renderer/Buffer.h"
+#include "Engine/Renderer/Shader.h"
+#include "Engine/Renderer/Texture.h"
+#include "Engine/Renderer/VertexArray.h"
+
+#include "Engine/Renderer/OrthographicCamera.h"
 
 // ---Entry Point--------------
 #include  "Engine\EntryPoint.h" 

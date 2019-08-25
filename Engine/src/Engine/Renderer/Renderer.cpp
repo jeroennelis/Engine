@@ -14,40 +14,29 @@ namespace Engine {
 	glm::mat4 Renderer::s_ProjectionMatrix(1.0);
 	glm::mat4 Renderer::s_ViewMatrix(1.0);
 
-	void Renderer::Create()
+	void Renderer::Init()
 	{
-		
-		switch (RendererAPI::GetAPI())
+		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None: 
-			EN_CORE_ASSERT(false, "RendererAPI::NONE currently not supported"); 
-			s_Renderer = nullptr; 
-			return;
+		case RendererAPI::API::None:
+			EN_CORE_ASSERT(false, "RendererAPI::NONE currently not supported");
+			break;
 
-		case RendererAPI::API::OpenGL: 
+		case RendererAPI::API::OpenGL:
 			s_Renderer = new OpenGLRenderer();
-			s_Renderer->Init();
 			break;
 
-		case RendererAPI::API::Vulkan: 
+		case RendererAPI::API::Vulkan:
 			s_Renderer = new VulkanRenderer();
-			s_Renderer->Init();
 			break;
 
-		case RendererAPI::API::OpenVR_OpenGL:
-			s_Renderer = new OpenVR_OpenGLRenderer();
-			if (!s_Renderer->Init())
-			{
-				RendererAPI::SetAPI(RendererAPI::API::OpenGL);
-				s_Renderer = new OpenGLRenderer();
-				s_Renderer->Init();
-			}
+		case RendererAPI::API::OpenVR_OpenGL: 
+			s_Renderer = new OpenGLRenderer();
 			break;
 		}
-	
+		RenderCommand::Init();
+		s_Renderer->Initialize();
 	}
-
-
 
 	void Renderer::BeginScene(Camera* cam)
 	{

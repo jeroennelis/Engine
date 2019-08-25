@@ -23,7 +23,7 @@ namespace Engine {
 		}
 	}
 
-	bool OpenVR_OpenGLRenderer::Init()
+	bool OpenVR_OpenGLRenderer::Initialize()
 	{
 		vr::EVRInitError eError = vr::VRInitError_None;
 		m_System = vr::VR_Init(&eError, vr::VRApplication_Scene);

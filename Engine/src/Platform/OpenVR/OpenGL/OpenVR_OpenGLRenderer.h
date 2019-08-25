@@ -27,7 +27,7 @@ namespace Engine {
 
 		void Shutdown();
 
-		virtual bool Init() override;
+		virtual bool Initialize() override;
 		virtual void Render() override;
 		virtual void CleanUp() override;
 

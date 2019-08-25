@@ -29,7 +29,7 @@ namespace Engine {
 		m_DiffuseBRDF->SetKd(kd);
 	}
 
-	void Matte::SetCd(Texture* c)
+	void Matte::SetCd(Texture_temp* c)
 	{
 		m_AmbientBRDF->SetCd(c);
 		m_DiffuseBRDF->SetCd(c);

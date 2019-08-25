@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Platform/OpenGl/Shader.h"
+#include "Platform/OpenGl/Renderer/OpenGLShader.h"
 #include "Platform/OpenGl/FrameBuffer.h"
 
 namespace Engine {
@@ -8,16 +8,16 @@ namespace Engine {
 	class OpenGLMaterial
 	{
 	public:
-		OpenGLMaterial(Shader* shader, const std::string& name);
+		OpenGLMaterial(OpenGLShader* shader, const std::string& name);
 
-		virtual void Bind();
+		virtual void Bind() = 0;
 
 		virtual void RenderInspectorInfo() = 0;
 		const void RenderProjectInfo()const;
 
 		void RenderPreview();
 
-		Shader* m_Shader;
+		OpenGLShader* m_Shader;
 
 	protected:
 		std::string m_Name;

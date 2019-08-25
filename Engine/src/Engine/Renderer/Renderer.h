@@ -11,11 +11,18 @@ namespace Engine {
 	{
 	public:
 		
+		static void Init();
+		
+		static void BeginScene(Camera* cam);
+		static void EndScene();
 
-		static void Create();
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+
 		inline static Renderer* Get() { return s_Renderer; }
-		virtual bool Init() = 0;
 
+		virtual bool Initialize() = 0;
 		virtual void Render() = 0;
 		virtual void CleanUp() = 0;
 
@@ -30,12 +37,6 @@ namespace Engine {
 
 		inline static void SetTransforms(Camera* cam) { s_ProjectionMatrix = cam->GetProjectionMatrix(); s_ViewMatrix = cam->GetViewMatrix(); }
 
-		static void BeginScene(Camera* cam);
-		static void EndScene();
-
-		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
-
-		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
 	private:
 		static Renderer* s_Renderer;

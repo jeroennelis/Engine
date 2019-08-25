@@ -8,7 +8,7 @@ namespace Engine {
 	{
 
 	public:
-		OpenGLCone(Shader* shader, const std::string& name);
+		OpenGLCone(OpenGLShader* shader, const std::string& name);
 		// Inherited via GLMaterial
 		virtual void RenderInspectorInfo() override;
 

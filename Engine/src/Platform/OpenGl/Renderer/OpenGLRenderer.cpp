@@ -5,6 +5,8 @@
 #include "../Loader.h"
 #include "Engine/Components/RenderCompont.h"
 
+#include "Engine/Logic/LogicLayer.h"
+
 namespace Engine {
 
 	OpenGLRenderer::OpenGLRenderer()
@@ -15,28 +17,18 @@ namespace Engine {
 	{
 	}
 
-	bool OpenGLRenderer::Init()
+	bool OpenGLRenderer::Initialize()
 	{
 		EN_CORE_INFO("Initializing OpenGL Renderer");
 		//Loader
 		Loader::Create();
-
-		//Create framebuffers
-		int width = Application::Get().GetWindow().GetWidth();
-		int height = Application::Get().GetWindow().GetHeight();
-
 		m_GameFrameBuffer = new FrameBuffer(Application::Get().GetWindow().GetWidth(), Application::Get().GetWindow().GetHeight());
 		m_SceneFrameBuffer = new FrameBuffer(Application::Get().GetWindow().GetWidth(), Application::Get().GetWindow().GetHeight());
 
 		//init ImGui
 		m_ImGuiLayer = new ImGuiLayer;
 		Application::Get().PushOverLay(m_ImGuiLayer);
-
-		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-		GLCall(glEnable(GL_BLEND));
-		GLCall(glEnable(GL_DEPTH_TEST));
-		RenderCommand::SetClearColor({ 0.0, 0.0, 0.0, 1 });
-
+		Application::Get().PushLayer(new LogicLayer());
 		return true;
 	}
 
@@ -54,6 +46,8 @@ namespace Engine {
 				if (renderer)
 					renderer->Render();
 			}
+
+			Scene::Current()->RenderSkybox();
 		}
 		Renderer::EndScene();
 		m_SceneFrameBuffer->Unbind();
@@ -69,6 +63,7 @@ namespace Engine {
 					if (renderer)
 						renderer->Render();
 			}
+			Scene::Current()->RenderSkybox();
 				
 		}
 		Renderer::EndScene();

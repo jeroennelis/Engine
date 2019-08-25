@@ -30,7 +30,7 @@ void Engine::RawModel::RenderPreview()
 	Loader::Get()->GetShader("preview")->Bind();
 
 	glm::mat4 projection = glm::mat4(1.0);
-	Loader::Get()->GetShader("preview")->SetUniform("u_projectionMatrix", projection);
+	((OpenGLShader*)(Loader::Get()->GetShader("preview")))->SetUniform("u_projectionMatrix", projection);
 
 	//Camera* camera = Scene::Current()->GetGameCamera();
 	
@@ -64,12 +64,12 @@ void Engine::RawModel::RenderPreview()
 
 	glm::mat4 viewTransform = glm::mat4(1.0);
 
-	Loader::Get()->GetShader("preview")->SetUniform("u_viewMatrix", viewTransform);
-	Loader::Get()->GetShader("preview")->SetUniform("u_projectionMatrix", projectionMatrix);
+	((OpenGLShader*)(Loader::Get()->GetShader("preview")))->SetUniform("u_viewMatrix", viewTransform);
+	((OpenGLShader*)(Loader::Get()->GetShader("preview")))->SetUniform("u_projectionMatrix", projectionMatrix);
 
 	glm::mat4 transform = glm::mat4(1.0);
 	transform = glm::translate(transform, glm::vec3(0, -dy, -(dnear + dz/2)));
-	Loader::Get()->GetShader("preview")->SetUniform("u_transformationMatrix", transform);
+	((OpenGLShader*)(Loader::Get()->GetShader("preview")))->SetUniform("u_transformationMatrix", transform);
 
 	glDrawElements(GL_TRIANGLES, va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	m_Preview->Unbind();

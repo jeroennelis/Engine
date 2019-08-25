@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>enpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;EN_ENABLE_ASSERTS;EN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Vulkan\include;vendor\tiny_obj;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Vulkan\include;vendor\tiny_obj;vendor\physx\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -88,8 +88,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;PhysX_64.lib;PhysXCommon_64.lib;PhysXCooking_64.lib;PhysXFoundation_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;vendor\physx\bin\win.x86_64.vc141.mt\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -97,8 +97,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>enpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;EN_ENABLE_ASSERTS;EN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Vulkan\include;vendor\tiny_obj;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;EN_ENABLE_ASSERTS;EN_RELEASE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Vulkan\include;vendor\tiny_obj;vendor\physx\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -113,8 +113,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;PhysX_64.lib;PhysXCommon_64.lib;PhysXCooking_64.lib;PhysXFoundation_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;vendor\physx\bin\win.x86_64.vc141.mt\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -123,7 +123,7 @@
       <PrecompiledHeaderFile>enpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>EN_PLATFORM_WINDOWS;EN_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;EN_ENABLE_ASSERTS;EN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Vulkan\include;vendor\tiny_obj;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Vulkan\include;vendor\tiny_obj;vendor\physx\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\openvr\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -138,8 +138,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;openvr_api.lib;vulkan-1.lib;PhysX_64.lib;PhysXCommon_64.lib;PhysXCooking_64.lib;PhysXFoundation_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\openvr\lib\win64;vendor\Vulkan\lib;vendor\physx\bin\win.x86_64.vc141.mt\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -188,10 +188,12 @@
     <ClInclude Include="src\Engine\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Engine\Renderer\Renderer.h" />
     <ClInclude Include="src\Engine\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Engine\Renderer\Shader.h" />
+    <ClInclude Include="src\Engine\Renderer\Texture.h" />
     <ClInclude Include="src\Engine\Renderer\VertexArray.h" />
     <ClInclude Include="src\Engine\Textures\ConstantColor.h" />
     <ClInclude Include="src\Engine\Textures\ImageTexture.h" />
-    <ClInclude Include="src\Engine\Textures\Texture.h" />
+    <ClInclude Include="src\Engine\Textures\Texture_temp.h" />
     <ClInclude Include="src\Engine\XMLParser\XMLNode.h" />
     <ClInclude Include="src\Engine\XMLParser\XMLReader.h" />
     <ClInclude Include="src\Engine\XMLParser\XMLWriter.h" />
@@ -204,23 +206,30 @@
     <ClInclude Include="src\Platform\OpenGl\FrameBuffer.h" />
     <ClInclude Include="src\Platform\OpenGl\GL.h" />
     <ClInclude Include="src\Platform\OpenGl\GLTexture.h" />
+    <ClInclude Include="src\Platform\OpenGl\IconRenderer.h" />
     <ClInclude Include="src\Platform\OpenGl\Loader.h" />
     <ClInclude Include="src\Platform\OpenGl\MaterialProperty.h" />
     <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLCone.h" />
+    <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLIconMaterial.h" />
     <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLMaterial.h" />
     <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLPhong.h" />
+    <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLSkyboxMaterial.h" />
     <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLTerrainMaterial.h" />
     <ClInclude Include="src\Platform\OpenGl\MeshRenderer.h" />
     <ClInclude Include="src\Platform\OpenGl\OBJLoader.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLLight.h" />
+    <ClInclude Include="src\Platform\OpenGl\PointCloudRenderer.h" />
+    <ClInclude Include="src\Platform\OpenGl\RawModel.h" />
     <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLRenderer.h" />
     <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Platform\OpenGl\PointCloudRenderer.h" />
-    <ClInclude Include="src\Platform\OpenGl\RawModel.h" />
-    <ClInclude Include="src\Platform\OpenGl\Shader.h" />
+    <ClInclude Include="src\Platform\OpenGl\SkyboxRenderer.h" />
     <ClInclude Include="src\Platform\OpenGl\Terrain.h" />
+    <ClInclude Include="src\Platform\OpenGl\TerrainRenderer.h" />
     <ClInclude Include="src\Platform\OpenGl\XYZLoader.h" />
     <ClInclude Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenVR\OpenGL\OpenVR_OpenGLRenderer.h" />
@@ -276,10 +285,10 @@
     <ClInclude Include="src\Platform\RayTracer\Utilities\ShadeRec.h" />
     <ClInclude Include="src\Platform\RayTracer\World\ViewPlane.h" />
     <ClInclude Include="src\Platform\RayTracer\World\World.h" />
-    <ClInclude Include="src\Platform\OpenGl\TerrainRenderer.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanBuffer.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanContext.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanRenderer.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanRendererAPI.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\enpch.h" />
@@ -684,6 +693,8 @@
     <ClCompile Include="src\Engine\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Engine\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Engine\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Engine\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Engine\Renderer\Texture.cpp" />
     <ClCompile Include="src\Engine\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Engine\Textures\ConstantColor.cpp" />
     <ClCompile Include="src\Engine\XMLParser\XMLNode.cpp" />
@@ -695,22 +706,27 @@
     <ClCompile Include="src\Platform\OpenGl\ConeRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\FrameBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\GLTexture.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\IconRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Loader.cpp" />
     <ClCompile Include="src\Platform\OpenGl\MaterialProperty.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLCone.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLIconMaterial.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLMaterial.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLPhong.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLSkyboxMaterial.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLTerrainMaterial.cpp" />
     <ClCompile Include="src\Platform\OpenGl\MeshRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\OBJLoader.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\PointCloudRenderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\RawModel.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLShader.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\PointCloudRenderer.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\RawModel.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\Shader.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\SkyboxRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\Terrain.cpp" />
     <ClCompile Include="src\Platform\OpenGl\TerrainRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGl\XYZLoader.cpp" />
@@ -769,6 +785,7 @@
     <ClCompile Include="src\Platform\Vulkan\VulkanBuffer.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanContext.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanRenderer.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanRendererAPI.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\enpch.cpp">

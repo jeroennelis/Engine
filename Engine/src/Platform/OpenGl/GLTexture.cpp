@@ -4,7 +4,7 @@
 #include "stb_image.h"
 
 namespace Engine {
-	Engine::GLTexture::GLTexture()
+	GLTexture::GLTexture()
 	{
 		GLCall(glGenTextures(1, &m_RendererID));
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
@@ -21,7 +21,7 @@ namespace Engine {
 
 	}
 
-	Engine::GLTexture::GLTexture(const std::string& path)
+	GLTexture::GLTexture(const std::string& path)
 		:m_RendererID(0), m_FilePath(path), m_LocalBuffer(nullptr), m_Width(0), m_Height(0), m_BPP(0)
 	{
 		//stbi_set_flip_vertically_on_load(1);
@@ -29,26 +29,15 @@ namespace Engine {
 
 		EN_CORE_INFO("{0}", path.c_str());
 
-
-
-		GLCall(glGenTextures(1, &m_RendererID));
-		GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
-
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-
-		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
-		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
-
-		//midmapping
-		GLCall(glGenerateMipmap(GL_TEXTURE_2D));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
+		glGenTextures(1, &m_RendererID);
+		glBindTexture(GL_TEXTURE_2D, m_RendererID);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer);
+		glGenerateMipmap(GL_TEXTURE_2D);  //Generate mipmaps now!!!
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		GLCall(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.4));
-
-
-
 
 		if (m_LocalBuffer)
 		{

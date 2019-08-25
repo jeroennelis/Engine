@@ -49,6 +49,9 @@
     <Filter Include="src\Platform\OpenGl\Materials">
       <UniqueIdentifier>{66D5108E-D2ED-F7B7-9B9A-875107728C51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\OpenGl\Renderer">
+      <UniqueIdentifier>{9B971A91-8752-0A3D-300A-83871CA454CD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform\OpenVR">
       <UniqueIdentifier>{2AA69437-9607-7245-1F75-B8F78BD5A804}</UniqueIdentifier>
     </Filter>
@@ -162,6 +165,9 @@
     <ClInclude Include="src\Engine\Components\Light.h">
       <Filter>src\Engine\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Components\RenderCompont.h">
+      <Filter>src\Engine\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\Components\TestComponent.h">
       <Filter>src\Engine\Components</Filter>
     </ClInclude>
@@ -267,6 +273,9 @@
     <ClInclude Include="src\Engine\Renderer\RendererAPI.h">
       <Filter>src\Engine\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Renderer\Shader.h">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine\Renderer\VertexArray.h">
       <Filter>src\Engine\Renderer</Filter>
     </ClInclude>
@@ -274,9 +283,6 @@
       <Filter>src\Engine\Textures</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Textures\ImageTexture.h">
-      <Filter>src\Engine\Textures</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Textures\Texture.h">
       <Filter>src\Engine\Textures</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\XMLParser\XMLNode.h">
@@ -315,6 +321,9 @@
     <ClInclude Include="src\Platform\OpenGl\GLTexture.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\IconRenderer.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\Loader.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
@@ -324,10 +333,19 @@
     <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLCone.h">
       <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLIconMaterial.h">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLMaterial.h">
       <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLPhong.h">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLSkyboxMaterial.h">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLTerrainMaterial.h">
       <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\MeshRenderer.h">
@@ -336,16 +354,40 @@
     <ClInclude Include="src\Platform\OpenGl\OBJLoader.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\OpenGLLight.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\PointCloudRenderer.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\RawModel.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\Shader.h">
+    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLBuffer.h">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLContext.h">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLRenderer.h">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLShader.h">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLVertexArray.h">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\SkyboxRenderer.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\Terrain.h">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGl\TerrainRenderer.h">
       <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGl\XYZLoader.h">
@@ -412,6 +454,9 @@
       <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothMeshTriangle.h">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothUVMeshTriangle.h">
       <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\Triangle.h">
@@ -1626,23 +1671,12 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLBuffer.h">
-      <Filter>src\Platform\OpenGl</Filter>
+    <ClInclude Include="src\Engine\Textures\Texture_temp.h">
+      <Filter>src\Engine\Textures</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLContext.h">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLRendererAPI.h">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLVertexArray.h">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLRenderer.h" />
-    <ClInclude Include="src\Engine\Components\RenderCompont.h" />
-    <ClInclude Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothUVMeshTriangle.h" />
-    <ClInclude Include="src\Platform\OpenGl\Materials\OpenGLTerrainMaterial.h" />
-    <ClInclude Include="src\Platform\OpenGl\TerrainRenderer.h" />
+    <ClInclude Include="src\Engine\Renderer\Texture.h" />
+    <ClInclude Include="src\Platform\OpenGl\Renderer\OpenGLTexture.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanRendererAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp">
@@ -1664,6 +1698,9 @@
       <Filter>src\Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Components\Light.cpp">
+      <Filter>src\Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Components\RenderCompont.cpp">
       <Filter>src\Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Components\TestComponent.cpp">
@@ -1741,6 +1778,9 @@
     <ClCompile Include="src\Engine\Renderer\RendererAPI.cpp">
       <Filter>src\Engine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Renderer\Shader.cpp">
+      <Filter>src\Engine\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine\Renderer\VertexArray.cpp">
       <Filter>src\Engine\Renderer</Filter>
     </ClCompile>
@@ -1774,6 +1814,9 @@
     <ClCompile Include="src\Platform\OpenGl\GLTexture.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\IconRenderer.cpp">
+      <Filter>src\Platform\OpenGl</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\Loader.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
@@ -1783,10 +1826,19 @@
     <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLCone.cpp">
       <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLIconMaterial.cpp">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLMaterial.cpp">
       <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLPhong.cpp">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLSkyboxMaterial.cpp">
+      <Filter>src\Platform\OpenGl\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLTerrainMaterial.cpp">
       <Filter>src\Platform\OpenGl\Materials</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\MeshRenderer.cpp">
@@ -1801,7 +1853,25 @@
     <ClCompile Include="src\Platform\OpenGl\RawModel.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\Shader.cpp">
+    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLBuffer.cpp">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLRenderer.cpp">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLVertexArray.cpp">
+      <Filter>src\Platform\OpenGl\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\SkyboxRenderer.cpp">
       <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGl\Terrain.cpp">
@@ -1874,6 +1944,9 @@
       <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothMeshTriangle.cpp">
+      <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothUVMeshTriangle.cpp">
       <Filter>src\Platform\RayTracer\GeometricObjects\Triangles</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\Triangle.cpp">
@@ -1993,21 +2066,8 @@
     <ClCompile Include="vendor\stb_image\std_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLBuffer.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLContext.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLRendererAPI.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLVertexArray.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLRenderer.cpp" />
-    <ClCompile Include="src\Engine\Components\RenderCompont.cpp" />
-    <ClCompile Include="src\Platform\RayTracer\GeometricObjects\Triangles\SmoothUVMeshTriangle.cpp" />
-    <ClCompile Include="src\Platform\OpenGl\Materials\OpenGLTerrainMaterial.cpp" />
+    <ClCompile Include="src\Engine\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\Renderer\OpenGLTexture.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanRendererAPI.cpp" />
   </ItemGroup>
 </Project>

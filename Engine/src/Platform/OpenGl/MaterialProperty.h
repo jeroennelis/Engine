@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shader.h"
+#include "Renderer/OpenGLShader.h"
 
 namespace Engine {
 
@@ -12,7 +12,7 @@ namespace Engine {
 		MaterialProperty(const std::string& name);
 		virtual ~MaterialProperty();
 
-		virtual void SetProperty(Shader* shader) = 0;
+		virtual void SetProperty(OpenGLShader* shader) = 0;
 		virtual void SetData(void*) = 0;
 		virtual void RenderInspectorInfo() = 0;
 
@@ -28,7 +28,7 @@ namespace Engine {
 	{
 	public:
 		IntProperty(const std::string& name, int data);
-		virtual void SetProperty(Shader * shader) override;
+		virtual void SetProperty(OpenGLShader* shader) override;
 		virtual void SetData(void*)override;
 		virtual void RenderInspectorInfo() override;
 
@@ -43,7 +43,7 @@ namespace Engine {
 	public:
 		FloatProperty(const std::string& name, float data);
 
-		virtual void SetProperty(Shader * shader) override;
+		virtual void SetProperty(OpenGLShader* shader) override;
 		virtual void SetData(void*)override;
 		virtual void RenderInspectorInfo() override;
 
@@ -58,7 +58,7 @@ namespace Engine {
 	public:
 		Vec3Property(const std::string& name, const glm::vec3& data);
 
-		virtual void SetProperty(Shader * shader) override;
+		virtual void SetProperty(OpenGLShader* shader) override;
 		virtual void RenderInspectorInfo() override;
 
 	private:
@@ -72,7 +72,7 @@ namespace Engine {
 	public:
 		Vec4Property(const std::string& name, const glm::vec4& data);
 
-		virtual void SetProperty(Shader * shader) override;
+		virtual void SetProperty(OpenGLShader* shader) override;
 		virtual void SetData(void*)override;
 		virtual void RenderInspectorInfo() override;
 
@@ -87,7 +87,7 @@ namespace Engine {
 	public:
 		ColorProperty(const std::string& name, const glm::vec4&  vec);
 
-		virtual void SetProperty(Shader * shader) override;
+		virtual void SetProperty(OpenGLShader* shader) override;
 		virtual void SetData(void*)override;
 		virtual void RenderInspectorInfo() override;
 
@@ -102,7 +102,7 @@ namespace Engine {
 	public:
 		Mat4Property(const std::string& name, const glm::mat4& data);
 
-		virtual void SetProperty(Shader * shader) override;
+		virtual void SetProperty(OpenGLShader* shader) override;
 		virtual void SetData(void* data)override;
 		virtual void RenderInspectorInfo() override;
 

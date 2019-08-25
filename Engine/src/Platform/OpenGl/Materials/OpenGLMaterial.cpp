@@ -8,7 +8,7 @@
 #include "Platform/OpenGl/FrameBuffer.h"
 
 namespace Engine {
-	OpenGLMaterial::OpenGLMaterial(Shader* shader, const std::string& name)
+	OpenGLMaterial::OpenGLMaterial(OpenGLShader* shader, const std::string& name)
 		:m_Shader(shader),
 		m_Name(name)
 	{

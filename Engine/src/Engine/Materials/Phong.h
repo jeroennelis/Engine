@@ -21,7 +21,7 @@ namespace Engine
 
 		void SetExp(const float exp);
 
-		void SetCd(Texture* c);
+		void SetCd(Texture_temp* c);
 		
 		void SetTexture(ImageTexture* t);
 
@@ -35,7 +35,7 @@ namespace Engine
 
 		virtual float GetExp();
 
-		virtual Texture* GetCd();
+		virtual Texture_temp* GetCd();
 
 	protected:
 		Lambertian* m_AmbientBRDF;

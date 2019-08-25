@@ -1,0 +1,35 @@
+﻿  Building Custom Rule C:/Users/Jeroen/Desktop/PhysX-4.1/physx/samples/compiler/cmake/CMakeLists.txt
+  AcclaimLoader.cpp
+  Dummy.cpp
+  InputEventBuffer.cpp
+  PhysXSample.cpp
+  PhysXSampleApplication.cpp
+  Picking.cpp
+  RawLoader.cpp
+  RaycastCCD.cpp
+  RenderBaseActor.cpp
+  RenderBaseObject.cpp
+  RenderBoxActor.cpp
+  RenderCapsuleActor.cpp
+  RenderGridActor.cpp
+  RenderMaterial.cpp
+  RenderMeshActor.cpp
+  RenderPhysX3Debug.cpp
+  RenderSphereActor.cpp
+  RenderTexture.cpp
+  SampleAllocator.cpp
+  SampleCamera.cpp
+  SampleCameraController.cpp
+  SampleCharacterHelpers.cpp
+  SampleConsole.cpp
+  SampleInputMappingAsset.cpp
+  SampleMain.cpp
+  SampleMouseFilter.cpp
+  SampleRandomPrecomputed.cpp
+  SampleStepper.cpp
+  TestGeometryHelpers.cpp
+  TestGroup.cpp
+  TestMotionGenerator.cpp
+  wavefront.cpp
+Dummy.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  SampleBase.vcxproj -> C:\Users\Jeroen\Desktop\PhysX-4.1\physx\bin\win.x86_64.vc141.mt\release\SampleBase_static_64.lib

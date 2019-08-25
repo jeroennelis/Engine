@@ -28,7 +28,7 @@ namespace Engine {
 		m_SpecularBRDF->SetExp(exp);
 	}
 
-	void Phong::SetCd(Texture* c)
+	void Phong::SetCd(Texture_temp* c)
 	{
 		m_AmbientBRDF->SetCd(c);
 		m_DiffuseBRDF->SetCd(c);
@@ -60,7 +60,7 @@ namespace Engine {
 		return m_SpecularBRDF->GetExp();
 	}
 
-	Texture* Phong::GetCd()
+	Texture_temp* Phong::GetCd()
 	{
 		return m_SpecularBRDF->GetCs();
 	}

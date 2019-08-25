@@ -577,7 +577,7 @@ namespace Engine {
 
 		Camera* cam = Scene::Current()->GetSceneCamera();
 				
-		if (Scene::Current()->SelectedGameObject() && Scene::Current()->SelectedGameObject()->GetComponent<MeshRenderer>())
+		if (Scene::Current()->SelectedGameObject() && Scene::Current()->SelectedGameObject()->GetComponent<RenderComponent>())
 		{
 			EditTransform(glm::value_ptr(cam->GetViewMatrix()), const_cast<float*>(glm::value_ptr(cam->GetProjectionMatrix())), glm::value_ptr(Scene::Current()->SelectedGameObject()->GetComponent<Transform>()->TransformationMatrix), origin, size);
 			Scene::Current()->SelectedGameObject()->GetComponent<Transform>()->CalculateComponents();
@@ -721,6 +721,16 @@ namespace Engine {
 			if (ImGui::Selectable("add killhouse"))
 			{
 				Scene::Current()->AddSphere();
+			}
+
+			if (ImGui::Selectable("add light"))
+			{
+				Scene::Current()->AddLight();
+			}
+
+			if (ImGui::Selectable("add terrain"))
+			{
+				Scene::Current()->AddTerrain();
 			}
 			ImGui::EndPopup();
 		}

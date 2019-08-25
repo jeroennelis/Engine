@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Texture.h"
+#include "Texture_temp.h"
 
 namespace Engine {
 
-	class ImageTexture : public Texture
+	class ImageTexture : public Texture_temp
 	{
 
 	public:

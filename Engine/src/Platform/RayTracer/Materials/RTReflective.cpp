@@ -51,7 +51,7 @@ namespace Engine {
 		m_ReflectiveBRDF->SetKr(kr);
 	}
 
-	void RTReflective::SetCr(Texture* cr)
+	void RTReflective::SetCr(Texture_temp* cr)
 	{
 		m_ReflectiveBRDF->SetCr(cr);
 	}

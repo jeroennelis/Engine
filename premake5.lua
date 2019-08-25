@@ -17,6 +17,7 @@ IncludeDir["Glad"] = "Engine/vendor/Glad/include"
 IncludeDir["ImGui"] = "Engine/vendor/imgui"
 IncludeDir["glm"] = "Engine/vendor/glm"
 IncludeDir["stb_image"] = "Engine/vendor/stb_image"
+IncludeDir["Physx"] = "Engine/vendor/physx"
 
 include "Engine/vendor/GLFW"
 include "Engine/vendor/Glad"
@@ -51,19 +52,22 @@ project "Engine"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/Vulkan/include",
 		"%{prj.name}/vendor/tiny_obj",
+		"%{IncludeDir.Physx}/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{prj.name}/vendor/openvr/include",
 		"%{IncludeDir.stb_image}",
+
 		
 	}
 
 	libdirs
 	{
 		"%{prj.name}/vendor/openvr/lib/win64",
-		"%{prj.name}/vendor/Vulkan/lib"
+		"%{prj.name}/vendor/Vulkan/lib",
+		"%{IncludeDir.Physx}/bin/win.x86_64.vc141.mt/release"
 	}
 
 	links
@@ -73,7 +77,11 @@ project "Engine"
 		"ImGui",
 		"opengl32.lib",
 		"openvr_api.lib",
-		"vulkan-1.lib"
+		"vulkan-1.lib",
+		"PhysX_64.lib",
+		"PhysXCommon_64.lib",
+		"PhysXCooking_64.lib",
+		"PhysXFoundation_64.lib"
 	}
 
 	filter "system:windows"
@@ -91,13 +99,17 @@ project "Engine"
 	filter "configurations:Debug"
 		defines
 		{
-			"EN_DEBUG",
+			"EN_DEBUG"
 		}
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "EN_RELEASE"
+		defines
+		{
+			"EN_RELEASE",
+			"NDEBUG"
+		}
 		runtime "Release"
 		optimize "on"
 

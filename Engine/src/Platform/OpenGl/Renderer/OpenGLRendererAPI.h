@@ -1,12 +1,14 @@
 #pragma once
 
-#include "Engine/Renderer/RendererAPI.h"
+#include "Engine/Renderer/RendererAPI.h".
+#include "Engine/ImGui/ImGuiLayer.h"
 
 namespace Engine {
 
 	class OpenGLRendererAPI : public RendererAPI
 	{
 	public:
+		virtual void Init() override;
 		virtual void SetClearColor(const glm::vec4& color) override;
 		virtual void Clear() override;
 
